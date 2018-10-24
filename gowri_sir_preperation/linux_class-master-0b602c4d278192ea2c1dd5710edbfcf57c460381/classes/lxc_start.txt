@@ -1,0 +1,147 @@
+LXC in Oracle Enterprise Linux :
+______________________________
+
+wget http://epel.mirror.net.in/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+
+yum install lxc lxc-templates libcap-devel libcgroup busybox wget bridge-utils
+
+check lxc configuration:
+________________________
+
+lxc-checkconfig |more
+
+List lxc templates:
+____________________
+
+ls /usr/share/lxc/templates/
+
+Creating a Container:
+_____________________
+
+lxc-create -n centos_lxc -t centos
+
+where -n is name and -t is template
+
+Container credentials:
+_____________________
+
+cat /var/lib/lxc/centos_lxc/tmp_root_pass
+
+To reset the credential:
+_______________________
+
+chroot /var/lib/lxc/centos_lxc/rootfs passwd
+
+To start the container:   
+______________________
+
+lxc-start -n centos_lxc -d
+
+To start the container with tty0 :
+__________________________________
+
+lxc-console -n centos_lxc -t 0
+
+Type <Ctrl+a q> to exit the console, <Ctrl+a Ctrl+a> to enter Ctrl+a itself
+
+To Clone a container:
+_____________________
+
+lxc-clone centos_lxc centos1_lxc
+
+centoslxc.veecube.com
+
+/etc/sysconfig/lxc-net:
+=======================
+
+LXC_BRIDGE="lxcbr0"
+LXC_ADDR="192.168.2.1"
+LXC_NETMASK="255.255.255.0"
+LXC_NETWORK="192.168.2.0/24"
+LXC_DHCP_RANGE="192.168.2.2,192.168.2.254"
+LXC_DHCP_MAX="253"
+
+
+
+
+
+
+
+
+
+
+
+ANSIBLE:
+________
+
+yum install ansible
+
+Configure Ansible Master_host :
+______________________________
+
+vi /etc/ansible/hosts
+
+format:
+
+##[group_name]
+
+##alias ansible_ssh_host=server_ip
+
+Examples:
+_________
+
+[server]
+alias ansible_ssh_host=gowri.veecube.com
+
+[clients]
+host1 ansible_ssh_host=centos1lxc.veecube.com
+host2 ansible_ssh_host=centos2lxc.veecube.com
+host3 ansible_ssh_host=centos3lxc.veecube.com
+
+[web_server]
+web1 ansible_ssh_host=centoslxc.veecube.com
+
+Dir for all groups:
+___________________
+
+mkdir -p /etc/ansible/group_vars
+
+the group_names in /etc/ansible/hosts should be created as 
+separate files in /etc/ansible/group_vars
+
+configuring YAML files:
+_______________________
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+I'st:
+-----
+
+/etc/sysconfig/selinux
+
+SELINUX=disabled
+
+iptables -F
+
+systemctl disable firewalld  RHEL7
+
+chkconfig off iptables   -------------------RHEL6
+(or) iptables -F && service iptables save --RHEL6
+
+IP set  ----
+
+Hostname ----
+--------
+
+hostnamectl sethostname <hostname> --static     ----RHEL7
+
+/etc/sysconfig/network             ----RHEL6
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+server 0.asia.pool.ntp.org
+server 1.asia.pool.ntp.org
+server 2.asia.pool.ntp.org
+server 3.asia.pool.ntp.org
+
+

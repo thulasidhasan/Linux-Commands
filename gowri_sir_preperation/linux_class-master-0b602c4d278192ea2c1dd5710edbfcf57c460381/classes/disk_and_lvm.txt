@@ -1,0 +1,272 @@
+Disk & LVM & FIle system:
+=========================
+
+yum install lsscsi
+
+lsscsi --- we can view the attached HDD
+
+or) 
+
+fdisk -l |grep /dev/sd*  >/tmp/disk_details
+
+dmesg
+
+Adding Disk:
+============
+
+**list the disks before adding a new disk
+**added from vmware or from SAN (storage are network)
+
+Scanning Disk:
+==============
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+echo "- - -" > /sys/class/scsi_host/host1/scan
+echo "- - -" > /sys/class/scsi_host/host2/scan
+
+
+
+What is dmesg ?
+
+Shows the Hardware changes and it does not have any time stamps
+
+
+list_disks:
+===========
+
+lsscsi
+
+
+Partitioning the Disk (Optional) :
+===================================
+
+fdisk <device>
+
+options:
+--------
+
+p print the information
+
+m help
+
+n new partition
+	p - primary partition (required)
+	e - extended
+
+q quit
+
+w write (save)
+
+
+Verifying the partition details:
+=================================
+
+fdisk -l <device>
+
+
+Creating File system:   (Equivalent to Format in windows/dos)
+=====================
+
+mkfs -t <type> -m <reserve> <device>
+
+-m 1: (1.00%) reserved for the super user  
+
+Creating Mount_Point:
+=====================
+
+mkdir <dir_name>  ###better to create in  /
+
+
+what is a file system ?
+-----------------------
+
+In computing, a file system or filesystems is used to control how data is stored and retrieved. 
+Has components like Index table and superblock.
+
+
+Common File system types in Linux:
+==================================
+
+ext2 ext3 ext4 xfs iso9660 nfs cifs
+
+
+what is Journalling ?
+---------------------
+
+A journaling file system is a file system that keeps track of 
+changes not yet committed to the file system's main part by recording 
+the intentions of such changes in a data structure known as a "journal"
+
+Mounting the file system through CLI:
+=====================================
+
+mount -t <type> <device> <mount_point> -o <options>
+
+
+File system Table Entries:
+==========================
+
+File: /etc/fstab
+
+<device>  <mount_point>  <type>  <options>  <Backup>  <FSCK> 
+
+Mounting all:
+=============
+
+mount -a
+
+verify :   df -h   (disk free, human readable format)
+
+Unmounting a file system:
+=========================
+
+umount <dev>-or-<mount_point>
+
+confirm: df -h
+
+
+Deleting a Partition if available:
+==================================
+
+fdisk <device>
+
+d -delete
+
+w - save
+
+removing the disk:
+==================
+
+**removing from Vmware end or from SAN end
+
+
+Logical Volume Manager:
+=======================
+
+
+diff bt disk & LVM:
+-------------------
+
+disk file system --- cannot be extended, cannot be snaphotted and tough to restore
+
+LVM file systems are expandable, snapshottable and easy to restore
+
+
+PV:  Physcial volume creation
+===  -------------------------
+
+pvcreate <disk/disk_part>
+
+verify : pvs & pvdisplay
+
+PE Size: Physical Extent size
+
+
+VG:  Volume Group creation
+===  -------------------------
+
+vgcreate <vg_name> <pv/device>
+
+verify : vgs & vgdisplay
+
+
+LV: Logical Volume
+=== --------------
+
+lvcreate -L <size> -n <new_lv_name> <vg_name>
+
+lvcreate -l <extents> -n <new_lv_name> <vg_name>
+
+verify: lvs & lvdisplay
+
+to utilize the overall free space in VG for LV creation:
+--------------------------------------------------------
+
+lvcreate -l 100%FREE -n <new_lv_name> <vg_name>
+
+to know which LV has which device:
+----------------------------------
+
+lvs -o+devices /dev/<vg_name>/<lv_name>
+
+
+creating file system, mount command & FSTAB
+
+
+VG EXTEND:
+==========
+
+vgextend <vg_name> <new_device/pv>
+
+vgs to confirm
+
+LV EXTEND:
+==========
+
+lvextend -L +<size> /dev/<vg_name>/<lv_name>
+
+(or)
+
+lvextend -l +<extents> /dev/<vg_name>/<lv_name>
+
+resize2fs </dev/vg_name/lv_name> --- when online
+
+what is  -r option in lvextend?
+
+
+
+LVREDUCE:  Be carefull
+=========
+
+1) umount <device>
+
+2) e2fsck -f <device>
+
+3) resize2fs <device> <final_size>
+
+actual_size -(minus) final_size = diff_size
+
+4) lvreduce -L -(diff_size) <device> 
+
+verify :  lvs & df -h 
+
+
+LVREMOVE:
+=========
+
+umount <device/mount_point>
+
+lvremove <device>
+
+VGREDUCE:
+=========
+
+vgreduce <vg_name> <pv>
+
+verify : vgs
+
+VGREMOVE:
+=========
+
+vgremove <vg_name>
+
+pvremove:
+=========
+
+pvremove <device>
+
+
+Online Extend of disk from VMware:
+----------------------------------
+
+**device should not have parttion
+
+rescan:
+=======
+
+
+pvresize:
+=========
+
+
+verify: vgs

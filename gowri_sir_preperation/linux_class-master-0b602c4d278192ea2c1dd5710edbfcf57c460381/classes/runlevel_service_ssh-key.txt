@@ -1,0 +1,108 @@
+Run Levels:
+-----------
+
+7 run levels:
+-------------
+
+0 - shutdown
+
+1 - Single user mode with minimal modules loaded (like safe mode)
+
+2 - Multi user mode without Network file system
+
+3 - Full mode without graphics  CLI
+
+4 - reserved
+
+5 - Full mode with graphics  GUI
+
+6 - reboot
+
+example :
+
+init 3  or init 0
+
+
+
+Service/Daemon:
+---------------
+
+A daemon is a computer program that runs as a background process, rather than being under the direct control of an interactive user. 
+
+
+root operations:
+----------------
+
+RHEL6
+
+service <service_name> start
+service <service_name> stop
+service <service_name> restart
+service <service_name> reload   #reloads the configuration changes
+service <service_name> status
+service <service_name> cond-restart
+
+For auto-start:
+---------------
+chkconfig <service_name> on
+chkconfig <service_name> off
+
+to list all services:
+--------------------
+
+chkconfig --list
+
+RHEL7
+
+systemctl <action> <service_name>
+
+to list all services:
+--------------------
+
+systemctl list-unit-files
+
+For auto-start:
+---------------
+
+systemctl enable <service_name>
+
+systemctl disable <service_name>
+
+
+Password_less Login:
+====================
+
+Machine (A):
+-------------
+
+* create a ssh key:
+
+		ssh-keygen -t rsa
+
+* this create private and public keys
+
+* Private key should not be shared
+
+* Public key can be shared
+
+ ~/.ssh/id.rsa -- private key
+
+ ~/.ssh/id_rsa.pub -- public key
+
+
+* copy the public key to Machine (B)
+
+cat ~/.ssh/id_rsa.pub | ssh <ip_of_Machine_B> "mkdir -p ~/.ssh;cat >> ~/.ssh/authorized_keys;chmod -R 700 ~/.ssh"
+
+###ssh -- secure shell
+
+(or)
+
+ssh-copy-id  user@Machine (B)
+
+(or)
+
+copy the public key manually, create/append the authorized_keys file at the client end with the copied key
+ 
+ 
+

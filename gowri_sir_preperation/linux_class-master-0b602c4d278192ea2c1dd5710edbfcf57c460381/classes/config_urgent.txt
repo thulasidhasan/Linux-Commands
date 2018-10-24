@@ -1,0 +1,166 @@
+______________________
+//
+// named.conf
+//
+// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS
+// server as a caching only nameserver (as a localhost DNS resolver only).
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+//
+// See the BIND Administrator's Reference Manual (ARM) for details about the
+// configuration located in /usr/share/doc/bind-{version}/Bv9ARM.html
+
+options {
+        listen-on port 53 { 127.0.0.1; 192.168.1.111; };
+        listen-on-v6 port 53 { ::1; };
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        allow-query     { localhost; 192.168.1.0/24; 192.168.2.0/24; };
+
+        /*
+         - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
+         - If you are building a RECURSIVE (caching) DNS server, you need to enable
+           recursion.
+         - If your recursive DNS server has a public IP address, you MUST enable access
+           control to limit queries to your legitimate users. Failing to do so will
+           cause your server to become part of large scale DNS amplification
+           attacks. Implementing BCP38 within your network would greatly
+           reduce such attack surface
+        */
+        recursion yes;
+
+        dnssec-enable yes;
+        dnssec-validation yes;
+
+        /* Path to ISC DLV key */
+        bindkeys-file "/etc/named.iscdlv.key";
+
+        managed-keys-directory "/var/named/dynamic";
+
+        pid-file "/run/named/named.pid";
+        session-keyfile "/run/named/session.key";
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";
+
+_____________________________________
+
+
+zone "veecube.com" IN {
+        type master;
+        file "named.for";
+        allow-update { none; };
+};
+zone "168.192.in-addr.arpa" IN {
+        type master;
+        file "named.rev";
+        allow-update { none; };
+};
+
+_________________________________________
+
+$TTL 1D
+@       IN SOA  veecube.com. postmaster.gowri.veecube.com. (
+                                        15001   ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      veecube.com.
+        A       192.168.1.111
+        IN      NS  gowri.veecube.com.
+        IN      NS  centoslxc.veecube.com.
+        IN      NS  centos1lxc.veecube.com.
+        IN      NS  centos2lxc.veecube.com.
+        IN      NS  centos3lxc.veecube.com.
+gowri   IN      A       192.168.1.111
+centoslxc      IN      A       192.168.2.100
+centos1lxc      IN      A       192.168.2.10
+centos2lxc      IN      A       192.168.2.20
+centos3lxc      IN      A       192.168.2.30
+
+________________________________________________________
+
+$TTL 1D
+@       IN SOA  veecube.com. postmaster.veecube.com (
+                                        15001   ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      gowri.veecube.com.
+        A       192.168.1.111
+111.1   IN      PTR     gowri.veecube.com.
+100.2   IN      PTR     centoslxc.veecube.com.
+10.2    IN      PTR     centos1lxc.veecube.com.
+20.2    IN      PTR     centos2lxc.veecube.com.
+30.2    IN      PTR     centos3lxc.veecube.com.
+________________________________________________________
+
+#!/bin/bash
+if ! [ $1 ] ;then echo "ARG not found exiting";exit 1;fi
+lxc-stop -n centos_lxc
+echo "one done and 3 to go"
+for x in `seq 1 3`;do lxc-stop -n centos${x}_lxc;done
+if [ $1 == 'yes' ];then
+echo "starting"
+if [ $2 == 2 ];then
+lxc-start -n centos_lxc -d
+lxc-start -n centos1_lxc -d;fi
+if [ $2 == 4 ];then
+lxc-start -n centos_lxc -d
+lxc-start -n centos1_lxc -d
+lxc-start -n centos2_lxc -d
+lxc-start -n centos3_lxc -d
+fi
+else
+echo "all containers are stopped"
+fi
+_______________________________________________
+
+TYPE=Ethernet
+BOOTPROTO=static
+IPADDR=192.168.1.111
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+DNS1=192.168.1.111
+DNS2=192.168.1.1
+NM_CONTROLLED=no
+DEFROUTE=yes
+PEERDNS=yes
+PEERROUTES=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=no
+IPV6_AUTOCONF=no
+IPV6_DEFROUTE=no
+IPV6_PEERDNS=no
+IPV6_PEERROUTES=no
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens32
+UUID=b6f1582c-8756-4ab6-a31d-4021e992ec53
+DEVICE=ens32
+ONBOOT=yes
+_________________________________________
+
+IPADDR=192.168.2.100
+NESTMASK=255.255.255.0
+GATEWAY=192.168.2.1
+DNS2=8.8.8.8
+DNS1=192.168.2.1
+__________________________________________

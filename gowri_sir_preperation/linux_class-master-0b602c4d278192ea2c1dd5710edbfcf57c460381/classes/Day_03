@@ -1,0 +1,887 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2017.12.12 19:00:50 =~=~=~=~=~=~=~=~=~=~=~=
+ansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# ansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# cat lib[K[K[K[K[K[K[Ks[Kpws
+-bash: pws: command not found
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# pwd
+/
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# 
+]0;root@vaithee:/[root@vaithee /]# su - muthu
+Last login: Mon Dec 11 08:24:18 IST 2017 on pts/1
+]0;muthu@vaithee:~[?1034h[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ pwd
+/home/muthu
+]0;muthu@vaithee:~[muthu@vaithee ~]$ ls
+[0m[01;34mansible[0m
+]0;muthu@vaithee:~[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ cd ansible
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ls
+ansible.cfg
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi ansible.cfg
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"ansible.cfg" 0L, 0C[2;1H[1m[34m~                                                                                                                            [3;1H~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[m[36;13H[K[1;1H[?12l[?25h[?25l{[?12l[?25h[?25l[1;1H[K[1;1H[?12l[?25h[?25l[[?12l[?25h[?25ld[?12l[?25h[?25le[?12l[?25h[?25lf[?12l[?25h[?25la[?12l[?25h[?25lu[?12l[?25h[?25ll[?12l[?25h[?25lt[?12l[?25h[?25ls[?12l[?25h[?25l][?12l[?25h[?25l[2;1H[K[2;1H[?12l[?25h[36;1H[K[2;1H[?25l[?12l[?25h[?25l[36;1H:[?12l[?25hwq![?25l"ansible.cfg" 2L, 12C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat ansible.cfg 
+[defaults]
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ssh 10.110.208.15
+The authenticity of host '10.110.208.15 (10.110.208.15)' can't be established.
+RSA key fingerprint is f1:a9:95:2a:b5:e9:b0:54:0c:7f:e3:7d:ca:40:7b:1d.
+Are you sure you want to continue connecting (yes/no)? no
+Host key verification failed.
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ca[K[K
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ls
+ansible.cfg
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi ansible.cfg 
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"ansible.cfg" 2L, 12C[1;1H[defaults]
+
+[1m[34m~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[m[36;13H[K[1;1H[?12l[?25h[defaults][?25l[2;35r[2;1H[L[1;36r[2;1H[?12l[?25h[?25lh[?12l[?25h[?25lo[?12l[?25h[?25ls[?12l[?25h[?25lt[?12l[?25h[?25l_[?12l[?25h[?25lk[?12l[?25h[?25le[?12l[?25h[?25ly[?12l[?25h[?25l_[?12l[?25h[?25lc[?12l[?25h[?25lh[?12l[?25h[?25le[?12l[?25h[?25lc[?12l[?25h[?25lk[?12l[?25h[?25li[?12l[?25h[?25ln[?12l[?25h[?25lg[?12l[?25h[?25l=[?12l[?25h[?25lf[?12l[?25h[?25la[?12l[?25h[?25ll[?12l[?25h[?25ls[?12l[?25h[?25le[?12l[?25h[?25lalse[2;23H[K[2;19H[?12l[?25h[?25lFalse[?12l[?25halse[36;1H[K[2;23H[?25l[?12l[?25h[?25l[36;1H[1m-- INSERT --[3;35r[m[3;1H[L[1;36r[3;1H[?12l[?25h[?25lm[?12l[?25h[?25lu[?12l[?25h[?25lt[?12l[?25h[?25lh[?12l[?25h[?25lu[?12l[?25h[?25l[3;5H[K[3;5H[?12l[?25h[?25l[3;4H[K[3;4H[?12l[?25h[?25l[3;3H[K[3;3H[?12l[?25h[?25l[3;2H[K[3;2H[?12l[?25h[?25l[3;1H[K[3;1H[?12l[?25h[?25li[?12l[?25h[?25ln[?12l[?25h[?25lv[?12l[?25h[?25li[?12l[?25h[?25ln[?12l[?25h[?25lt[?12l[?25h[?25lo[?12l[?25h[?25lr[?12l[?25h[?25ly[?12l[?25h[?25lntory[3;9H[K[3;4H[?12l[?25h[?25lentory[?12l[?25hntory[?25l [?12l[?25h[?25l=[?12l[?25h[?25l [?12l[?25h[?25lm[?12l[?25h[?25lu[?12l[?25h[?25lt[?12l[?25h[?25lh[?12l[?25h[?25lu[?12l[?25h[?25lh[?12l[?25h[?25lo[?12l[?25h[?25ls[?12l[?25h[?25lt[?12l[?25h[?25l[4;35r[4;1H[L[1;36r[4;1H[?12l[?25h[36;1H[K[4;1H[?25l[?12l[?25h[?25l[36;1H:[?12l[?25hwq![?25l"ansible.cfg" 5L, 59C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat ansible.cfg 
+[defaults]
+host_key_checking=False
+inventory = muthuhost
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhots
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhots" [New File][2;1H[1m[34m~                                                                                                                            [3;1H~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[m[36;13H[K[1;1H[?12l[?25h[?25l10.110.208.15[?12l[?25h[?25l [?12l[?25h[?25la[?12l[?25h[?25ln[?12l[?25h[?25ls[?12l[?25h[?25li[?12l[?25h[?25lb[?12l[?25h[?25ll[?12l[?25h[?25le[?12l[?25h[?25l_[?12l[?25h[?25ls[?12l[?25h[?25ls[?12l[?25h[?25lh[?12l[?25h[?25l_[?12l[?25h[?25lu[?12l[?25h[?25ls[?12l[?25h[?25le[?12l[?25h[?25lr[?12l[?25h[?25l=[?12l[?25h[?25lr[?12l[?25h[?25lo[?12l[?25h[?25lo[?12l[?25h[?25lt[?12l[?25h[?25l [?12l[?25h[?25la[?12l[?25h[?25ln[?12l[?25h[?25ls[?12l[?25h[?25li[?12l[?25h[?25lb[?12l[?25h[?25ll[?12l[?25h[?25le[?12l[?25h[?25l_[?12l[?25h[?25ls[?12l[?25h[?25ls[?12l[?25h[?25lh[?12l[?25h[?25l_[?12l[?25h[?25lp[?12l[?25h[?25la[?12l[?25h[?25ls[?12l[?25h[?25ls[?12l[?25h[?25l=[?12l[?25h[?25lr[?12l[?25h[?25le[?12l[?25h[?25ld[?12l[?25h[?25lh[?12l[?25h[?25la[?12l[?25h[?25lt[?12l[?25h[?25l[2;1H[K[2;1H[?12l[?25h[?25l:[?12l[?25h[?25l[2;1H[K[2;1H[?12l[?25h[36;1H[K[2;1H[?25l10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[3;60H[K[4;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[4;60H[K[5;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[5;60H[K[6;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[6;60H[K[7;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[7;60H[K[8;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[8;60H[K[9;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[9;60H[K[10;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[10;60H[K[11;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[11;60H[K[12;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[12;60H[K[13;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[13;60H[K[14;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[14;60H[K[15;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[15;60H[K[16;1H[K[16;1H[?12l[?25h[?25l[36;1H:[?12l[?25h[?25l[36;1H[K[16;1H[?12l[?25h[?25l[1m[34m~                                                                                                                            [15;1H[?12l[?25h[?25l~                                                                                                                            [14;1H[?12l[?25h[?25l~                                                                                                                            [13;1H[?12l[?25h[?25l~                                                                                                                            [12;1H[?12l[?25h[?25l~                                                                                                                            [11;1H[?12l[?25h[?25l~                                                                                                                            [10;1H[?12l[?25h[?25l~                                                                                                                            [9;1H[?12l[?25h[?25l~                                                                                                                            [8;1H[?12l[?25h[?25l~                                                                                                                            [7;1H[?12l[?25h[?25l~                                                                                                                            [6;1H[?12l[?25h[?25l~                                                                                                                            [5;1H[?12l[?25h[?25l~                                                                                                                            [4;1H[?12l[?25h[?25l~                                                                                                                            [3;1H[?12l[?25h[?25l~                                                                                                                            [2;1H[?12l[?25h[?25l~                                                                                                                            [1;1H[?12l[?25h[?25l[36;1H[m:[?12l[?25hwq![?25l"muthuhots" [New] 1L, 60C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhots
+10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat ansible.cfg 
+[defaults]
+host_key_checking=False
+inventory = muthuhost
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ mv muthuhots muthuhost
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost 
+10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ n[K
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -m ping
+[0;32m10.110.208.15 | SUCCESS => {[0m
+[0;32m    "changed": false, [0m
+[0;32m    "ping": "pong"[0m
+[0;32m}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -m ping -o
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 1L, 60C[1;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat
+[1m[34m~                                                                                                                            [3;1H~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[m10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redha[?25l[36;1H[1m-- INSERT --[m[36;13H[K[1;59H[?12l[?25h[36;1H[K[1;58H[?25l[?12l[?25ha[?25l[36;1H[1m-- INSERT --[1;60H[?12l[?25h[?25l[m[2;1H[K[2;1H[?12l[?25h[?25l10.110.208.34
+10.110.208.146[3;15H[K[4;1H10.110.208.115[4;15H[K[5;1H10.110.208.47[5;14H[K[6;1H10.110.208.229[6;15H[K[6;15H[?12l[?25h[?25l [?12l[?25h[5;14H[4;15H[3;15H[2;14H[?25l [?12l[?25h[?25lansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[3;15H[?25l [?12l[?25h[?25lansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[4;15H[?25l [?12l[?25h[?25lansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[5;14H[?25l [?12l[?25h[?25lansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[6;16H[?25lansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[?25l[7;1H[K[7;1H[?12l[?25h[36;1H[K[7;1H[?25l[?12l[?25h[?25l[36;1H:[?12l[?25hwq![?25l"muthuhost" 7L, 364C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhostansible all -m ping -o
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.34 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.146 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.47 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.229 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.115 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost
+10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.34 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.146 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.115 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.47 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ls
+ansible.cfg  muthuhost
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat ansible.cfg
+[defaults]
+host_key_checking=False
+inventory = muthuhost
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ pwd
+/home/muthu/ansible
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 7L, 364C[1;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.34 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.146 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.115 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.47 ansible_ssh_user=root ansible_ssh_pass=redhat
+10.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat
+
+[1m[34m~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[m[36;13H[K[1;1H[?12l[?25h[?25l[2;35r[2;1H[L[1;36r[1;1H[K[2;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[1;1H[?25l[[?12l[?25h[?25lm[?12l[?25h[?25ly[?12l[?25h[?25lh[?12l[?25h[?25lo[?12l[?25h[?25ls[?12l[?25h[?25lt[?12l[?25h[?25l][?12l[?25h[?25l[1;35r[35;1H
+[1;36r[1;1H[myhost]10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[35;1H[1m[34m~                                                                                                                            [1;9H[?12l[?25h[?25l[2;35r[m[2;1H[L[1;36r[1;9H[K[2;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[?25l[3;35r[3;1H[L[1;36r[2;1H[K[3;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[?25l[2;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h[?25l[3;35r[m[3;1H[L[1;36r[2;1H[K[3;1H10.110.208.15 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[36;1H[K[3;1H[?25l[?12l[?25h[?25l[3;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [3;1H[?12l[?25h[?25l[3;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [3;1H[?12l[?25h[?25l[3;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [3;1H[?12l[?25h[?25l[3;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [3;1H[?12l[?25h[?25l[3;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [3;1H[?12l[?25h
+[3;1H[?25l[m[36;1H[1m-- INSERT --[3;1H[?12l[?25h[?25l[4;35r[m[4;1H[L[1;36r[3;1H[K[4;1H10.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[?25l[5;35r[5;1H[L[1;36r[4;1H[K[5;1H10.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[?25l[6;35r[6;1H[L[1;36r[5;1H[K[6;1H10.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat[?12l[?25h[5;1H[4;1H[3;1H[2;1H[34m^[m [?25l[34m^?[?12l[?25h^[m [?25l[34m^?[?12l[?25h[?25l[m[2;3H[K[2;3H[?12l[?25h[?25l[2;1H[K[2;1H[?12l[?25h[?25l[1;35r[35;1H
+[1;36r[1;1H[myhost][35;1H[1m[34m~                                                                                                                            [1;9H[?12l[?25h[?25l[m[1;8H[K[1;8H[?12l[?25h[?25l][?12l[?25h[?25l[2;35r[2;1H[L[1;36r[2;1H[?12l[?25h[?25l[3;35r[3;1H[6L[1;36r[3;1H10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229[?12l[?25h[7;14H[6;15H[5;15H[4;14H[3;14H[2;1H[1;9H
+[?25l[1;35r[35;1H
+[1;36r[1;1H[myhost][35;1H[1m[34m~                                                                                                                            [1;9H[?12l[?25h[2;9H[3;9H[4;9H[5;9H[6;9H[7;9H
+
+
+[9;1H[8;1H[?25l[m[[?12l[?25h[?25lm[?12l[?25h[?25ly[?12l[?25h[?25lh[?12l[?25h[?25lo[?12l[?25h[?25lt[?12l[?25h[?25l[8;6H[K[8;6H[?12l[?25h[?25l[8;5H[K[8;5H[?12l[?25h[?25l[8;4H[K[8;4H[?12l[?25h[?25lh[?12l[?25h[?25lo[?12l[?25h[?25ls[?12l[?25h[?25lt[?12l[?25h[?25l"[?12l[?25h[?25l[8;8H[K[8;8H[?12l[?25h[?25l:[?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25ls[?12l[?25h[?25l][?12l[?25h[?25l[9;35r[9;1H[L[1;36r[9;1H[?12l[?25h[?25lansible_ssh_user=root[?12l[?25h[?25l[10;35r[10;1H[L[1;36r[10;1H[?12l[?25h[?25lansible_ssh_pass=redhat[?12l[?25h[?25l[11;35r[11;1H[L[1;36r[11;1H[?12l[?25h
+
+
+[36;1H[K[14;1H[?25l[?12l[?25h[?25l0.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat[14;60H[K[14;1H[?12l[?25h[?25l.110.208.229 ansible_ssh_user=root ansible_ssh_pass=redhat[14;59H[K[14;1H[?12l[?25h[?25l[14;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [14;1H[?12l[?25h[?25l[36;1H[m:[?12l[?25hwq![?25l"muthuhost" 14L, 160C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost
+[myhost]
+10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost[1Pvi[C[C[C[C[C[C[C[C[C[Cpwd[Kcat ansible.cfgls[Kcat muthuhostansible all -m ping -o
+[0;32m10.110.208.146 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.34 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.47 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.115 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.229 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -m ping -o[9Pcat muthuhostansible all -m ping -o[1P[1P[1P[1@1[1@0[1@.[1@1[1@1[1@0[1@.[1@2[1@0[1@8[1@.[1@1[1@5
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible 10.110.208.15 -m ping -o
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ pwd
+/home/muthu/ansible
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ls
+ansible.cfg  muthuhost
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat ansible.cfg
+[defaults]
+host_key_checking=False
+inventory = muthuhost
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost
+[myhost]
+10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 14L, 160C[1;1H[myhost]
+10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[15;1H[1m[34m~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h
+
+
+
+
+
+[m10.110.208.22[?25l[36;1H[1m-- INSERT --[m[36;13H[K[7;15H[?12l[?25h[?25l[8;35r[8;1H[L[1;36r[8;1H[?12l[?25h[?25l[[?12l[?25h[?25lA[?12l[?25h[?25lp[?12l[?25h[?25lp[?12l[?25h[?25ll[?12l[?25h[?25li[?12l[?25h[?25lc[?12l[?25h[?25la[?12l[?25h[?25lt[?12l[?25h[?25li[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25l][?12l[?25h[?25l[9;35r[9;1H[L[1;36r[9;1H[?12l[?25h[?25l10.110.208.15[?12l[?25h[?25l[10;35r[10;1H[L[1;36r[10;1H[?12l[?25h[?25l10.110.208.47[?12l[?25h[?25l[11;35r[11;1H[L[1;36r[11;1H[?12l[?25h[?25l[[?12l[?25h[?25ld[?12l[?25h[?25lb[?12l[?25h[?25l][?12l[?25h[?25l[12;35r[12;1H[L[1;36r[12;1H[?12l[?25h[?25l10.110.208.34[?12l[?25h[?25l10.110.208.229[?12l[?25h[?25l[12;27H[K[12;27H[?12l[?25h[?25l[12;26H[K[12;26H[?12l[?25h[?25l[12;25H[K[12;25H[?12l[?25h[?25l[12;24H[K[12;24H[?12l[?25h[?25l[12;23H[K[12;23H[?12l[?25h[?25l[12;22H[K[12;22H[?12l[?25h[?25l[12;21H[K[12;21H[?12l[?25h[?25l[12;20H[K[12;20H[?12l[?25h[?25l[12;19H[K[12;19H[?12l[?25h[?25l[12;18H[K[12;18H[?12l[?25h[?25l[12;17H[K[12;17H[?12l[?25h[?25l[12;16H[K[12;16H[?12l[?25h[?25l[12;15H[K[12;15H[?12l[?25h[?25l[12;14H[K[12;14H[?12l[?25h[?25l[13;35r[13;1H[L[1;36r[13;1H[?12l[?25h[?25l10.110.208.229[?12l[?25h[?25l[14;35r[14;1H[L[1;36r[14;1H[?12l[?25h[?25l[[?12l[?25h[?25lw[?12l[?25h[?25le[?12l[?25h[?25lb[?12l[?25h[?25ls[?12l[?25h[?25le[?12l[?25h[?25lr[?12l[?25h[?25lv[?12l[?25h[?25le[?12l[?25h[?25lr[?12l[?25h[?25l][?12l[?25h[?25l[15;35r[15;1H[L[1;36r[15;1H[?12l[?25h[?25l10.110.208.146[?12l[?25h[?25l[16;35r[16;1H[L[1;36r[16;1H[?12l[?25h[?25l10.110.208.115[?12l[?25h[15;15H[14;12H[13;15H[12;14H[11;5H[10;14H[9;14H[8;14H[7;15H[6;14H[5;15H[4;15H[3;14H[2;14H[1;9H[?25l1][?12l[?25h[?25l][1;9H[K[1;8H[?12l[?25h[36;1H[K[1;7H[?25l[?12l[?25h[?25l[36;1H:[?12l[?25hwq![?25l"muthuhost" 23L, 278C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible db -m ping -o
+[0;32m10.110.208.34 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.229 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ bcoz of all ips are added in myhost, bcoz of that dc 
+-bash: bcoz: command not found
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ bcoz of that db is ping
+-bash: bcoz: command not found
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ adding myhost in somethin like myhost_1
+-bash: adding: command not found
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ adding myhost in somethin like myhost_1[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[16Pbcoz of that db is pingall ips are added in myhost, bcoz of that dc [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[32Pansible db -m ping -o[9Pvi muthuhost
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 23L, 278C[1;1H[myhost]
+10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229
+[Application]
+10.110.208.15
+10.110.208.47
+[db]
+10.110.208.34
+10.110.208.229
+[webserver]
+10.110.208.146
+10.110.208.115
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[24;1H[1m[34m~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[m[myhost[?25l[36;1H[1m-- INSERT --[m[36;13H[K[1;1H[?12l[?25h[myhost][?25l1][?12l[?25h[2;9H[3;9H[4;9H[5;9H[6;9H[7;9H[8;9H[9;9H[10;9H
+[db][12;9H[13;9H[14;9H[15;9H[16;9H[17;9H[18;9H[19;9H
+
+[36;1H[K[21;1H[?25l[?12l[?25h[?25l[36;1H:[?12l[?25hwq1[?25l[36;4H[K[36;4H[?12l[?25h![?25l"muthuhost" 23L, 279C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhostadding myhost in somethin like myhost_1[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[16Pbcoz of that db is pingall ips are added in myhost, bcoz of that dc [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[32Pansible db -m ping -o
+[0;31mERROR! Attempted to read "muthuhost" as YAML: Syntax Error while loading YAML.[0m
+[0;31m[0m
+[0;31m[0m
+[0;31mThe error appears to have been in '/home/muthu/ansible/muthuhost': line 2, column 1, but may[0m
+[0;31mbe elsewhere in the file depending on the exact syntax problem.[0m
+[0;31m[0m
+[0;31mThe offending line appears to be:[0m
+[0;31m[0m
+[0;31m[myhost1][0m
+[0;31m10.110.208.15[0m
+[0;31m^ here[0m
+[0;31m[0m
+[0;31mAttempted to read "muthuhost" as ini file: muthuhost:17: Section [myhost:vars] not valid for undefined group: myhost [0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ bcoz of we changed ho[K[K   my 
+-bash: bcoz: command not found
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ bcoz we changed myhosr to myhost1
+-bash: bcoz: command not found
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ bcoz we changed myhosr to myhost1[8Pof we changed    my [4Pansible db -m ping -o[9Pvi muthuhost
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 23L, 279C[1;1H[myhost1]
+10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229
+[Application]
+10.110.208.15
+10.110.208.47
+[db]
+10.110.208.34
+10.110.208.229
+[webserver]
+10.110.208.146
+10.110.208.115
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[24;1H[1m[34m~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+
+
+
+
+
+[14;1H[?25l[14;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [m[36;1H[K[14;1H[?12l[?25h[?25l[14;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [14;1H[?12l[?25h[?25l[14;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [14;1H[?12l[?25h[m[myhost:vars[15;13H[16;13Hpass=redha[?25l[36;1H[1m-- INSERT --[16;24H[?12l[?25h[?25l[17;35r[m[17;1H[L[1;36r[17;1H[?12l[?25h[?25l[[?12l[?25h[?25lm[?12l[?25h[?25ly[?12l[?25h[?25l[17;3H[K[17;3H[?12l[?25h[?25l[17;2H[K[17;2H[?12l[?25h[?25ld[?12l[?25h[?25lb[?12l[?25h[?25l:[?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25ls[?12l[?25h[?25l][?12l[?25h[?25l[18;35r[18;1H[L[1;36r[18;1H[?12l[?25h[?25l[19;35r[19;1H[2L[1;36r[18;1Hansible_ssh_user=root
+ansible_ssh_pass=redhat
+[?12l[?25h[?25l[[?12l[?25h[?25lA[?12l[?25h[?25lp[?12l[?25h[?25lp[?12l[?25h[?25ll[?12l[?25h[?25li[?12l[?25h[?25lc[?12l[?25h[?25la[?12l[?25h[?25lt[?12l[?25h[?25li[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25l:[?12l[?25h[?25lv[?12l[?25h[?25la[?12l[?25h[?25lr[?12l[?25h[?25ls[?12l[?25h[?25l][?12l[?25h[?25l[21;35r[21;1H[L[1;36r[21;1H[?12l[?25h[?25l[22;35r[22;1H[2L[1;36r[21;1Hansible_ssh_user=root
+ansible_ssh_pass=redhat
+[?12l[?25h[22;1H[21;1H[20;1H[19;1H[18;1H[17;1H[16;1H[15;1H[14;1H[13;1H[12;1H[11;1H[10;1H[9;1H[8;1H[7;1H[6;1H[5;1H[4;1H[3;1H[36;1H[K[3;1H[?25l[?12l[?25h[?25l[3;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [3;1H[?12l[?25h[2;1H[?25l[2;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h
+
+
+[4;1H[?25l[4;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [4;1H[?12l[?25h[?25l[4;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [4;1H[?12l[?25h[?25l[36;1H[m:[?12l[?25hwq1[?25l[36;4H[K[36;4H[?12l[?25h![?25l"muthuhost" 23L, 302C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhostbcoz we changed myhosr to myhost1[8Pof we changed    my [4Pansible db -m ping -o[9Pvi muthuhostansible db -m ping -o
+[0;31mERROR! Attempted to read "muthuhost" as YAML: Syntax Error while loading YAML.[0m
+[0;31m[0m
+[0;31m[0m
+[0;31mThe error appears to have been in '/home/muthu/ansible/muthuhost': line 2, column 1, but may[0m
+[0;31mbe elsewhere in the file depending on the exact syntax problem.[0m
+[0;31m[0m
+[0;31mThe offending line appears to be:[0m
+[0;31m[0m
+[0;31m[myhost1][0m
+[0;31m10.110.208.146[0m
+[0;31m^ here[0m
+[0;31m[0m
+[0;31mAttempted to read "muthuhost" as ini file: muthuhost:10: Section [myhost:vars] not valid for undefined group: myhost [0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost 
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 23L, 302C[1;1H[myhost1]
+10.110.208.146
+10.110.208.115
+[Application]
+10.110.208.15
+10.110.208.47
+[db]
+10.110.208.34
+10.110.208.229
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+[db:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+[Application:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[24;1H[1m[34m~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[m[36;13H[K[1;1H[?12l[?25h
+
+10.110.208.115[?25l[4;35r[4;1H[L[1;36r[4;1H[?12l[?25h[34m^[m [?25l[34m^?[?12l[?25h[?25l[5;35r[m[5;1H[3L[1;36r[4;3H[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+[?12l[?25h[6;1H[5;1H[4;1H[2C[[?25l[myhost:vars][4;14H[K[4;1H[?12l[?25h[?25l[3;35r[35;1H
+[1;36r[3;1H10.110.208.115[myhost:vars][35;1H[1m[34m~                                                                                                                            [3;15H[?12l[?25h[?25l[4;35r[m[4;1H[L[1;36r[3;15H[K[4;1H[myhost:vars][?12l[?25h
+
+
+
+
+
+
+
+
+
+[13;1H10.110.208.229[?25l[14;35r[14;1H[L[1;36r[14;1H[?12l[?25h[34m^[m [?25l[34m^?[?12l[?25h[?25l[15;35r[m[15;1H[2L[1;36r[14;3H[db:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[?12l[?25h[15;22H[14;1H[2C[[?25l[db:vars][14;10H[K[14;1H[?12l[?25h[?25l[13;35r[35;1H
+[1;36r[13;1H10.110.208.229[db:vars][35;1H[1m[34m~                                                                                                                            [13;15H[?12l[?25h[?25l[14;35r[m[14;1H[L[1;36r[13;15H[K[14;1H[db:vars][?12l[?25h
+
+
+[16;1H[15;1H[14;1H[13;1H[12;1H[11;1H[10;1H[9;1H10.110.20[10;10H8.47[?25l[11;35r[11;1H[L[1;36r[11;1H[?12l[?25h[?25l[12;35r[12;1H[3L[1;36r[11;1H[Application:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+[?12l[?25h
+
+
+
+
+
+
+
+[36;1H[K[22;1H[?25l[?12l[?25h[?25l[21;35r[21;1H[2M[1;36r[34;1H[1m[34m~                                                                                                                            [35;1H~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[21;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [21;1H[?12l[?25h[?25l[36;1H[m:[?12l[?25hwq![?25l"muthuhost" 25L, 304C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost ansible db -m ping -o
+[0;31mERROR! Attempted to read "muthuhost" as YAML: Syntax Error while loading YAML.[0m
+[0;31m[0m
+[0;31m[0m
+[0;31mThe error appears to have been in '/home/muthu/ansible/muthuhost': line 2, column 1, but may[0m
+[0;31mbe elsewhere in the file depending on the exact syntax problem.[0m
+[0;31m[0m
+[0;31mThe offending line appears to be:[0m
+[0;31m[0m
+[0;31m[myhost1][0m
+[0;31m10.110.208.146[0m
+[0;31m^ here[0m
+[0;31m[0m
+[0;31mAttempted to read "muthuhost" as ini file: muthuhost:4: Section [myhost:vars] not valid for undefined group: myhost [0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat [Application:vars]
+cat: [Application:vars]: No such file or directory
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible_ssh_user=root
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible_ssh_pass=redhat
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat 
+
+
+
+
+
+
+cat ^C
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat ansible.cfg 
+[defaults]
+host_key_checking=False
+inventory = muthuhost
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost 
+[myhost1]
+10.110.208.146
+10.110.208.115
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[Application]
+10.110.208.15
+10.110.208.47
+[Application:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[db]
+10.110.208.34
+10.110.208.229
+[db:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi ho
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"ho" [New File][2;1H[1m[34m~                                                                                                                            [3;1H~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h[?25l[m[36;1HType  :quit<Enter>  to exit Vim[1;1H[?12l[?25h[?25l[36;1H[1m[37m[41mE78: Unknown mark[m[36;18H[K[1;1H[?12l[?25h[?25l[36;1H[K[36;1H:[?12l[?25hQ[34m^Z[?25l[m[36;3H[K[36;3H[?12l[?25hwq[?25l[36;4H[K[36;4H[?12l[?25h[?25l[36;3H[K[36;3H[?12l[?25h[?25l[36;2H[K[36;2H[?12l[?25h [1;1H[?25l[36;1HEntering Ex mode.  Type "visual" to go to Normal mode.[?12l[?25h
+:[34m^[[m?"
+[?25l[1m[37m[41mE492: Not an editor command: ^[?"[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:[34m^[[m:WQ!
+[?25l[1m[37m[41mE492: Not an editor command: ^[:WQ![?12l[?25h[m
+:[34m^[[m:q!
+[?25l[1m[37m[41mE492: Not an editor command: ^[:q![?12l[?25h[m
+:[34m^[[m
+:[34m^Z^A[m
+[?25l[1m[37m[41mE492: Not an editor command: ^Z^A[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:[34m^[[m:wq!
+[?25l[1m[37m[41mE492: Not an editor command: ^[:wq![?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:[34m^[^[[mq::[34m^[^[[mq[36;7H[K[36;7H!
+[?25l[1m[37m[41mE492: Not an editor command: ^[^[q![?12l[?25h[m
+:Q!
+[?25l[1m[37m[41mE492: Not an editor command: Q![?12l[?25h[m
+:[34m^Z^X[m
+[?25l[1m[37m[41mE492: Not an editor command: ^Z^X[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:[34m^Z^A[m
+[?25l[1m[37m[41mE492: Not an editor command: ^Z^A[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:
+[?25l[1m[37m[41mE749: empty buffer[?12l[?25h[m
+:q
+[?1l>[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi hocat muthuhost 
+[myhost1]
+10.110.208.146
+10.110.208.115
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[Application]
+10.110.208.15
+10.110.208.47
+[Application:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[db]
+10.110.208.34
+10.110.208.229
+[db:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1H"muthuhost" 25L, 304C[1;1H[myhost1]
+10.110.208.146
+10.110.208.115
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[Application]
+10.110.208.15
+10.110.208.47
+[Application:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[db]
+10.110.208.34
+10.110.208.229
+[db:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[26;1H[1m[34m~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [1;1H[?12l[?25h
+
+
+
+[?25l[m[36;1H[1m-- INSERT --[m[36;13H[K[5;1H[?12l[?25h[4;1H[?25l[5;35r[5;1H[L[1;36r[4;1H[K[5;1H[myhost:vars][?12l[?25h[?25l[6;35r[6;1H[L[1;36r[5;1H[K[6;1H[myhost:vars][?12l[?25h[?25l[7;35r[7;1H[L[1;36r[6;1H[K[7;1H[myhost:vars][?12l[?25h[6;1H[5;1H[4;1H[?25l10.110.208.34[?12l[?25h[36;1H[K[4;13H[?25l[?12l[?25h[?25l[4;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [4;1H[?12l[?25h[?25l[4;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [4;1H[?12l[?25h[3;1H[2;1H[?25l[2;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h[?25l[2;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h
+[?25l[m[36;1H10 fewer lines[3;35r[3;1H[10M[1;36r[26;1H[1m[34m~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [m[36;1H[K[36;1H10 fewer lines[3;1H[?12l[?25h[?25l[36;2H2[3;1H[1m[34m~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [2;1H[?12l[?25h[36;1H
+[m[?1l>[?1049l
+[1]+  Stopped                 vi muthuhost
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ vi muthuhost 
+[?1049h[?1h=[1;36r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[36;1HE325: ATTENTION
+Found a swap file by the name ".muthuhost.swp"
+[10Cowned by: muthu   dated: Tue Dec 12 08:24:09 2017
+[9Cfile name: ~muthu/ansible/muthuhost
+[10Cmodified: YES
+[9Cuser name: muthu   host name: vaithee.veecube.com
+[8Cprocess ID: 6524 (still running)
+While opening file "muthuhost"
+[13Cdated: Tue Dec 12 08:19:08 2017
+
+(1) Another program may be editing the same file.  If this is the case,
+    be careful not to end up with two different instances of the same
+    file when making changes.  Quit, or continue with caution.
+(2) An edit session for this file crashed.
+    If this is the case, use ":recover" or "vim -r muthuhost"
+    to recover the changes (see ":help recovery").
+    If you did this already, delete the swap file ".muthuhost.swp"
+    to avoid this message.
+
+[35;1H"muthuhost" 25L, 304C
+Press ENTER or type command to continue[?12l[?25h[1;1H[19L[?25l[1;1H[myhost1]
+10.110.208.146
+10.110.208.115
+[myhost:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[Application]
+10.110.208.15
+10.110.208.47
+[Application:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+[db]
+10.110.208.34
+10.110.208.229
+[db:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat[26;1H[1m[34m~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [m[36;1H[K[1;1H[?12l[?25h
+[?25l[36;1H[1m-- INSERT --[2;1H[?12l[?25h[m[36;1H[K[2;1H[?25l[?12l[?25h[?25l[2;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h[?25l[2;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[2;1H[?12l[?25h[?25l[3;35r[m[3;1H[L[1;36r[2;1H[K[3;1H[myhost:vars][?12l[?25h[2;1H[?25l[3;35r[3;1H[6L[1;36r[3;1H10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229[?12l[?25h[7;14H[6;15H[5;15H[4;14H[3;14H[2;1H[36;1H[K[2;1H[?25l[?12l[?25h[?25l[2;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h[1;1H
+
+
+
+
+
+
+
+
+
+
+[11;1H[?25l[m[36;1H[1m-- INSERT --[11;1H[?12l[?25h[?25l[10;35r[m[35;1H
+[1;36r[10;1Hansible_ssh_pass=redhat[35;1H[1m[34m~                                                                                                                            [10;24H[?12l[?25h[11;14H[12;14H[13;14H[14;19H[15;22H[16;24H
+[?25l[16;35r[m[35;1H
+[1;36r[16;1Hansible_ssh_pass=redhat[35;1H[1m[34m~                                                                                                                            [16;24H[?12l[?25h[15;22H[14;19H[13;14H[12;14H[11;14H[10;24H[9;22H[m[36;1H[K[9;1H[?25l[?12l[?25h[?25l[9;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [9;1H[?12l[?25h[?25l[9;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [9;1H[?12l[?25h[8;1H[?25l[8;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [8;1H[?12l[?25h
+
+
+
+[?25l[12;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [12;1H[?12l[?25h[?25l[12;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [12;1H[?12l[?25h
+
+
+[14;1H[13;1H[12;1H[11;1H[?25l[11;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [11;1H[?12l[?25h[10;1H[9;1H[8;1H[7;1H[6;1H[5;1H[4;1H[3;1H[2;1H[?25l[2;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h[?25l[2;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [2;1H[?12l[?25h
+
+
+[4;1H[?25l[4;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [4;1H[?12l[?25h[?25l[4;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [4;1H[?12l[?25h
+
+
+
+
+
+
+
+
+
+
+
+
+[16;1H[15;1H[14;1H[13;1H[?25l[m[36;1H[1m-- INSERT --[13;1H[?12l[?25h[?25l[mmyhost1[?12l[?25h[?25l[14;35r[14;1H[L[1;36r[14;1H[?12l[?25h[?25lApplication[?12l[?25h[?25l[15;35r[15;1H[L[1;36r[15;1H[?12l[?25h[?25ldb[?12l[?25h[?25l[16;35r[16;1H[L[1;36r[16;1H[?12l[?25h[15;1H[14;1H[13;1H[12;1H[11;1H[10;1H[36;1H[K[10;1H[?25l[?12l[?25h[?25l[10;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [10;1H[?12l[?25h
+[10;1H[9;1H
+[?25l[m[36;1H[1m-- INSERT --[10;1H[?12l[?25h[?25l[11;35r[m[11;1H[L[1;36r[10;1H[K[11;1Hansible_ssh_user=root[?12l[?25h[10;1H[?25l[[?12l[?25h[?25lA[?12l[?25h[?25ll[?12l[?25h[?25ll[?12l[?25h[?25l_[?12l[?25h[?25lg[?12l[?25h[?25lr[?12l[?25h[?25lo[?12l[?25h[?25lu[?12l[?25h[?25lp[?12l[?25h[?25l[10;10H[K[10;10H[?12l[?25h[?25l[10;9H[K[10;9H[?12l[?25h[?25l[10;8H[K[10;8H[?12l[?25h[?25l[10;7H[K[10;7H[?12l[?25h[?25l[10;6H[K[10;6H[?12l[?25h[?25l[10;5H[K[10;5H[?12l[?25h[?25lg[?12l[?25h[?25lr[?12l[?25h[?25lo[?12l[?25h[?25lu[?12l[?25h[?25lp[?12l[?25h[?25l=[?12l[?25h[?25l[10;10H[K[10;10H[?12l[?25h[?25l:[?12l[?25h[?25lc[?12l[?25h[?25lh[?12l[?25h[?25li[?12l[?25h[?25ll[?12l[?25h[?25ld[?12l[?25h[?25lr[?12l[?25h[?25le[?12l[?25h[?25ln[?12l[?25h[?25l][?12l[?25h[?25l[11;35r[11;1H[L[1;36r[11;1H[?12l[?25h[?25lmyhost1[?12l[?25h[?25l[12;35r[12;1H[L[1;36r[12;1H[?12l[?25h[?25lmyhost1[?12l[?25h[?25l[13;35r[13;1H[L[1;36r[13;1H[?12l[?25h[?25l[12;35r[35;1H
+[1;36r[12;1Hmyhost1[35;1H[1m[34m~                                                                                                                            [12;8H[?12l[?25h[m[36;1H[K[12;7H[?25l[?12l[?25h[?25l[12;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [12;1H[?12l[?25h[?25l[m[36;1H[1m-- INSERT --[12;1H[?12l[?25h[11;1H[10;1H[9;1H
+
+[mmyhost1[?25l[12;35r[12;1H[L[1;36r[12;1H[?12l[?25h[?25lApplication[?12l[?25h[?25l[13;35r[13;1H[L[1;36r[13;1H[?12l[?25h[?25ld[?12l[?25h[?25lb[?12l[?25h[?25l[14;35r[14;1H[L[1;36r[14;1H[?12l[?25h[?25l[Allgroup:children][?12l[?25hn[?25l][14;19H[K[14;18H[?12l[?25h[?25l][14;18H[K[14;17H[?12l[?25h[?25l][14;17H[K[14;16H[?12l[?25h[?25l][14;16H[K[14;15H[?12l[?25h[?25l][14;15H[K[14;14H[?12l[?25h[?25l][14;14H[K[14;13H[?12l[?25h[?25l][14;13H[K[14;12H[?12l[?25h[?25l][14;12H[K[14;11H[?12l[?25h[?25lb][?12l[?25h[?25la][?12l[?25h[?25lr][?12l[?25h[?25ls][?12l[?25h[?25lars][14;15H[K[14;11H[?12l[?25h[?25lvars][?12l[?25h[15;12H[16;12H[17;8H[16;12H[15;11H[36;1H[K[15;1H[?25l[?12l[?25h[?25l[15;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [15;1H[?12l[?25h[?25l[m[36;1H1 more line; before #26  4 seconds ago[15;35r[15;1H[L[1;36r[15;1Hansible_ssh_user=root[36;1H[K[15;1H[?12l[?25h
+
+[?25l[17;35r[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [17;1H[?12l[?25h[?25l[17;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [17;1H[?12l[?25h[?25l[17;35r[m[35;1H
+[1;36r[35;1H[1m[34m~                                                                                                                            [17;1H[?12l[?25h[?25l[36;1H[m:[?12l[?25hwq![?25l"muthuhost" 21L, 226C written
+[?1l>[?12l[?25h[?1049l]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cat muthuhost
+[myhost1]
+10.110.208.146
+10.110.208.115
+[Application]
+10.110.208.15
+10.110.208.47
+[db]
+10.110.208.34
+10.110.208.229
+[Allgroup:children]
+myhost1
+Application
+db
+[Allgroup:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+
+
+
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible -db [K[K[K[Kdb -m ping
+[0;32m10.110.208.34 | SUCCESS => {[0m
+[0;32m    "changed": false, [0m
+[0;32m    "ping": "pong"[0m
+[0;32m}[0m
+[0;32m10.110.208.229 | SUCCESS => {[0m
+[0;32m    "changed": false, [0m
+[0;32m    "ping": "pong"[0m
+[0;32m}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible db -m ping -o
+[0;32m10.110.208.34 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.229 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible db -m ping -o[1P[1P[1@A[1@p[1@p[1@l[1@i[1@c[1@a[1@t[1@i[1@o[1@n
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.47 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -a 'hostname'
+[0;32m10.110.208.34 | SUCCESS | rc=0 >>[0m
+[0;32mmuthu_cent6_2[0m
+[0;32m[0m
+[0;32m10.110.208.15 | SUCCESS | rc=0 >>[0m
+[0;32mmuthu_cent6_1[0m
+[0;32m[0m
+[0;32m10.110.208.47 | SUCCESS | rc=0 >>[0m
+[0;32mmuthu_cent7_2[0m
+[0;32m[0m
+[0;32m10.110.208.229 | SUCCESS | rc=0 >>[0m
+[0;32mmuthu_cent7_3[0m
+[0;32m[0m
+[0;32m10.110.208.146 | SUCCESS | rc=0 >>[0m
+[0;32mmuthu_cent6_3[0m
+[0;32m[0m
+[0;32m10.110.208.115 | SUCCESS | rc=0 >>[0m
+[0;32mmuthu_cent7_1[0m
+[0;32m[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -a 'hostname'[C[1P'[1P'[1P'[1P'[1P'[1P'[1P'[1P'c'a't' '/'e't'c'/'r'e'd'h'a't'.'[1P'-'r'e'l'a'[1P'e'a's'e'[C'
+> ^C
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -a 'cat /etc/redhat-release''[K
+[0;32m10.110.208.34 | SUCCESS | rc=0 >>[0m
+[0;32mCentOS release 6.9 (Final)[0m
+[0;32m[0m
+[0;32m10.110.208.146 | SUCCESS | rc=0 >>[0m
+[0;32mCentOS release 6.9 (Final)[0m
+[0;32m[0m
+[0;32m10.110.208.15 | SUCCESS | rc=0 >>[0m
+[0;32mCentOS release 6.9 (Final)[0m
+[0;32m[0m
+[0;32m10.110.208.115 | SUCCESS | rc=0 >>[0m
+[0;32mCentOS Linux release 7.4.1708 (Core) [0m
+[0;32m[0m
+[0;32m10.110.208.47 | SUCCESS | rc=0 >>[0m
+[0;32mCentOS Linux release 7.4.1708 (Core) [0m
+[0;32m[0m
+[0;32m10.110.208.229 | SUCCESS | rc=0 >>[0m
+[0;32mCentOS Linux release 7.4.1708 (Core) [0m
+[0;32m[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible all -a 'cat /etc/redhat-release''[16Phostname'Application -m ping -o
+[0;32m10.110.208.15 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+[0;32m10.110.208.47 | SUCCESS => {"changed": false, "ping": "pong"}[0m
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ exit
+logout
+There are stopped jobs.
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ exit
+logout
+[?1049h[?1h=[?12;25h[?12l[?25h[27m[m[H[2J[?25l[1;1H[myhost1]
+
+[1m[34m~                                                                                                                            [4;1H~                                                                                                                            [5;1H~                                                                                                                            [6;1H~                                                                                                                            [7;1H~                                                                                                                            [8;1H~                                                                                                                            [9;1H~                                                                                                                            [10;1H~                                                                                                                            [11;1H~                                                                                                                            [12;1H~                                                                                                                            [13;1H~                                                                                                                            [14;1H~                                                                                                                            [15;1H~                                                                                                                            [16;1H~                                                                                                                            [17;1H~                                                                                                                            [18;1H~                                                                                                                            [19;1H~                                                                                                                            [20;1H~                                                                                                                            [21;1H~                                                                                                                            [22;1H~                                                                                                                            [23;1H~                                                                                                                            [24;1H~                                                                                                                            [25;1H~                                                                                                                            [26;1H~                                                                                                                            [27;1H~                                                                                                                            [28;1H~                                                                                                                            [29;1H~                                                                                                                            [30;1H~                                                                                                                            [31;1H~                                                                                                                            [32;1H~                                                                                                                            [33;1H~                                                                                                                            [34;1H~                                                                                                                            [35;1H~                                                                                                                            [2;1H[?12l[?25h[?25l[m[36;1H[1m[37m[41mW12: Warning: File "muthuhost" has changed and the buffer was changed in Vim as well[m[31mSee ":help W12" for more info.]0;root@vaithee:/[root@vaithee /]# [2;1H[?12l[?25h[36;1H[m[?1l>[?1049lVim: Caught deadly signal TERM
+Vim: preserving files...
+
+Vim: Finished.
+[36;1H
+]0;root@vaithee:/[root@vaithee /]# exit
+logout

@@ -1,0 +1,19 @@
+LXC
+Dockers
+GIT
+OpenStack  ... syllabus to be done with wednesday 
+Splunk
+
+
+AWS
+
+
+
+Foreman
+
+UI Devoloper
+
+
+server 3.in.pool.ntp.org
+server 1.asia.pool.ntp.org
+server 3.asia.pool.ntp.org

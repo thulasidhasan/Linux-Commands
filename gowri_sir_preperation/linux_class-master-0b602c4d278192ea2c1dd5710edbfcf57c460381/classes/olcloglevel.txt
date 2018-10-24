@@ -1,0 +1,17 @@
+setting up the LOG in openldap:
+===============================
+
+ldapsearch -x -H ldap://192.168.2.20:389 -D "cn=admin,cn=config" -w redhat 
+dn: cn=config
+changetype:modify
+replace: olcLogFile
+olcLogFile: /var/log/slapd/slapd.log
+-
+replace: olcLogLevel
+olcLogLevel: conns filter config acl stats shell
+
+
+local4.*                        /var/log/ldap.log
+
+
+

@@ -1,0 +1,110 @@
+Deleting Files/Dirs :
+=====================
+
+
+rm <file>      #would ask a confirmation
+
+rm -r <dir>    #would ask a confirmation
+
+rm -f <file>   # f - force
+
+rm -rf <dir>   #dangerous command, use this as a non-root user
+
+
+Links:
+======
+
+soft link:
+----------
+
+
+ln -s <source> <destination>
+
+* Both source and destiantion has different inode numbers #( ls -li).
+
+* As destination is just a pointer to source, if the source is deleted, the destination becomes waste.
+
+*can be done for both files and directories.
+
+
+
+hard link:
+----------
+
+ln <source> <destination>
+ 
+* Both source and destiantion has same inode numbers #( ls -li).
+
+* Even if the source is deleted, the destination can function alone.
+
+* cannot be done for directories and can be done for files only
+
+
+Compression
+:
+============
+
+gzip <file>  ---> file.gz (compressed_form)
+
+gunzip <file.gz> ---> file (normal_form)
+
+gzip -r <dir>  ---> dir/*.gz (compressed_form) compresses all invidual files inside the directory
+
+cat <file1> <file2> <file3> | gzip > all.gz
+
+gzip -c <source_file> > <destination.gz>
+
+gunzip -c <source.gz> > <destination_file>
+
+tar:
+===
+
+*Finest utility for compression and archive
+
+without compression:
+====================
+
+tar -cvf <destination.tar> <dir/file>
+
+command  options destination source
+
+c for create
+v verbose
+f file
+
+verification:
+--------------
+
+tar -tvf <file.tar>
+
+extraction:
+-----------
+
+tar -xvf <file.tar.gz>      ###to do in current dir
+
+tar -xvf <file.tar.gz> -C <destination_dir>   ###to do in another dir/path
+
+
+with compression:
+=================
+
+tar -cvzf <file.tar.gz> <dir>
+
+verification:
+--------------
+
+tar -tvf <file.tar>
+
+
+extraction:
+-----------
+
+tar -xvf <file.tar.gz>      ###to do in current dir
+
+tar -xvf <file.tar.gz> -C <destination_dir>   ###to do in another dir/path
+
+
+
+
+
+

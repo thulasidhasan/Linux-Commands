@@ -1,0 +1,299 @@
+Shell Scripting:
+----------------
+
+
+The Session through which the user interacts with the Unix/Linux machine is a shell.
+
+/bin/bash
+
+/bin/ksh
+
+/bin/csh
+
+================================================================
+
+#!/bin/bash --- is a convention, so the Linux shell knows what kind of interpretor is used.
+
+a=0;  #### initializing a variable
+
+echo $a  ####printing the variable at the STDOUT
+
+b=1;  #### initializing another variable
+
+echo "$a $b"   #### '$' is used only when the variable needs to be sustituted/expressed
+
+
+<shell_script_common_text_commands.txt>
+
+CLI ARG:
+--------
+
+#!/bin/bash
+echo "$0"   #####CLI ARG for the File_name
+echo "$1"   #####CLI ARG1
+echo "$2"
+echo "$3"
+echo "$#"   #####Count of the CLI ARGs
+
+A1) Please write a program, to print the name of the file which is been used as the CLI ARG and the Program_file's name
+
+
+A2) use the same program of A1 , where /etc/passwd as the CLI ARG1  and show only the UIDs & GIDs
+
+####STDIN
+#!/bin/bash
+echo "please enter a value"
+read a
+echo "the entered value is: $a"
+
+#!/bin/bash
+read -p "please enter a value: " a
+echo "the entered value is: $a"
+
+A3) Write a program to select a line in /tmp/passwd and separate the field while printing like
+USER:root UID:0 GID:0 HOME:/root SHELL:/bin/bash
+
+hint : to execute a command(s) and to store the output in variable
+
+var=`<command>`
+or)
+var=$(<command>)
+ 
+grep)
+
+##write a program to list all the *.conf file in /etc and select the file number from STDIN with showing the file content with # and without # separately
+
+##write a program to print only the file_names under /etc having ROOT & UID as a pattern in content
+
+
+##write a program to create a log file stating all the non root processes (ps aux |grep -v ^root). The log file should be updated every minute having a line started in up front with stamp and ending with a stamp at the bottom.
+
+###write a program to find all the files having 777 perm using stat
+
+##write a program to change the perm of /tmp/file* (777) to 644 using find command
+
+##write a program to take input from STDIN and compare with a fixed variable (integer as well as string)
+
+read integer
+[ "$text" == "high" ] && echo "both are same" || echo "not equal"
+[ $integer -eq 100 ] && echo "both are same" || echo "not equal"
+
+##write a program to assure that /etc/passwd /etc/shadow /etc/group files are present (using both AND and OR tests)
+
+[ -e /etc/passwd ] && echo "file present"
+
+! [ -e /etc/passwd ] || echo "file present"
+
+
+a) for x in good bad worst ok; do echo $x;done
+
+b) for (( x=0;x<=15;x++ ));do echo $x;done
+
+c) for x in $(cat /etc/passwd);do echo $x;done
+
+d) for x in $(seq 10);do echo $x;done
+
+
+while loop:
+-----------
+
+comparing for loop with while loop:
+
+for (( x=0;x<15;x++ ))
+
+the same case in while loop
+
+x=0;  ##intialize the x varible out side the loop
+
+while [ $x -lt 15 ];do
+###<statements>
+echo $x;
+(( X++ )) ### x=$( X + 1 ) ### $x + = 1
+
+done
+
+1) write a program to print first 20 numbers using while
+
+x=1;while [ $x -le 20 ];do echo $x; (( x++ ));done
+
+
+while read:
+-----------
+
+cat /tmp/f11|while read line;do echo $line;done
+
+Please write a program to the order of /etc/passwd to have space as the delimeter
+then change the order of printing last to first and first to last. (using while read)
+
+Hint : to change a particular character in a file :
+
+sed 's/:/ /g' /etc/passwd
+
+cut -d: -f
+
+echo "/sbin/nologin:/home/user1:description:506:506:x:user1" |sed 's/:/ /g'
+
+#!/bin/bash
+cat /etc/passwd|while read line;do
+user=`echo $line|cut -d: -f1`;
+pass=`echo $line|cut -d: -f2`;
+uid=`echo $line|cut -d: -f3`;
+gid=`echo $line|cut -d: -f4`;
+desc=`echo $line|cut -d: -f5`;
+home=`echo $line|cut -d: -f6`;
+shell=`echo $line|cut -d: -f7`;
+echo "$shell $home $desc $gid $uid $pass $user";
+done
+
+
+Arrays:
+-------
+
+gowri=("40" "7337734771" "Bangalore" "Capgemini")
+
+
+Please write a program to store all the files in a Linux machine to an array, then generate the same after sometime with a different array name. Compare both the arrays and show the differences only.
+
+array1
+
+sleep 120
+
+array2 
+
+compare both array1 and array2 ---> show only the difference
+
+#!/bin/bash
+array1=(`find / -type f 2>/dev/null`);
+sleep 120;
+array2=(`find / -type f 2>/dev/null`);
+count_array1=${#array1[*]};
+count_array2=${#array2[*]};
+for (( x=0;x<$count_array1;x++ ));do
+chk1=${array1[$x]};
+for (( y=0;y<$count_array2;y++ ));do
+chk2=${array2[$x]};
+! [ "$chk1" == "$chk2" ] && echo "$chk1 differs $chk2";
+done
+done
+
+
+
+Language English Maths Science Social_science
+
+
+vi sandeep
+
+54 25 67 92 34
+
+
+awk '{
+if ($1 >=35 && $2 >= 35 && $3 >=35 && $4 >= 35 && $5 >= 35)
+
+ 	print $0,"=>","Pass";
+        
+else
+	
+        print $0,"=>","Fail";
+       
+}'
+ sandeep
+
+Please write a program to sort the USER_NAME UID HOME SHELL from /etc/passwd
+
+awk -F: '{print $1"\t\t\t"$3"\t\t"$6"\t\t\t"$7}' /etc/passwd
+
+
+Please write a program to sort the USER_NAME UID HOME SHELL from /etc/passwd, provides UID_number more than 499
+
+awk -F: '{if ($3 >= 500) print $1"_"$3"_"$6"_"$7 }' /etc/passwd
+
+awk -F: '{if ($1 == "root") print $1"_"$3"_"$6"_"$7 }' /etc/passwd
+
+awk -F: '{if ($1 == "postfix") print $1"_"$3"_"$6"_"$7 }' /etc/passwd
+
+
+read a;
+echo $a |awk '{
+
+if ($1<=100) 
+if ($1>=35) print $1 "=>" "pass";
+else print $1 "=>" "fail";
+else print $1 "=>" "invalid";
+
+if ($2<=100) 
+if ($2>=35) print $2 "=>" "pass";
+else print $2 "=>" "fail";
+else print $2 "=>" "invalid";
+
+if ($3<=100) 
+if ($3>=35) print $3 "=>" "pass";
+else print $3 "=>" "fail";
+else print $3 "=>" "invalid";
+
+if ($4<=100) 
+if ($4>=35) print $4 "=>" "pass";
+else print $4 "=>" "fail";
+else print $4 "=>" "invalid";
+
+if ($5<=100) 
+if ($5>=35) print $5 "=>" "pass";
+else print $5 "=>" "fail";
+else print $5 "=>" "invalid";
+}'
+
+
+#!/bin/bash
+a="invalid"
+array=(`for y in $(cat $1);do echo $y |\
+awk '{ if ($1<=100) if ($1>=35) print "1";else print "0";else print "2";}';done`);
+if echo "${array[*]}"|grep -q "0";then
+echo "$1 fail"
+elif echo "${array[*]}"|grep -q "2";then
+echo "$1 invalid"
+else
+echo "$1 pass"
+fi
+echo "------------";
+awk '{
+if ($1<=100)
+if ($1>=35) print $1 "=>" "pass";
+else print $1 "=>" "fail";
+else print $1 "=>" "invalid";
+
+if ($2<=100)
+if ($2>=35) print $2 "=>" "pass";
+else print $2 "=>" "fail";
+else print $2 "=>" "invalid";
+
+if ($3<=100)
+if ($3>=35) print $3 "=>" "pass";
+else print $3 "=>" "fail";
+else print $3 "=>" "invalid";
+
+if ($4<=100)
+if ($4>=35) print $4 "=>" "pass";
+else print $4 "=>" "fail";
+else print $4 "=>" "invalid";
+
+if ($5<=100)
+if ($5>=35) print $5 "=>" "pass";
+else print $5 "=>" "fail";
+else print $5 "=>" "invalid";
+}' $1;
+echo "--------------------"
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+

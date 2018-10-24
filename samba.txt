@@ -1,0 +1,31 @@
+------------------------installing samba server----------------------------------
+yum install samba samba-common cups-libs samba-client        :insall the packages
+
+.........................edit configration file......................................
+vi /etc/samba/smb.conf
+
+netbios name = vpntestmachine.com
+
+interfaces = lo eth0 192.168.0.0/24
+hosts allow = 127. 192.168.0.
+
+[samba]					; add this in last 
+comment = samba share
+path = /share
+valid users = test1
+public = yes
+writable = yes
+browsable = yes
+wq!				: save and quit
+...................................................create a shared directory......................
+mkdir /share			create a shared folder
+chmod 777 /share               give full permission to the folder
+............................create a samba user..........................
+useradd test
+passwd test 
+smbuser -a test
+.................................
+chkconfig smb on
+/etc/init.d/smb start
+/etc/init.d/nmb start
+

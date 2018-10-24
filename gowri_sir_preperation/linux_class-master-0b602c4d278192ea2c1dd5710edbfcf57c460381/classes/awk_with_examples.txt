@@ -1,0 +1,138 @@
+AWK:
+----
+
+echo "hi hello how are you" |awk '{print}'  --- printing the whole
+
+echo "hi hello how are you" |awk '{print $1}'  --- printing the selected
+
+## only "hi" is getting printed
+
+echo "hi hello how are you" |awk '{print $1" "$2}' --- printing with space
+
+echo "hi hello how are you" |awk '{print $NF}' --- prints the last column
+
+echo "hi hello how are you" |awk '{Print $(NF-1)}' --- prints the column 1 b4 the last
+
+echo "hi hello how are you" |awk '{($1=$2="");print }' ####
+
+echo "hi_hello_how_are_you" |awk -F "_" '{print $1" "$2}'
+
+awk -F: '/root/ { gsub("root","good",$1);print}' /etc/passwd
+
+awk -F ":" 'BEGIN{s=1}{s=s+$3;print s }' /etc/passwd
+
+awk 'BEGIN {FS=":";OFS="|"}{print $1,$3}' /etc/passwd
+
+awk -F ":" ' BEGIN { print "number occurances of nologin in an user information 
+
+file"; }
+/nologin/ { counter+=1 ; }
+END { printf "%s\n", counter ; }
+' /etc/passwd
+
+
+size=$1
+if [ $size -ge 1048576 ]; then 
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1048576}'M
+fi
+echo $size
+
+$ awk '{
+if ($3 >=35 && $4 >= 35 && $5 >= 35)
+	print $0,"=>","Pass";
+else
+	print $0,"=>","Fail";
+}' student-marks
+
+
+
+
+sed -n '2,5p' prog1
+ sed -n '1,5d' prog1
+ sed '1,5d' prog1
+ cat prog1
+ sed '2,5d' prog1
+ sed '2d' prog1
+ sed '2p' prog1
+ sed -n '2p' prog1
+ sed -n -e '2,4p' -e '5,7p' prog1
+ sed -e '2,4d' -e '5,7d' prog1
+ sed 's/if/fi/g' prog1
+ vi prog1
+ sed 's/fi/if/gi' prog1
+ sed -i 's/fi/if/gi' prog1
+ cat prog
+ cat prog1
+ clear
+ dir
+ cat prog1
+ vi prog
+ vi prog1
+ sed 's/^#//g' prog1
+ sed 's/^$//g' prog1
+ sed 's/#$//g' prog1
+ vi prog1
+ cat prog1
+ sed 's/#$//g' prog1
+ sed 's/#//g' prog1
+ sed 's/^#//g;s/#$//g' prog1
+ sed 's/^#//g' prog1
+ sed 's/^#//g;s/#$//g' prog1
+ sed 's/^#//g;s/#$//g;s/if/fi/g' prog1
+ sed 's/^#//g;s/#$//g;s/if/fi/g;s/print//g' prog1
+ grep -v ^# prog1
+ sed 's/^#/##/g;s/#$//g;s/if/fi/g;s/print//g' prog1
+ sed 's/^#|#$//g' prog1
+ sed 's/^#|#$\//g' prog1
+ sed 's/^#\|#$|\//g' prog1
+ sed 's/^#\|#$\|//g' prog1
+ sed 's/^#\|#$\|/go/g' prog1
+ sed 's/^#\|#$\|//g' prog1
+ clear
+ vi prog1
+ sed 's/[Zz]ip/rar/g' prog1
+ sed 's/Zip/rar/g;s/zip/rar/g' prog1
+ sed 's/Zip/rar/gi' prog1
+ vi prog1
+ sed 's/Zip/rar/gi' prog1
+ sed 's/[Nz]ip/rar/g' prog1
+ history
+ vi prog1
+ sed 's/^$//g'
+ sed 's/^$//g' prog1
+ sed '^$d' prog1
+ sed '/^$/d' prog1
+ sed '/^#/d' prog1
+ sed 's/^#//g' prog1
+ sed '/^#/d' prog1
+ sed '/^#/d;/^$/d' prog1
+ echo "hi how are you ?"
+ echo "hi how are you ?"|sed 's/\s\+/ /g'
+ echo "hi how are you ?"|sed 's/ / /g'
+ a='hi';echo "hi how are you ?"|sed "s/${a}/hello/g"
+ a='hi';echo "hi how are you ?"|sed "s/$a/hello/g"
+ a='hi';echo "hi how are you hire ?"|sed "s/${a}re/hello/g"
+ a='hi';echo "hi how are you hire ?"|sed "s/${a}re/hello/g"
+ echo "hi hello how are you"|awk '{print}'
+ echo "hi hello how are you"|awk '{print $1}'
+ echo "hi hello how are you"|awk '{print $NF}'
+ echo "hi hello how are you"|awk '{($1=="");print}'
+ echo "hi hello how are you"|awk '{$1=="";print}'
+ echo "hi hello how are you"|awk '{$1="";print}'
+ echo "hi hello how are you"|awk '{$1="";print}'|sed 's/^\s\+//g'
+ head -1 /etc/passwd
+ head -1 /etc/passwd|awk -F ":" '{print}'
+ head -1 /etc/passwd|awk -F ":" '{print $1$2}'
+ head -1 /etc/passwd|awk -F ":" '{print $1":"$2}'
+ head -1 /etc/passwd|awk -F ":" '{print $1" "$2}'
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -le 0 ];do head -$line_count|tail -1 /etc/passwd;(( $line_count-- ));done
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count|tail -1 /etc/passwd;(( $line_count-- ));done
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1;(( $line_count-- ));done
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1;line_count=`expr $line_count - 1`;done
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1|awk -F ":" '{print $NF":"$6":"$5":"$4":"$3":"$2":"$1}';line_count=`expr $line_count - 1`;done
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1|awk -F ":" '{$NF="";print ":"$6":"$5":"$4":"$3":"$2":"$1}'|sed 's/\s\+/#/g';line_count=`expr $line_count - 1`;done
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1|awk -F ":" '{$NF="";print ":"$6":"$5":"$4":"$3":"$2":"$1}'|sed 's/\s\+/#/g';line_count=`expr $line_count - 1`;done |sed -n -e '5,7p' -e '13,15d'
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1|awk -F ":" '{$NF="";print ":"$6":"$5":"$4":"$3":"$2":"$1}'|sed 's/\s\+/#/g';line_count=`expr $line_count - 1`;done |sed -e '13,15d' -n -e '5,7p'
+ line_count=`cat /etc/passwd|wc -l`;while [ $line_count -ne 0 ];do head -$line_count /etc/passwd|tail -1|awk -F ":" '{$NF="";print ":"$6":"$5":"$4":"$3":"$2":"$1}'|sed 's/\s\+/#/g';line_count=`expr $line_count - 1`;done |sed -e '13,15d'
+
+

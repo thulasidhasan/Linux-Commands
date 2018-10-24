@@ -1,0 +1,128 @@
+User Group Management:
+======================
+
+user info : 
+-----------
+
+/etc/passwd
+
+name, passwd, uid, gid, gecos,home , shell
+
+
+Try: 
+----
+
+getent passwd <user_name>
+
+getent group <group_name>
+
+id <user_name>
+
+adding an user with parameters defined:
+---------------------------------------
+useradd --uid 601 -c "murali muniraj" --home /tmp/murali --shell /bin/ksh mmurali
+
+
+verifying the user in user info file:
+-------------------------------------
+grep <user_name> /etc/passwd
+
+
+mmurali:x:601:601:murali muniraj:/tmp/murali:/bin/ksh
+
+
+changing the shell parameter of the user:
+-----------------------------------------
+usermod --shell /bin/bash mmurali
+
+verify:
+-------
+grep <user_name> /etc/passwd
+
+mmurali:x:601:601:murali muniraj:/tmp/murali:/bin/bash
+
+adding a group:
+---------------
+groupadd --gid 600 localuser
+
+modifying the user group :
+--------------------------
+usermod --gid 600 mmurali 
+
+verify the user info:
+---------------------
+grep <user_name> /etc/passwd
+
+mmurali:x:601:600:murali muniraj:/tmp/murali:/bin/bash
+
+verify the member groups:
+-------------------------
+groups <user_name>
+
+mmurali : localuser
+
+Primary Group   &  Supplementory Group 
+======================================
+
+adding a new group:
+-------------------
+groupadd <options> <group_name>
+
+groupadd --gid 700 traininguser
+
+adding the user to a supplementory group:
+-----------------------------------------
+
+usermod -G <sup_grp_name> <user_name>
+
+usermod -G traininguser mmurali
+
+
+verify:
+-------
+groups <user_name>
+
+mmurali : localuser traininguser
+
+modifying the primary group of the user:
+----------------------------------------
+usermod -g traininguser mmurali
+
+verify:
+--------
+groups <user_name>
+
+mmurali : traininguser
+
+adding the user to a supplementory group:
+-----------------------------------------
+
+usermod -G localuser  mmurali
+
+verify:
+-------
+
+groups <user_name>
+
+mmurali : traininguser localuser
+
+verify the user info:
+---------------------
+grep <user_name> /etc/passwd
+
+mmurali:x:601:700:murali muniraj:/tmp/murali:/bin/bash
+
+
+--------------------------------------------------------
+
+NOTE: groupmod is used to modify the group info
+
+
+groupmod --gid <num> <grp_name>
+--------------------------------------------------------
+
+vipw : edits the passwd file directly
+
+vipw –s : edits the shadow file
+
+

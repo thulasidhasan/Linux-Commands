@@ -1,0 +1,23 @@
+Network Aliases:
+----------------
+
+cat /proc/net/dev
+
+* Aliases are dependency configurations on the actual NIC
+
+* Through Alises, we can have more than one IPADDR of any NIC
+
+* HWADDR, UUID and BOOTPROTO=dhcp are not allowed for aliases
+
+* If the base NIC is down then alias will not function alone
+
+preparing an alias:
+-------------------
+
+###change dir to : /etc/sysconfig/network-scripts/
+
+cp ifcfg-eth0 ifcfg-eth0:1
+
+#### change the DEVICE, NAME and remove HWADDR, UUID.
+
+

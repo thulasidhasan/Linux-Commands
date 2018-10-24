@@ -1,0 +1,25 @@
+1) Extend the disk from the vendor end
+
+2) rescan  the disk 
+
+	echo "1" > /sys/class/block/sdb/device/rescan
+
+
+3) pvresize
+
+	pvresize <device>
+
+Caution:
+--------
+
+a) do not try this with your boot disk
+
+b) do not try this on any partition
+
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+
+
+

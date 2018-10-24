@@ -1,0 +1,10 @@
+Learning Outcomes:
+------------------
+
+1) Illustrate the architechture and functions of a big data system.
+
+Subject Briefing:
+-----------------
+
+
+

@@ -1,0 +1,153 @@
+ISCSI:
+------
+
+iSCSI is Internet SCSI (Small Computer System Interface), an Internet Protocol (IP)-based storage networking standard for linking data storage facilities by carrying SCSI commands over IP networks. iSCSI is used to facilitate data transfers over intranets and to manage storage over long distances. iSCSI makes block devices available via the network. We can mount block devices (disks) across an IP network to local system and then use them like any other block device. iSCSI is a client-server protocol. The server-side is referred to as the 'target,' while the client-side is referred to as the 'initiator.' Both the target and initiator are uniquely identified by a string called the iSCSI Qualified Name (iQN). Initiators come in two varieties: software and hardware. A software initiator is just a driver that handles all requests and pairs the network interfaces driver and the SCSI drivers together to make it work. Using a software initiator any system with an Ethernet card can act as an iSCSI initiator. A hardware initiator is an iSCSI HBA, which is basically just an ethernet card with a SCSI ASIC onboard. 
+
+Here we are configuring software initiator in RHEL 6
+=====================================================
+
+INSTALL:
+========
+yum install scsi-target-utils
+chkconfig tgtd on
+service tgtd start
+
+Allocate storage for the LUNs:
+------------------------------
+The iSCSI target service is not dependent on a particular type of exported LUN. The LUNs can be plain files, LVM volumes, or block devices. There is however a performance overhead if using the LVM and/or file system layers as compared to block devices. This example demonstrates the creation of a local partition /dec/sdc1 as iSCSI storage LUN
+
+
+1) creating target (server)
+===========================
+ 
+ Targets can be created by adding an XML entry to the /etc/tgt/targets.conf file, using text editor.  Following entries to be added.
+#vi /etc/tgt/targets.conf
+default-driver iscsi
+<target iqn.2008-09.com.example:server.target1>
+    backing-store /dev/sdc1
+    write-cache off
+    initiator-address your_client_ip
+</target>
+
+Note:
+-----
+The target attribute requires an iSCSI Qualified Name (IQN),following is the general format:
+iqn.yyyy-mm.reversed.domain.name:OptionalIdentifierText
+yyyy-mm represents the 4-digit year and 2-digit month the device was started (for example: 2011-07)
+reversed.domain.name is the hosts domain name in reverse. For example, server1.example.com, in an IQN, becomes com.example.server1;
+OptionalIdentifierText is any text string, without spaces, that helps the administrator identifies which device.
+
+Restart  tgtd service:
+----------------------
+
+Need to restart tgtd service after configuring iscsi target
+
+service tgtd restart
+
+Checking configuration:
+-----------------------
+To confirm the successful operation , query the iSCSI target setup using following command
+
+tgt-admin --show
+
+
+
+2) accessing the target (client)
+================================
+Install  iscsi-initiator-utils package on the client using yum
+
+yum install iscsi-initiator-utils
+
+Discover the target LUN’s exported by server using following command. It will provide iqn name with of LUN associated with given ip address
+
+iscsiadm -m discovery -t sendtargets -p 10.30.32.206
+
+Note :
+------
+-p : it is indicates the address of target server.
+
+To connect iSCSI target we can use following command , we need to mention server ip and iqn name.
+
+iscsiadm -m node -T iqn.2008-09.com.example:server.target1 –p 10.30.32.206 –login
+
+Note :
+-----
+-p : it is indicates the address of target server.
+-T : This option specifies iqn of target server
+Now iSCSI target is connected from ip 10.30.32.206.To find out the device associated with the iSCSI LUN. We have to check /var/log/message
+
+
+(Dec 26 14:22:50 localhost kernel: sdd: sdd1) in /var/log/messages
+
+(or use) dmesg
+
+
+Creating file system:
+---------------------
+
+ we can create file system on /ded/sdd1 and use locally.
+# mkfs.ext3 /dev/sdd1
+# mkdir iSCSI
+# mount /dev/sdd1 /iSCSI
+
+
+Adding entry in /etc/fstab:
+---------------------------
+
+Find out UUID of device using following command
+# blkid /dev/sdd1
+/dev/sdd1: UUID="9674832d-c995-4ac8-b6da-0d25efa088d0" TYPE="ext3"
+
+Add the following entry in /etc/fstab using vi editor.
+“UUID=9674832d-c995-4ac8-b6da-0d25efa088d0 /iSCSI ext3   _netdev        0 0”
+
+
+-----------------|
+IN SIMPLE WORDS: |
+-----------------|
+
+Install:
+---------
+
+In Server:
+----------
+
+lsscsi
+
+###add a disk
+
+###scan 
+
+lsscsi
+
+yum install scsi-target-utils
+
+vi /etc/tgt/targets.conf
+
+initiator-address 192.168.1.180
+
+
+service tgtd start
+
+In Client:
+----------
+lsscsi
+
+yum install iscsi-initiator-utils
+
+
+iscsiadm -m discovery -t st -p <server_ip>:3260
+
+192.168.1.174:3260,1 iqn.2018.com.veecube:server.target1
+
+iscsiadm -m node -T <LUN> -p <server_ip>:3260 -l
+
+lsscsi ###compare with previous output
+###create a file system in the new disk 
+###make entries in fstab with _netdev
+
+mount -a
+
+df -hP 
+
+init 6

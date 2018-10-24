@@ -1,0 +1,261 @@
+yum install sysstat
+sar -V
+
+either create a file : /etc/cron.d/sysstat
+
+crontab -e
+
+
+# Run system activity accounting tool every 10 minutes
+*/10 * * * * root /usr/lib64/sa/sa1 1 1
+# Generate a daily summary of process accounting at 23:53
+53 23 * * * root /usr/lib64/sa/sa2 -A
+So the first cron entry will run every 10 minutes which will call the sadc utility and collect system stats and store it in a binary file.
+And the second cron entry will dump all the contents of that binary file into another text file.
+
+By default 7 days statistics, So you can modify that HISTORY entry easily by editing the file.
+
+# cat /etc/sysconfig/sysstat
+# How long to keep log files (in days).
+# If value is greater than 28, then log files are kept in
+# multiple directories, one for each month.
+HISTORY=28
+
+By default all the statistics will save /var/log/sa location.
+
+# cd /var/log/sa
+
+
+Finally, make sure sar works. For example, the following gives the system CPU statistics 3 times (with 1 second interval).
+
+$ sar 1 3
+
+Utilities part of Sysstat
+
+Following are the other sysstat utilities.
+
+sar collects and displays ALL system activities statistics.
+sadc stands for “system activity data collector”. This is the sar backend tool that does the data collection.
+sa1 stores system activities in binary data file. sa1 depends on sadc for this purpose. sa1 runs from cron.
+sa2 creates daily summary of the collected statistics. sa2 runs from cron.
+sadf can generate sar report in CSV, XML, and various other formats. Use this to integrate sar data with other tools.
+iostat generates CPU, I/O statistics
+mpstat displays CPU statistics.
+pidstat reports statistics based on the process id (PID)
+nfsiostat displays NFS I/O statistics.
+cifsiostat generates CIFS statistics
+
+/usr/local/lib/sa/sa1
+
+This runs every 10 minutes and collects sar data for historical reference.
+If you want to collect sar statistics every 5 minutes, change */10 to */5 in the above /etc/cron.d/sysstat file.
+This writes the data to /var/log/sa/saXX file. XX is the day of the month. saXX file is a binary file. You cannot view its content by opening it in a text editor.
+For example, If today is 26th day of the month, sa1 writes the sar data to /var/log/sa/sa26
+You can pass two parameters to sa1: interval (in seconds) and count.
+In the above crontab example: sa1 1 1 means that sa1 collects sar data 1 time with 1 second interval (for every 10 mins).
+/usr/local/lib/sa/sa2
+
+This runs close to midnight (at 23:53) to create the daily summary report of the sar data.
+sa2 creates /var/log/sa/sarXX file (Note that this is different than saXX file that is created by sa1). This sarXX file created by sa2 is an ascii file that you can view it in a text editor.
+This will also remove saXX files that are older than a week. So, write a quick shell script that runs every week to copy the /var/log/sa/* files to some other directory to do historical sar data analysis.
+
+
+There are two ways to invoke sar.
+
+sar followed by an option (without specifying a saXX data file). This will look for the current day’s saXX data file and report the performance data that was recorded until that point for the current day.
+sar followed by an option, and additionally specifying a saXX data file using -f option. This will report the performance data for that particular day. i.e XX is the day of the month.
+In all the examples below, we are going to explain how to view certain performance data for the current day. To look for a specific day, add “-f /var/log/sa/saXX” at the end of the sar command.
+
+All the sar command will have the following as the 1st line in its output.
+
+$ sar -u
+Linux 2.6.18-194.el5PAE (dev-db)        03/26/2011      _i686_  (8 CPU)
+Linux 2.6.18-194.el5PAE – Linux kernel version of the system.
+(dev-db) – The hostname where the sar data was collected.
+03/26/2011 – The date when the sar data was collected.
+_i686_ – The system architecture
+(8 CPU) – Number of CPUs available on this system. On multi core systems, this indicates the total number of cores.
+
+1. CPU Usage of ALL CPUs (sar -u)
+
+This gives the cumulative real-time CPU usage of all CPUs. “1 3” reports for every 1 seconds a total of 3 times. Most likely you’ll focus on the last field “%idle” to see the cpu load.
+
+$ sar -u 1 3
+
+Following are few variations:
+
+sar -u Displays CPU usage for the current day that was collected until that point.
+sar -u 1 3 Displays real time CPU usage every 1 second for 3 times.
+sar -u ALL Same as “sar -u” but displays additional fields.
+sar -u ALL 1 3 Same as “sar -u 1 3” but displays additional fields.
+sar -u -f /var/log/sa/sa10 Displays CPU usage for the 10day of the month from the sa10 file.
+
+2. CPU Usage of Individual CPU or Core (sar -P)
+
+If you have 4 Cores on the machine and would like to see what the individual cores are doing, do the following.
+
+“-P ALL” indicates that it should displays statistics for ALL the individual Cores.
+
+In the following example under “CPU” column 0, 1, 2, and 3 indicates the corresponding CPU core numbers.
+
+$ sar -P ALL 1 1
+
+“-P 1” indicates that it should displays statistics only for the 2nd Core. (Note that Core number starts from 0).
+
+Following are few variations:
+
+sar -P ALL Displays CPU usage broken down by all cores for the current day.
+sar -P ALL 1 3 Displays real time CPU usage for ALL cores every 1 second for 3 times (broken down by all cores).
+sar -P 1 Displays CPU usage for core number 1 for the current day.
+sar -P 1 1 3 Displays real time CPU usage for core number 1, every 1 second for 3 times.
+sar -P ALL -f /var/log/sa/sa10 Displays CPU usage broken down by all cores for the 10day day of the month from sa10 file.
+
+3. Memory Free and Used (sar -r)
+
+This reports the memory statistics. “1 3” reports for every 1 seconds a total of 3 times. Most likely you’ll focus on “kbmemfree” and “kbmemused” for free and used memory.
+
+$ sar -r 1 3
+
+Following are few variations:
+
+sar -r
+sar -r 1 3
+sar -r -f /var/log/sa/sa10
+
+4. Swap Space Used (sar -S)
+
+This reports the swap statistics. “1 3” reports for every 1 seconds a total of 3 times. If the “kbswpused” and “%swpused” are at 0, then your system is not swapping.
+
+$ sar -S 1 3
+
+Following are few variations:
+
+sar -S
+sar -S 1 3
+sar -S -f /var/log/sa/sa10
+
+Notes:
+
+Use “sar -R” to identify number of memory pages freed, used, and cached per second by the system.
+Use “sar -H” to identify the hugepages (in KB) that are used and available.
+Use “sar -B” to generate paging statistics. i.e Number of KB paged in (and out) from disk per second.
+Use “sar -W” to generate page swap statistics. i.e Page swap in (and out) per second.
+5. Overall I/O Activities (sar -b)
+
+This reports I/O statistics. “1 3” reports for every 1 seconds a total of 3 times.
+
+Following fields are displays in the example below.
+
+tps – Transactions per second (this includes both read and write)
+rtps – Read transactions per second
+wtps – Write transactions per second
+bread/s – Bytes read per second
+bwrtn/s – Bytes written per second
+$ sar -b 1 3
+
+Following are few variations:
+
+sar -b
+sar -b 1 3
+sar -b -f /var/log/sa/sa10
+Note: Use “sar -v” to display number of inode handlers, file handlers, and pseudo-terminals used by the system.
+
+6. Individual Block Device I/O Activities (sar -d)
+
+To identify the activities by the individual block devices (i.e a specific mount point, or LUN, or partition), use “sar -d”
+
+$ sar -d 1 1
+
+
+In the above example “DEV” indicates the specific block device.
+
+For example: “dev53-1” means a block device with 53 as major number, and 1 as minor number.
+
+The device name (DEV column) can display the actual device name (for example: sda, sda1, sdb1 etc.,), if you use the -p option (pretty print) as shown below.
+
+$ sar -p -d 1 1
+
+
+Following are few variations:
+
+sar -d
+sar -d 1 3
+sar -d -f /var/log/sa/sa10
+sar -p -d
+
+7. Display context switch per second (sar -w)
+
+This reports the total number of processes created per second, and total number of context switches per second. “1 3” reports for every 1 seconds a total of 3 times.
+
+$ sar -w 1 3
+
+
+Following are few variations:
+
+sar -w
+sar -w 1 3
+sar -w -f /var/log/sa/sa10
+
+8. Reports run queue and load average (sar -q)
+
+This reports the run queue size and load average of last 1 minute, 5 minutes, and 15 minutes. “1 3” reports for every 1 seconds a total of 3 times.
+
+$ sar -q 1 3
+
+
+Note: The “blocked” column displays the number of tasks that are currently blocked and waiting for I/O operation to complete.
+
+Following are few variations:
+
+sar -q
+sar -q 1 3
+sar -q -f /var/log/sa/sa10
+
+9. Report network statistics (sar -n)
+
+This reports various network statistics. For example: number of packets received (transmitted) through the network card, statistics of packet failure etc.,. “1 3” reports for every 1 seconds a total of 3 times.
+
+sar -n KEYWORD
+
+
+KEYWORD can be one of the following:
+
+DEV – Displays network devices vital statistics for eth0, eth1, etc.,
+EDEV – Display network device failure statistics
+NFS – Displays NFS client activities
+NFSD – Displays NFS server activities
+SOCK – Displays sockets in use for IPv4
+IP – Displays IPv4 network traffic
+EIP – Displays IPv4 network errors
+ICMP – Displays ICMPv4 network traffic
+EICMP – Displays ICMPv4 network errors
+TCP – Displays TCPv4 network traffic
+ETCP – Displays TCPv4 network errors
+UDP – Displays UDPv4 network traffic
+SOCK6, IP6, EIP6, ICMP6, UDP6 are for IPv6
+ALL – This displays all of the above information. The output will be very long.
+
+$ sar -n DEV 1 1
+
+
+10. Report Sar Data Using Start Time (sar -s)
+
+When you view historic sar data from the /var/log/sa/saXX file using “sar -f” option, it displays all the sar data for that specific day starting from 12:00 a.m for that day.
+
+Using “-s hh:mi:ss” option, you can specify the start time. For example, if you specify “sar -s 10:00:00”, it will display the sar data starting from 10 a.m (instead of starting from midnight) as shown below.
+
+You can combine -s option with other sar option.
+
+For example, to report the load average on 26th of this month starting from 10 a.m in the morning, combine the -q and -s option as shown below.
+
+$ sar -q -f /var/log/sa/sa23 -s 10:00:01
+
+
+
+There is no option to limit the end-time. You just have to get creative and use head command as shown below.
+
+For example, starting from 10 a.m, if you want to see 7 entries, you have to pipe the above output to “head -n 10”.
+
+$ sar -q -f /var/log/sa/sa23 -s 10:00:01 | head -n 10
+
+

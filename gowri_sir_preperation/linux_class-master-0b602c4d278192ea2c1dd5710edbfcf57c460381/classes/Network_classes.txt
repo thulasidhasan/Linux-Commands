@@ -1,0 +1,81 @@
+Network-class2
+--------------
+
+what is MAC id ?
+
+A media access control address (MAC address) of a device is an unique identifier assigned to network interfaces for communications at the data link layer of a network segment.
+
+MAC id is the "HWADDR" entry in the Network Configuration File
+
+Use "ip addr show" to configure and monitor network addresses
+Use "ip route show" to configure and monitor routing information
+Use "ip link show" to configure and monitor network link state
+
+ifconfig :
+----------
+
+ifconfig --- interface config
+
+shows all the Active Network Interfaces of the system 
+
+ifconfig <NIC> : shows a particular NIC
+
+ethtool:
+--------
+ethtool is a utility for Linux kernel-based operating system for displaying and modifying some parameters of network interface controllers (NICs) and their device drivers.
+
+ip route get <ip>
+-----------------
+
+to know, through which interface the network connection happens.
+
+routing table:
+--------------
+
+route -n
+
+traceroute & tracepath :
+------------------------
+
+Tracepath and traceroute are very similiar network mapping commands. The main difference between the two is that you need to be a superuser on a Linux computer to use traceroute, whereas tracepath can be run without this
+
+traceroute <ip/host>
+
+tracepath <ip/host>
+
+where to find the available network interfaces in a machine ?
+
+cat /proc/net/dev
+
+configuration Directory:
+------------------------
+
+/etc/sysconfig/network-script
+
+NIC card configure file : ifcfg-eth0 ifcfg-ens32 
+
+where in as eth stands for ethernet , if --- interface, cfg --- config and ens --- Ethereum Name Service
+
+
+To up/down an interface:
+------------------------
+
+ifup <if_name> 
+
+ifdown <if_name>
+
+For the whole Network:
+----------------------
+
+service network start/stop/reload/restart/status
+
+systemctl start/stop/reload/restart/status/enable/disable network.service
+
+
+
+
+
+
+
+
+

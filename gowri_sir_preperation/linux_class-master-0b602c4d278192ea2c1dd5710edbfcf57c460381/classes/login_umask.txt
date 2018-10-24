@@ -1,0 +1,89 @@
+/etc/default/useradd:
+---------------------
+# useradd defaults file
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+last
+-----
+###shows the current time stamp, since how long the machine is up from a boot,
+###how many users are logged in currently and the load avg for 1,5,15 mins.
+
+
+uptime
+------
+##shows the login history and reboot status history with terminal, from which 
+##IP/HOST, login date::time stamp, status/how long logged.
+
+
+
+chage -l <user_name>
+--------------------
+###TO show the atteributes of an account/UserPassword...AGE & EXPIRY
+
+passwd -S <user_name>
+---------------------
+###To show the attributes of an User Password with encryption type 
+
+
+/etc/skel:
+----------
+###this directory has the hidden files like 
+.bashrc
+.bash_profile
+.bash_logout
+
+to be transferred to the users home directory upon creation along with ownership changes
+
+.bash_profile
+-------------
+###user default executable command while logging in can be added here 
+
+/etc/motd:
+----------
+##has just the message to be dispalyed at the terminal while logging in
+
+/etc/login.defs:
+----------------
+MAIL_DIR	/var/spool/mail
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_MIN_LEN	5
+PASS_WARN_AGE	7
+UID_MIN                  1000
+UID_MAX                 60000
+SYS_UID_MIN               201
+SYS_UID_MAX               999
+GID_MIN                  1000
+GID_MAX                 60000
+SYS_GID_MIN               201
+SYS_GID_MAX               999
+CREATE_HOME	yes
+UMASK           077
+USERGROUPS_ENAB yes
+ENCRYPT_METHOD SHA512
+
+umask:
+------
+
+##for dir subtract from 777
+
+##for file subtract from 666
+
+umask (to see the current value)
+
+umask <value> (to set a new value, temporary)
+
+##for user specific ~/.bash_profile can be use
+###use vi or nano editor to edit the file ~/.bash_profile and set the below
+###for example
+umask 0077
+
+

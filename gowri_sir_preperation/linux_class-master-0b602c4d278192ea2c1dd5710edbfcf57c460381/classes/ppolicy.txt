@@ -1,0 +1,306 @@
+Loading Schema:
+===============
+
+OpenLDAP with OLC
+
+Load the ppolicy schema into OLC: 
+
+ldapmodify -D "cn=Manager,cn=config" -W -a -f /etc/openldap/schema/ppolicy.ldif
+
+Load the module: 
+
+ldapmodify -D "cn=Manager,cn=config" -W -a -f ppolicymodule.ldif
+
+Create a ppolicy ldif:
+======================
+
+dn: cn=module{0},cn=config
+objectClass: olcModuleList
+cn: module{0}
+olcModuleLoad: ppolicy.la
+
+(not require if been configured with slapd.conf)
+
+Load the module: 
+======================
+ldapmodify -D "cn=Manager,cn=config" -W -a -f ppolicymodule.ldif
+
+
+Configure ppolicy overlay: 
+======================
+
+ldapmodify -D "cn=Manager,cn=config" -W -a -f ppolicyoverlay.ldif
+
+dn: olcOverlay=ppolicy,olcDatabase={2}bdb,cn=config
+objectClass: olcOverlayConfig
+objectClass: olcPPolicyConfig
+olcOverlay: ppolicy
+olcPPolicyDefault: cn=passwordDefault,ou=Policies,dc=veecube00,dc=com
+olcPPolicyHashCleartext: FALSE
+olcPPolicyUseLockout: FALSE
+olcPPolicyForwardUpdates: FALSE
+
+(not require if been configured with slapd.conf)
+
+Under the Database:
+===================
+
+#-- Load overlay
+overlay ppolicy
+ppolicy_default "cn=passwordDefault,ou=Policies,dc=veecube00,dc=com"
+
+
+ldapmodify -D "cn=Manager,dc=veecube00,dc=com" -W -a -f param_ppolicy.ldif
+
+Main Parameter ldif file:
+=========================
+
+dn: ou=Policies,dc=veecube00,dc=com
+ou: Policies
+objectClass: organizationalUnit
+
+dn: cn=passwordDefault,ou=Policies,dc=veecube00,dc=com
+objectClass: pwdPolicy
+objectClass: person
+objectClass: top
+cn: passwordDefault
+sn: passwordDefault
+pwdAttribute: userPassword
+pwdCheckQuality: 0
+pwdMinAge: 0
+pwdMaxAge: 30
+pwdMinLength: 8
+pwdInHistory: 3
+pwdMaxFailure: 3
+pwdFailureCountInterval: 0
+pwdLockout: TRUE
+pwdLockoutDuration: 3
+pwdAllowUserChange: TRUE
+pwdExpireWarning: 7
+pwdGraceAuthNLimit: 0
+pwdMustChange: TRUE
+pwdSafeModify: FALSE
+
+
+Optional:
+==========
+OpenLDAP password policy overlay / 
+==================================
+pwdPolicy ObjectClass and Attributes.
+==================================
+
+This policy applies to all userPassword attributes. 
+If an object needs a different policy, 
+just define the differing policy under another name and reference the policy with the pwdPolicySubentry attribute. Example:
+
+dn: cn=My User,ou=People,dc=mydomain,dc=tld
+changetype: modify
+add: pwdPolicySubentry
+pwdPolicySubentry: cn=passwordSpecial,ou=Policies,dc=mydomain,dc=tld
+
+
+Usage and behaviour :
+=====================
+Query all locked accounts :
+===========================
+
+If an object has the pwdAccountLockedTime attribute: 
+it is locked since then. 
+
+Simply issue the following query:
+
+ldapsearch <MYCONNECTIONPARAMS> -b "ou=People,dc=veecube00,dc=com" "pwdAccountLockedTime=*" pwdAccountLockedTime
+
+
+Unlock an account :
+=================
+
+There are two variants. For the first one you simply delete the pwdAccountLockedTime attribute which unlocks the account immediately:
+---------------------------------------------
+dn: cn=My User,ou=People,dc=veecube00,dc=com
+changetype: modify
+delete: pwdAccountLockedTime
+---------------------------------------------
+The second variant adds the attribute pwdReset which basically means: 
+The user can only login again after changing it's password:
+---------------------------------------------
+dn: cn=My User,ou=People,dc=veecube00,dc=com
+changetype: modify
+add: pwdReset
+pwdReset: TRUE
+---------------------------------------------
+If the user tries other operations than changing its password, the OpenLDAP server responds with bind: Operations are 
+restricted to bind/unbind/abandon/StartTLS/modify password Changing an LDAP password can be 
+done f.e. with the ldappasswd tool:
+
+-----------------
+ldappasswd <MYCONNECTIONPARAMS> -D "cn=<admin user>,ou=People,dc=veecube,dc=com" -W -S "cn=<user>,ou=People,dc=veecube00,dc=com"
+-----------------
+
+Behaviour of some policy settings:
+----------------------------------
+==================================
+
+A short overview of how some of the policies behave (not all covered here):
+
+pwdMinAge
+
+    Result: Constraint violation (19)
+    Additional info: Password is too young to change
+
+pwdMaxAge
+
+    ldap_bind: Invalid credentials (49)
+    in the logfile: ppolicy_bind: Entry cn=My User,ou=People,dc=mydomain,dc=tld has an expired password: 0 grace logins
+
+pwdGraceAuthNLimit
+
+    in the log: ppolicy_bind: Entry cn=My User,ou=People,dc=mydomain,dc=tld has an expired password: 1 grace logins
+
+pwdInHistory
+
+    Result: Constraint violation (19)
+    Additional info: Password is in history of old passwords
+
+pwdAllowUserChange
+
+    Result: Insufficient access (50)
+    Additional info: User alteration of password is not allowed
+
+Storage location of the policy data
+
+Policy data (f.e. number of failed login attempts) is stored as Operational Attributes on each object. In a normal ldapsearch query operational attributes are not returned. To make them visible, add a "+" to the end of the query. Example: ldapsearch <MYCONNECTIONPARAMS> -b "ou=People,dc=mydomain,dc=tld" "+"
+Considerations when using LDAP replication
+
+If you replicate from an LDAP master to LDAP slave(s) and your users are authenticating against slaves, take into consideration that the policy data needs to be synced somehow back to the master (f.e. number of failed login attempts).
+
+The ppolicy module already knows about it. You basically need to set the
+configuration value olcPPolicyForwardUpdates (OLC style) / ppolicy_forward_updates (slapd.conf). Furthermore chaining must be configured, including syncrepl. This is very well documented at Linuxtopia.
+
+Openssl key:
+============
+
+create a private key:
+---------------------
+
+openssl genres -des3 2048 >ldap1.key
+
+
+generate request:
+-----------------
+
+openssl req -new -key ./ldap1.key -days 365 -out ldap1.csr
+
+copy the csr file to the ssl server
+
+sign the certificate signing request:
+-------------------------------------
+
+openssl ca -in ldap1.csr -out ldap1.crt
+
+copy the signed certificate crt back to ldap_server:/etc/openldap
+
+keep the ldap1.key with 600 perm
+
+send /etc/pki/CA/ca.crt to /etc/openldap
+
+
+prepare the ldif import:
+------------------------
+
+dn: cn=config
+changeType: modify
+add: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/openldap/ldap1.key
+-
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/openldap/ldap1.crt
+-
+add: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/openldap/ldap1.key
+
+cp ldap1.key ldap1.key.pass
+
+
+to remove passwd from the key:
+------------------------------
+
+openssl rsa -in ldap1.key.pass -out ldap1.key
+
+ldapmodify -f tls.ldif -D "cn=Manager,cn=config" -W
+
+Edit: /etc/sysconfig/ldap
+
+SLAPD_LDAPS=yes
+
+restart slapd
+
+netstat -antu|grep 636
+
+Edit the /etc/sysconfig/ldap:
+-----------------------------
+
+SLAPD_LDAPS=yes
+
+
+Edit the Ldap client configuration:
+-----------------------------------
+
+TLS_REQCERT allow  in /etc/openldap/ldap.conf
+
+tls_reqcert alow  in /etc/nslcd.conf
+
+tls_reqcert allow  in /etc/pam_ldap.conf
+
+authconfig --enableldaptls --update
+
+  
+This policy applies to all userPassword attributes. If an object needs a different policy, just define the differing policy under another name and reference the policy with the pwdPolicySubentry attribute. Example:
+
+dn: cn=My User,ou=People,dc=mydomain,dc=tld
+changetype: modify
+add: pwdPolicySubentry
+pwdPolicySubentry: cn=passwordSpecial,ou=Policies,dc=mydomain,dc=tld
+
+Usage and behaviour
+Query all locked accounts
+
+If an object has the pwdAccountLockedTime attribute: it is locked since then. Simply issue the following query:
+ldapsearch <MYCONNECTIONPARAMS> -b "ou=People,dc=mydomain,dc=tld" "pwdAccountLockedTime=*" pwdAccountLockedTime
+Unlock an account
+
+There are two variants. For the first one you simply delete the pwdAccountLockedTime attribute which unlocks the account immediately:
+
+dn: cn=My User,ou=People,dc=mydomain,dc=tld
+changetype: modify
+delete: pwdAccountLockedTime
+
+The second variant adds the attribute pwdReset which basically means: The user can only login again after changing it's password:
+
+dn: cn=My User,ou=People,dc=mydomain,dc=tld
+changetype: modify
+add: pwdReset
+pwdReset: TRUE
+
+If the user tries other operations than changing its password, the OpenLDAP server responds with bind: Operations are restricted to bind/unbind/abandon/StartTLS/modify password Changing an LDAP password can be done f.e. with the ldappasswd tool:
+
+ldappasswd <MYCONNECTIONPARAMS> -D "cn=My User,ou=People,dc=mydomain,dc=tld" -W -S "cn=My User,ou=
+
+
+Types 	Description
+bdb 	Berkeley DB transactional backend (deprecated)
+config 	Slapd configuration backend
+dnssrv 	DNS SRV backend
+hdb 	Hierarchical variant of bdb backend (deprecated)
+ldap 	Lightweight Directory Access Protocol (Proxy) backend
+ldif 	Lightweight Data Interchange Format backend
+mdb 	Memory-Mapped DB backend
+meta 	Meta Directory backend
+monitor 	Monitor backend
+passwd 	Provides read-only access to passwd(5)
+perl 	Perl Programmable backend
+shell 	Shell (extern program) backend
+sql 	SQL Programmable backend 
+
+
+

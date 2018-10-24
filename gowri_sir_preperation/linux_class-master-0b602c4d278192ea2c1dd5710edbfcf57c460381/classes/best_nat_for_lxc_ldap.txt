@@ -1,0 +1,2 @@
+iptables -t nat -A PREROUTING -p tcp --dport 3890 -j DNAT --to-destination 192.168.2.80:389
+iptables -t nat -A POSTROUTING -j MASQUERADE

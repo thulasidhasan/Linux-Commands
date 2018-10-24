@@ -1,0 +1,92 @@
+File Types:
+-----------
+
+-     -> Normal or regular file
+
+d     -> Directory
+
+l     -> Symbollic link ###same like shortcut in Windows
+
+b     -> Block file    #### HDD CDROM USB_PEN_DRIVE -- DEVICES
+
+s     -> Socket file   ####
+
+c     -> CHaracter File   #### Interface ASCII 
+
+
+ls -l :
+-------
+
+1) type 2) perm 3) no of links 4)user owner 5)group owner 6)size 7)modifier time stamp 8)name
+
+
+to create a file:
+-----------------
+
+touch <file_name>
+
+touch <file_name_with_path>
+
+with touch an emepty file will be created.
+
+cat:
+----
+to read a file
+
+cat > <file_name>     #### > is single redirection
+
+cat >> <file_name>    #### >> is double redirection
+
+> clears the existing content
+
+>> appends the file with new content
+
+vi editor:
+----------
+
+vi --- visual editor 
+
+vim --- vi improved
+
+Esc Mode:
+=========
+
+/<search>   and to another match -  press 'n'
+
+O -- creates a new line and provides Insert
+    
+G -- goto the last line
+
+U -- undo
+
+1yy -- yanking one line
+
+23yy -- yanking 23 lines
+
+p -- paste
+
+1dd -- delete (cut)
+
+
+
+
+Commond Mode 
+============
+:w write , :wq write and quit , :wq! append ,
+q! quit without saving 
+
+:%s/<search>/<replace>   ---- replaces only on the line
+
+:%s/<search>/<replace>/g ---- replaces on the whole file - global
+
+:set nu  -- displays line numbers
+
+:1   -- goto line number 1
+
+
+
+Insert Mode  --- i is the key . Editing
+
+
+
+

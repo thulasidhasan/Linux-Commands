@@ -1,0 +1,36 @@
+${var} substitute the value of var
+
+${var:-word} for the instance replace the var with the word
+
+${var:=word} if the value of var is null, then set the word as var for the instance
+
+${var:?message} STDERR of message if the var value is null
+
+
+making an variable to constant:
+-------------------------------
+PIE=3.14
+readonly PIE
+echo $PIE
+PIE='x'     abnormal
+unset PIE   abnormal
+---------------------
+
+set PIE=3.14   --- scope is for the function only
+-------------------------------------------------
+
+
+echo $$  -- current shell pid
+
+$0 -- filename of the  current script
+
+$n -- argument numbers
+
+$# -- number of arguments supplied 
+
+$@ and $* -- all the argument double quoted
+
+$? result of the last execution success
+
+$!  -- pid of last executed background process
+-------------------------------------------------

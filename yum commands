@@ -1,0 +1,18 @@
+1: yum remove package_name   ===>   will remove the package
+
+2: yum autoremove            ====>  will remove the unused dependencies
+
+###########  To remove a package with it's dependencies , you need to install yum plugin called: remove-with-leaves #################3
+
+# yum install yum-plugin-remove-with-leaves
+
+1: yum remove package_name --remove-leaves  
+
+#################    ifconfig ==> command not found      ####################################33
+
+  type ============>yum provides ifconfig
+          (or)
+  type ============> yum whatprovides ifconfig  it will show one package to install 
+  then install that package
+
+

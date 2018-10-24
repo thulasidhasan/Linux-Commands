@@ -1,0 +1,62 @@
+On a New system:
+----------------
+
+
+RHEL6:
+------
+
+iptables -F   ####flushing iptables
+
+chkconfig iptables off
+
+
+vi /etc/sysconfig/selinux
+
+SELINUX=disabled
+
+
+what is SELinux ?
+
+SE --- security enabled Linux, this provides strict contexts to the services and service oriented directories.
+
+vi /etc/sysconfig/network
+HOSTNAME=<your_host_name>
+
+vi /etc/sysconfig/network-scripts/ifcfg-<device>
+
+
+vi /etc/hosts
+
+<ip>   <hostname>
+
+chkconfig NetworkManager off
+
+reboot
+
+RHEL7:
+------
+
+iptables -F
+
+systemctl disble firewalld
+
+vi /etc/sysconfig/selinux
+
+SELINUX=disabled
+
+hostnamectl set-hostname <you_host_name> --static
+
+vi /etc/sysconfig/network-scripts/ifcfg-<device>
+
+vi /etc/hosts
+
+<ip>   <hostname>
+
+systemctl disable NetworkManager 
+
+reboot
+
+
+
+
+

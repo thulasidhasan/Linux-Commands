@@ -1,0 +1,6 @@
+pwd=`echo $PWD`;
+user=`whoami`;
+lst=`last|grep $user|head -1`;
+dt=`date`;
+echo -e "USER:$user \n$lst \nDIRECTORY_FROM:$pwd \nDATE:$dt \nCOMMAND:rm $*"|mutt -s "rm invoked" root@localhost
+/usr/lib/main/rm $*

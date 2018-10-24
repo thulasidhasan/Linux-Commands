@@ -1,0 +1,63 @@
+Android Logo safe
+
+
+
+Update Logo  ???
+
+
+control + data 
+
+
+
+control --->
+
+data --->
+
+FORSTAR FT970 TABLET 
+FLASHING AND ROOTING SOFTWARE 
+WHICH IS BASED ON ROCKCHIP RK3066
+
+*YOU CAN ONLY ROOT YOUR RICOH FT970 TABLET.
+*AND TAKE ADVANTAAGE OF ROOT APPLICATIONS AND CUSTOMIZATION..
+
+I ROOTED MY TABLET
+*Change The Boot Animation.
+
+Addding Button In Power Menu.
+*POWER off
+*Reboot
+-Reboot.
+-Soft Reboot
+-Recovery.
+-Bootloader
+# AND MANY OTHER THINGS.
+
+Board ID: D902_V5_0711
+
+AMICORE tt4 is the only one Rom
+
+
+rockchip.nl
+
+NOVATIUM BASE FIRMWARE IS AVAILABLE ON ITS RICOH SERVICE CENTER
+
+vroot 1.7 software tool
+
+
+
+
+su
+dd if=/sdcard/logo.img of=/dev/block/platform/msm_sdcc.1/by-name/LOGO
+
+adb reboot bootloader
+fastboot flash LOGO /path/to/logo/file
+
+C:\Users\veecube\Downloads\logo
+
+
+redhat
+
+touch file1;chmod g+rwx file1
+
+
+rootpw {SSHA}uh2QeBL0v78Gp50tbAWj/Qu8a3UEKO6G

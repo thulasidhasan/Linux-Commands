@@ -1,0 +1,36 @@
+#######################  HOW TO TAKE BACKUP IN LINUX   #############################
+
+for example iam going to take backup /home  
+
+command : tar -cvpzf /backdata/file1.tar.gz /home
+
+backdate ========> directory  destination
+file1.tar.gz ====> file name that ends with .tar.gz
+/home ===========> is my source
+
+
+###########  source  http://broexperts.com/how-to-backup-files-and-directories-in-linux-using-tar-cron-jobs/    ###########
+
+
+########## now by using rsync how to take backup of all file and directories  ############################
+
+ rsync -anv server@192.168.1.195:/home/server/dir1/ /opt/  ===> 
+  
+
+  -a ===> flag to that permissions will not get change
+  -r=====> recursive
+  -v=====>  verbose
+  -n =====> dry run
+  -z =====>  If you are transferring files that have not already been compressed, like text files, you can reduce the network transfer by
+             adding compression with the -z option:  
+
+
+ rsync -anv dir1/ server@192.168.1.195:/opt/   ====> mind the / after dir1 otherwise it will create a directory inside /opt
+
+ sudo rsync --progress -ahvz seafile-data.zip root@192.168.1.3:/newhome/  =====> example while taking GB size data include --progress
+
+ rsync --ignore-existing --progress -ahvz utorrent-server-alpha-v3_3/ root@192.168.1.3:/tmp/rsync.bak  ===> skipping existing one 
+
+################  before doing any rsync runn dry run to check for errors  ##############################
+
+

@@ -1,0 +1,16 @@
+cat /tmp/ftp/ftp |awk -F "/" '{$1=$2=$3=$4="";print}'|sed 's/^\s\+//g;s/ /\\ /g'|head -20
+
+for x in `ls -l /tmp/trial/|grep ^d|awk '{print $NF}'`;do grep "^/ftp/${x}" /tmp/ftp/ftp;done|head -20
+
+for x in `ls -l /tmp/trial/|grep ^d|awk '{print $NF}'`;do grep "^/ftp/${x}" /tmp/ftp/ftp||awk -F "/" '{$1=$2=$3=$4="";print}'|sed 's/^\s\+//g;s/ /\\ /g';done|head -20
+
+for x in `ls -l /tmp/trial/|grep ^d|awk '{print $NF}'`;
+	do grep "^/ftp/${x}" /tmp/ftp/ftp|awk -F "/" '{$1=$2=$3=$4="";print}'|sed 's/^\s\+//g;s/ /\\ /g'|while read dir;
+	do echo "/tmp/trial/${x}/${dir};
+	done;
+done
+
+for x in `ls /tmp/trial`;do rm -rf /tmp/trial/${x}/*;done
+
+find /tmp/trial -type d
+

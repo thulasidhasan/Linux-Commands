@@ -1,0 +1,32 @@
+[muthu@vaithee ansible]$ cat ansible.cfg
+[defaults]
+host_key_checking=False
+inventory = muthuhost
+
+
+[muthu@vaithee ansible]$
+
+
+[muthu@vaithee ansible]$ cat muthuhost
+[myhost1]
+10.110.208.146
+10.110.208.115
+[Application]
+10.110.208.15
+10.110.208.47
+[db]
+10.110.208.34
+10.110.208.229
+[Allgroup:children]
+myhost1
+Application
+db
+[Allgroup:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+
+
+
+[muthu@vaithee ansible]$

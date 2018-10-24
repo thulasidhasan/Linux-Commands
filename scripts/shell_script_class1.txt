@@ -1,0 +1,419 @@
+SHELL:
+======
+
+What is a shell?
+
+Shell is nothing but an interface between the user and the system (OS)
+
+Is shell programming a structured programming language ?
+
+No
+
+For example:
+
+C C++ Java are all structured programming languages.
+
+where in as shell programming contains group of Linux commands with condition, looping, function, variables..etc
+
+Bang:
+=====
+Bang for shell programming can be :
+
+#!/bin/bash
+or
+#!/bin/ksh
+or
+#!/bin/csh
+
+
+what is a Bang ?
+
+Bang is a reference through which the script is been understood while executing.
+
+why Bang becomes necessory?
+
+for example: 
+
+we can run any script (shell, python, perl, go) if the script has got executable permission.
+
+path of the script can be called for exection or if the script is in the current directory, can be called for execution as: ./script
+
+Regardless of execting a script without a command like python perl sh, the bang should be there.
+
+
+Here in the entire classes we will see #!/bin/bash as the bang.
+And at the end of the course, we will see the differences between various shells.
+
+
+STDIN ?
+
+the standard input given to the system thorugh keyboard
+
+In Numbers: 0
+
+STDOUT =1
+
+the processed output given by the system through the monitor 
+
+
+STDERR =2 ?
+
+the unacceptable command/syntax errors and warnings given by the system through the monitor
+
+In Numbers: 2
+
+
+Let's prove:
+
+make a program starts with #!/bin/bash as bang
+then having the below commands
+ls
+lsa
+
+we know that "ls" is a proper command for listing
+
+but "lsa" is not a valid command
+
+make the file executable 
+
+now execute:
+
+result : 
+
+a STDOUT =1
+a STDERR =2
+
+1) eleminate the STDERR
+
+./script 2>/dev/null
+
+Note: /dev/null is a NULL device which can take inputs and sparsh
+
+2) eleminate the STDOUT 
+
+./script 1>/dev/null
+
+3) eleminate both
+
+./script >/dev/null 2>&1
+
+================================================================= 
+
+output redirection:
+===================
+
+>   single redirection
+
+>>  double redirection
+
+
+Note: This is used to redirect the output to a file
+
+
+for example:
+============
+
+ls > file1  ###creates a file with the output
+
+ls >> file1 ###updates/appends the file with the output
+
+Do you get STDOUT/STDERR while redirecting ?
+
+if the command has error, then the error appears in the STDERR and if there is any STDOUT goes only to the file and not to the monitor
+
+./script 2 > file3  ### catches only the error
+
+./script > file4 ###catches only the STDOUT
+
+we shall redirect both (STDOUT + STDERR) 
+
+./script > file5 2>&1
+
+
+tee:
+====
+
+this command does multiple redirection
+
+./script |tee file8
+
+./script 2>&1 | tee file9
+
+Note: Be careful while using tee command, because it overwrite the output file.
+
+./script |tee -a file10 ###appends
+
+Variables:
+==========
+for example:
+
+x+5=6 
+
+what is the value of x ?
+
+1
+
+same like that 
+
+x=1
+
+echo "$x"
+
+echo '$x'
+
+sample program:
+---------------
+
+#!/bin/bash
+Name=Sandeep   ### here Name is a variable (initialize)
+Age=25         ### here Age is a variable  (initialize)
+echo "The name is $Name and his age is $Age"  (utilizing)
+
+Note: while expressing/using the variable we need to give $ before it. The value of a variable can be changed in running.
+
+same program with echo having single quotes:
+--------------------------------------------
+
+The name is $Name and his age is $Age
+The name is $Name and his age is $Age
+
+Escape sequence:
+----------------
+
+[root@veecube7 shell]# echo """ ###is wrong
+> ^C
+[root@veecube7 shell]# echo "\""  ###is right
+"
+Note: Escape sequence will not work inside single quotes
+
+please try to print \
+
+[root@veecube7 shell]# echo "\\"
+\
+
+STDIN:
+------
+
+read:
+-----
+
+#!/bin/bash
+echo "Please enter the Name"
+read a
+echo "Please enter the Age"
+read b
+echo "The name is $a and the age is $b"
+
+###displaying the request/order/message using read command
+
+read -p "Please enter the Name: " a
+read -p "Please enter the Age: " b
+
+Command line Argument:
+----------------------
+
+Note: CLIARG should be given in the execution command line of the script
+
+./script sandeep 25
+
+here 
+	$0 is the script 
+	$1 is sandeep
+	$2 is 25
+
+#!/bin/bash
+echo "The name is $1 and the age is $2"
+
+to count the number of CLIARG inputs
+
+echo "$#"
+
+sample program:
+
+#!/bin/bash
+echo "The name of the script is $0"
+echo "The number of argumants given in the command line are: $#"
+echo "The \$1 is $1 and the \$2 is $2"
+echo "The name is $1 and the age is $2"
+echo "The arguments given in the command line are: $*"
+echo "The arguments given in the command line are: $@"
+echo "The whole command line is: sh $0 $*"
+echo "The whole command line is: sh $0 $@"
+
+Arithmatic operation:
+=====================
+
+add  +
+sub  - 
+mul  \*
+div  \/
+mod  %
+avg  55 \/ 65 \*100
+
+command : expr
+
+expr $a + $b
+expr $a - $b
+expr $a \* $b
+expr $a \/ $b
+expr $a % $b
+expr $a \/ $b \* 100
+
+Assign a command to variable:
+-----------------------------
+Example1:
+---------
+
+my_machine=`hostname`
+
+or 
+
+my_machine=$(hostname)
+
+echo "$my_machine"
+
+
+Example2:
+---------
+
+c=`expr $a + $b`
+c=$(expr $a + $b)
+echo "the added value of $a and $b is $c"
+
+Write a calculator program and take two inputs and do add,sub,mul,div,mod,avg
+
+
+Pipe Line Sequence:
+===================
+
+1) grep "void: -v" "case_senstive_less: -i" "recurssive: -r"
+2) cut
+3) sort
+4) wc  "line: wc -l"  "word: wc -w" "char: wc -c"  
+5) head
+6) tail
+7) uniq
+
+some result been put to a pipe 
+
+|   symbol for pipe
+
+Examples:
+---------
+
+ls -l / |grep ^d
+
+$# stores all the commandline arguments
+
+cat /etc/passwd | grep bash$
+
+cat /etc/passwd | grep bash$ |wc -l
+
+grep void:
+----------
+
+grep -v bash$ /etc/passwd |wc -l
+
+cat /etc/passwd | wc -l 
+
+grep root /etc/passwd |wc -l
+
+grep sys /etc/passwd |wc -l
+
+grep -i sys /etc/passwd |wc -l
+
+what is delimeter ?
+
+delimeter is a separator
+
+
+echo " hi hello how are you? "  ###here space_bar is the delimeter
+
+grep root /etc/passwd   ### what is the delimeter ?
+
+user_name:passwd:uid:gid:description:home_dir:shell
+
+cut -d ":" -f1 /etc/passwd  ### shows only the user_name
+
+user_name:shell  #### cut -d ":" -f 1,7 /etc/passwd
+
+cutting the char:
+-----------------
+
+echo "hi hello how are you?"|cut -c1,2,3,4,5
+
+
+head:
+-----
+to display only the first line:  head -1 /etc/passwd
+
+to display first 3 lines: head -3 /etc/passwd
+
+to display the last line: tail -1 /etc/passwd
+
+to display last 2 lines: tail -2 /etc/passwd
+
+to display the 15th line: head -15 /etc/passwd |tail -1
+
+
+cut -d ":" -f1 /etc/passwd  ###rough output
+cut -d ":" -f1 /etc/passwd|sort   ###sorted output
+
+sort file10  ###sorted output with duplicates
+sort -u file10  ### without duplicates
+sort file10|uniq -d  ###shows only the duplicates
+
+
+Write a program to take inputs:
+
+group_name
+gid
+user_name
+uid
+description
+home_dir
+shell
+
+
+groupadd --gid <gid> group_name
+useradd --gid <gid> --uid <uid> -c "<description>" --home <home_dir> --shell <shell> <user_name>
+
+grep ^<user_name> /etc/passwd
+grep ^<group_name> /etc/group
+
+bc: binory calculator
+---------------------
+
+echo "5+10" | bc
+echo "$a+$b" |bc
+echo "$a*$b" |bc
+echo "10/3" |bc
+
+output to a variable:
+---------------------
+
+result=$(echo "10/3" |bc)
+or
+result=`echo "10/3" |bc`
+
+
+
+==============================================================================================
+ 1961  grep bash$ /etc/passwd | wc -l
+ 1962  cat /etc/passwd | grep bash$ wc -l
+ 1963  cat /etc/passwd | grep bash$ | wc -l
+ 1964  grep -v bash$ /etc/passwd | wc -l
+ 1965  cat /etc/passwd | wc -l
+ 1966  grep -i bash$ /etc/passwd | wc -l
+ 1967  grep root /etc/passwd | wc -l
+ 1968  grep sys /etc/passwd | wc -l
+ 1969  grep -i sys /etc/passwd | wc -l
+ 1970  grep -i sys /etc/passwd | wc -c
+ 1971  grep root /etc/passwd
+ 1972  cut -d ":" -f1 /etc/passwd
+ 1973  cut -d ":" -f1 -f4 /etc/passwd
+ 1974  cut -d ":" -f1,-f4 /etc/passwd
+ 1975  cut -d ":" -f1,4 /etc/passwd
+============================================================================================
+sudo useradd --gid 2000 --uid 1888 -c "normaluser" --home /home/imran --shell /bin/ksh imran
+============================================================================================

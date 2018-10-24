@@ -1,0 +1,85 @@
+OpenLdap:
+=========
+
+yum install openldap-servers openldap-clients nss-pam-ldapd migration tools
+
+rm -rf /var/lib/ldap/*
+
+rm -rf /etc/openldap/slapd.d/*
+
+cp /usr/share/openldap-....(version)/DB_CONFIG.EXAMPLE /var/lib/ldap/DB_CONFIG
+
+cp /usr/share/openldap-....(version)/slapd.conf.example /etc/openldaP/slapd.conf
+
+vi /etc/openldap/slapd.conf
+
+#remove the comments for the module path
+
+slaptest -f slapd.conf -F slapd.d
+
+chmod -R 750 /etc/openldap/slapd.d
+chmod -R 700 /var/lib/ldap 
+chown -R ldap.  /etc/openldap/slapd.d
+chown -R ldap. /var/lib/ldap
+
+service slapd start
+
+cd /usr/share/migrationtools
+
+sed -i 's/padl/chakola/g' common.ph 
+
+##create a group "ldapusers", create two users ldapuser1 & ldapuser2 an
+d provide passwd to them
+
+###filter only the group name entry "ldapusers" from /etc/group to /tmp/grp
+###filter only the users start with "ldapuser" from /etc/passwd to /tmp/user
+
+./migrate_group /tmp/group > /tmp/group.ldif
+./migrate_passwd /tmp/user > /tmp/user.ldif
+./migrate_base > /tmp/base.ldif
+
+#########first add
+###remember cn=manager,dc=chakola,dc=com is the previleged manager for the ldap here
+
+ldapadd -x -h <ip_of_the_server> -D "cn=manager,dc=chakola,dc=com" -W -f /tmp/base.ldif
+
+ldapadd -x -h <ip_of_the_server> -D "cn=manager,dc=chakola,dc=com" -W -f /tmp/group.ldif
+
+ldapadd -x -h <ip_of_the_server> -D "cn=manager,dc=chakola,dc=com" -W -f /tmp/user.ldif
+
+###where "x" in the sense "no certificate", "h" in the sense "ldap_server", -D is binddn, "W" is "provided auth" and "f" denotes that a file path is followed.
+
+##simple ACL: (will be added to bdb-ldif file under cn\=config)
+=============
+
+ldapmodify -Y EXTERNAL -H LDAPI:/// 
+dn: olcDatabase={2}bdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess:{0} to attrs=userPassword by self write by * auth
+olcAccess:{1} to * by * read
+
+<ctrl-d> 
+
+####delete the group "ldapusers" and users "ldapuser*"
+
+client side:
+============
+
+yum install openldap-clients nss-pam-ldapd
+
+authconfig-tui
+(select only ldap auth in right and not in the left side, continue to provide server & dc details)
+
+###(nslcd starts)
+
+
+authconfig --enablemkhomedir --updateall
+
+
+#####edit /etc/nsswitch.conf to inform the system-auth that "not just files like /etc/passwd, /etc/group & /etc/shadow is there for auth and ldap is also there"
+
+getent passwd 
+getent group
+###(you would be able to see the new users,group created in the server and you can use them with auth)
+----------------------------------------

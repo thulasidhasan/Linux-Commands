@@ -1,0 +1,150 @@
+Rsyslog:
+--------
+
+[root@dlp ~]# vi /etc/rsyslog.conf
+# line 19-20: uncomment
+$ModLoad imtcp
+$InputTCPServerRun 514
+# specify senders you permit to access
+$AllowedSender TCP, 127.0.0.1, 10.0.0.0/24, *.srv.world
+[root@dlp ~]# systemctl restart rsyslog 
+
+
+[root@node01 ~]# vi /etc/rsyslog.conf
+# for exmaple, output logs for "authpriv.*" to remote host
+authpriv.*     @@dlp.srv.world:514
+# line 73: uncomment all
+$ActionQueueFileName fwdRule1 # unique name prefix for spool files
+$ActionQueueMaxDiskSpace 1g   # 1gb space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on # save messages to disk on shutdown
+$ActionQueueType LinkedList   # run asynchronously
+$ActionResumeRetryCount -1    # infinite retries if host is down
+
+
+systemctl restart rsyslog 
+
+
+tail -10 /var/log/secure 
+
+[root@dlp ~]# vi /etc/rsyslog.conf
+# add: define logfiles
+$template Secure_log,"/var/log/secure.d/%fromhost%_%$year%%$month%%$day%.secure"
+# add: specify logfiles defined above
+authpriv.*     -?Secure_log
+[root@dlp ~]# systemctl restart rsyslog
+[root@dlp ~]# ll /var/log/secure.d 
+total 8
+-rw-r--r-- 1 root root 350 Jun 17 11:34 dlp_20150617.secure
+-rw-r--r-- 1 root root 380 Jun 17 11:34 node01.srv.world_20150617.secure
+
+
+[root@node01 ~]# vi /etc/rsyslog.conf
+# for exmaple, output logs for "authpriv.*" to remote host
+authpriv.*     @@dlp.srv.world:514
+# line 73: uncomment all
+$WorkDirectory /var/lib/rsyslog # where to place spool files
+$ActionQueueFileName fwdRule1   # unique name prefix for spool files
+$ActionQueueMaxDiskSpace 1g     # 1gb space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+$ActionQueueType LinkedList     # run asynchronously
+$ActionResumeRetryCount -1      # infinite retries if host is down
+
+[root@node01 ~]# /etc/rc.d/init.d/rsyslog restart 
+Shutting down system logger: [ OK ]
+Starting system logger: [ OK ]
+
+
+	If you'd like to separate logs for a Host, for a date, Configure like follows.
+[root@dlp ~]# vi /etc/rsyslog.conf
+# add: define logfiles
+$template Secure_log,"/var/log/secure.d/%fromhost%_%$year%%$month%%$day%.secure"
+# add: specify logfiles defined above.
+authpriv.*     -?Secure_log
+[root@dlp ~]# /etc/rc.d/init.d/rsyslog restart 
+Shutting down system logger: [ OK ]
+Starting system logger: [ OK ]
+[root@dlp ~]# ll /var/log/secure.d 
+total 8
+-rw------- 1 root root 376 Apr  2 12:58 10.0.0.51_20150402.secure
+
+
+yum install rsyslog
+
+
+vi /etc/rsyslog.conf
+
+Then, append the below line at the end of the file as illustrated in the below excerpt.
+*. *  @192.168.10.254:514
+
+If the remote log server is configured to listen only on TCP connections or you want to use a reliable transport network protocol, such as TCP, add another @ character in front of the remote host as shown in the below example:
+*. *  @@logs.domain.lan:514
+
+The Linux rsyslog also allows has some special characters, such as = or !, which can be prefixed to priority levels to indicate “this priority only” for equal sign and “not this priority or higher than this”.
+Some samples of Rsyslog priority level qualifiers in CentOS 7:
+* 		kern.info = kernel logs with info priority and higher.
+* 		kern.=info = only kernel messages with info priority.
+* 		kern.info;kern.!err = only kernel messages with info, notice, and warning priorities.
+* 		kern.debug;kern.!=warning = all kernel priorities except warning.
+* 		kern.* = all kernel priorities messages.
+* 		kern.none = don’t log any related kernel facility messages regardless of the priority.
+For instance, assuming you want to send only a specific facility messages to a remote log server, such as all related mail messages regardless of the priority level, add the below line to rsyslog configuration file:
+
+mail.* @192.168.10.254:514 
+5. Finally, in order to apply the new configuration, Rsyslog service needs to be restarted in order for the daemon to pick-up the changes, by running the below command:
+# systemctl restart rsyslog.service
+6. If for some reasons Rsyslog daemon is not enabled during the boot time, issue the below command to enable the service system-wide:
+# systemctl enable rsyslog.service
+Step 3: Send Apache and Nginx Logs to a Remote Log Server
+7. Apache HTTP server can be configured to send logs messages to a remote syslog server by adding the following line to its main configuration file as illustrated in the below example.
+# vi /etc/httpd/conf/httpd.conf
+
+On Apache main conf file add the below line.
+CustomLog "| /bin/sh -c '/usr/bin/tee -a /var/log/httpd/httpd-access.log | /usr/bin/logger -thttpd -plocal1.notice'" combined
+The line will enforce the HTTP daemon to write the log messages internally to the filesystem log file, but also process the messages further through a pipe to logger utility, which will send them to a distant syslog server, by marking them as coming from the local1 facility.
+8. If you want to also direct Apache error log messages to a remote syslog server, add a new rule as the one presented in the above example, but make sure to replace the name of the httpd log file and the log file severity level to match error priority, as shown in the following sample:
+ErrorLog "|/bin/sh -c '/usr/bin/tee -a /var/log/httpd/httpd-error.log | /usr/bin/logger -thttpd -plocal1.err'"
+9. Once you’ve added the above lines, you need to restart Apache daemon to apply changes, by issuing the following command:
+# systemctl restart httpd.service   
+
+On the remote Rsyslog server you need to make the following change to rsyslog configuration file, in order to receive the logs send by Apache web server.
+local1.* @Apache_IP_address:514
+
+Now edit the rsyslog config file and make the changes as shown below.
+[root@server ~]# vi /etc/rsyslog.conf
+#### MODULES ####
+$ModLoad imuxsock # provides support for local system logging (e.g. via logger command)
+$ModLoad imklog   # provides kernel logging support (previously done by rklogd)
+#$ModLoad immark  # provides --MARK-- message capability
+# Provides UDP syslog reception
+
+## uncomment ##
+$ModLoad imudp
+$UDPServerRun 514
+
+# Provides TCP syslog reception
+## Uncomment ##
+$ModLoad imtcp
+$InputTCPServerRun 514
+## Add the following lines ##
+$ModLoad ommysql
+$ModLoad ommysql
+*.* :ommysql:127.0.0.1,rsysdb,rsyslog,centos
+$AllowedSender UDP, 127.0.0.1, 192.168.1.0/24
+$AllowedSender TCP, 127.0.0.1, 192.168.1.0/24
+Let me explain some lines in the above config file.
+rsysdb                   –  Database name
+rsyslog                  – Database user
+Centos                   – rsyslog user password
+$AllowedSender  – rsyslog accepts logs from clients on both UDP and TCP ports.
+Disable all existing syslog services if you have any.
+[root@server ~]# /etc/init.d/syslog stop
+[root@server ~]# chkconfig syslog off
+
+Client setup:
+Edit /etc/rsyslog.conf
+[root@client ~]# vi /etc/rsyslog.conf
+At the end of file place the following line to point the client message log to the server
+*.info;mail.none;authpriv.none;cron.none   @192.168.0.105
+You can either mention hostname or ip address.
+Restart the syslog service
+[root@client ~]# service rsyslog restart

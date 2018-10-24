@@ -1,0 +1,77 @@
+AWK:
+----
+
+echo "hi hello how are you" |awk '{print}'  --- printing the whole
+
+echo "hi hello how are you" |awk '{print $1}'  --- printing the selected
+
+## only "hi" is getting printed
+
+echo "hi hello how are you" |awk '{print $1" "$2}' --- printing with space
+
+echo "hi hello how are you" |awk '{print $NF}' --- prints the last column
+
+echo "hi hello how are you" |awk '{Print $(NF-1)}' --- prints the column 1 b4 the last
+
+echo "hi hello how are you" |awk '{($1 = "");print }' ---avoiding the first field
+
+echo "hi_hello_how_are_you" |awk -F "_" '{print $1" "$2}' ---with delimeter
+
+echo "Hi_hello_how_are_you" |awk -F "_" '{($1=$2="");print}' ---omits $1 and $2
+
+awk -F: '/root/ { gsub("root","good",$1);print}' /etc/passwd --search  and replace
+
+awk -F ":" 'BEGIN{s=1}{s=s+$3;print s }' /etc/passwd  ---with variable
+
+awk 'BEGIN {FS=":";OFS="|"}{print $1,$3}' /etc/passwd  --- print with delimeter
+
+awk -F ":" ' BEGIN { print "number occurances of nologin in an user information 
+file"; }
+/nologin/ { counter+=1 ; }
+END { printf "%s\n", counter ; }
+' /etc/passwd
+
+
+size=$1
+if [ $size -ge 1048576 ]; then 
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1048576}'M
+fi
+echo $size
+
+$ awk '{
+if ($3 >=35 && $4 >= 35 && $5 >= 35)
+	print $0,"=>","Pass";
+else
+	print $0,"=>","Fail";
+}' student-marks
+
+########################################################## example for awk to cut particular filed#####################################################
+
+[root@localhost ~]# cat extract.txt 
+/logs/tc0001/tomcat/tomcat7.1/conf/catalina.properties:app.env.server.name = demo.example.com
+/logs/tc0001/tomcat/tomcat7.2/conf/catalina.properties:app.env.server.name = quest.example.com
+/logs/tc0001/tomcat/tomcat7.5/conf/catalina.properties:app.env.server.name = www.example.com
+
+[root@localhost ~]# awk -F '/' '{print $3, $5}' extract.txt 
+tc0001 tomcat7.1
+tc0001 tomcat7.2
+tc0001 tomcat7.5
+#######################################################################################################################################################
+
+########################################################## printing text by using space as a delimeter ################################################
+[root@localhost ~]# cat shopping.txt
+No	Item_Name		Unit_Price	Quantity	Price
+1	Mouse			#20,000		   1		#20,000
+2 	Monitor			#500,000	   1		#500,000
+3	RAM_Chips		#150,000	   2		#300,000
+4	Ethernet_Cables	        #30,000		   4		#120,000
+
+[root@localhost ~]# awk -F ' ' '{print $2, $3}' shopping.txt
+Item_Name Unit_Price
+Mouse #20,000
+Monitor #500,000
+RAM_Chips #150,000
+Ethernet_Cables #30,000
+#######################################################################################################################################################
+
+

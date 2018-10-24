@@ -1,0 +1,8 @@
+down vote
+
+Use sshpass:
+
+sshpass -p "password" scp -r user@example.com:/some/remote/path /some/local/path
+
+LFTP_PASSWORD='$N2wy0rk#'
+lftp -e 'mirror -R / /cc3/mbdownload/ftp/test' --env-password -u lmc 166.78.82.20

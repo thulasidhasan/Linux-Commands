@@ -1,0 +1,145 @@
+whoami
+
+ssh <ip> "<commands>"
+
+*the commands will only run at the remote machine, But environmental variables would be taken from the initiator machine.
+
+explicit:
+
+ssh <user@ip>
+
+
+ssh 192.168.1.173 "hostname"
+
+echo $HOSTNAME
+
+ssh 192.168.1.173 "echo $HOSTNAME"  ###hostname of Initiator
+
+In the given Example, we are storing the commands in variables, the same variables are executed in the remote machine.
+
+a='ls /root';
+b='cat /etc/passwd';
+ssh 192.168.1.173 "$a;$b"
+
+try this:
+---------
+
+ssh 192.168.1.173 "host_name=`hostname`;echo $hostname"
+
+solution for this issue:
+------------------------
+
+1) create a file with whatever commands to be executed
+
+2) `cat` the file to a pipe
+
+3) ssh login to remote machine
+
+4) cat the file from the pipe and re-direct it to a file in /tmp
+
+5) execute the file in /tmp with 'sh' command
+
+6) after execution give 'rm -f </tmp/file>'
+
+** in this case the STDOUT in the intiator machine can show the output
+ 
+
+try this:
+---------
+
+a) try the above same method having variables in the script like:
+
+try to print all the users having UID more than 500.
+
+
+cat /tmp/f2
+#!/bin/bash
+uid=$(head -$1 /etc/passwd|tail -1|cut -d: -f3);
+[ $uid -gt 500 ] && echo $uid
+##eof
+
+line=63;cat /tmp/f2 |ssh 192.168.1.173 "cat >/tmp/f2;sh /tmp/f2 $line;rm -f /tmp/f2"
+
+
+for loop:
+---------
+
+###with counts
+
+for (( <variable>=<integer_value>;<condition>;<inc/dec> ));
+
+do 
+
+<statements>
+
+done 
+
+For Example:
+------------
+
+for (( x=0;x<10;x++ ));
+do echo $x;
+done;
+
+
+try this:
+---------
+
+seq command:
+------------
+
+seq 9 ##gives
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+seq 10 15 ##gives
+
+10
+11
+12
+13
+14
+15
+
+Make a script 'sequ' to function same like seq, using 'for' loop
+
+
+! [ $1 ] && echo "NO CLI ARG1" && exit 1
+for (( x=1;x<=$1;x++ ));
+do
+echo $x
+done
+
+! [ $2 ] && echo "NO CLI ARG2" && exit 1
+for (( x=$1;x<=$2;x++ ));
+do
+echo $x
+done
+
+combining both:
+---------------
+#!/bin/bash
+! [ $1 ] && echo "NO CLI ARG1" && exit 1
+[ $1 -lt 0 ] || [ $2 -lt 0 ] && exit 1
+###now satified with $1 at the least
+if ! [ $2 ]; 
+then
+for (( x=1;x<=$1;x++ ));
+do
+echo $x
+done
+else 
+for (( x=$1;x<=$2;x++ ));
+do
+echo $x
+done
+fi
+

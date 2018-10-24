@@ -1,0 +1,109 @@
+for loop:
+---------
+
+for (( x=0;x<10;x++ )) ;do 
+
+echo $x
+
+done
+
+
+
+for x in linux unix redhat ubuntu;do 
+
+echo $x
+
+done
+
+
+seq:
+----
+
+seq 1 10
+
+seq 10
+
+seq 0 10
+
+for x in $(seq 10); do
+echo $x
+done
+
+
+for x in `seq 10` ;do 
+echo $x
+done
+
+for x in `cat /etc/passwd`;do 
+echo $x
+done
+
+###by default for loop takes space as the delimeter
+
+
+for x in `seq 0 9`;do 
+for y in `seq ${x}0 ${x}9`;do 
+echo $y
+done
+done
+
+Please write a program to display:
+
+USER	UID	GID	SHELL
+
+###those user's UID less than 500
+
+###clue: use sed 's/\s\+/_/g' ---changes the spaces into _
+
+sed 's/\s\+/_/g' /etc/passwd >>/tmp/passwd
+
+echo -e "NAME\t\t\tUID\tGID\tSHELL";
+for x in `cat /tmp/passwd`;
+do 
+uid=`echo $x|cut -d: -f3`;
+if [ $uid -lt 500 ];
+then 
+name=`echo $x|cut -d: -f1`;
+gid=`echo $x|cut -d: -f4`;
+shell=`echo $x|cut -d: -f7`;
+echo -e "${name}\t\t\t${uid}\t${gid}\t${shell}";
+fi;
+done
+
+Please write a program to take strings from CLI and to search in /etc 
+
+
+#!/bin/bash
+read -p "string to search: " input
+read -p "directory in which to check: " direct
+! [ -d $direct ] && echo "no such directory $direct" && exit 1
+for x in `grep -r $input $direct|cut -d: -f1`;do
+echo -e "${input}:\t$x
+done 
+
+
+Please write a program for displaying the below format:
+
+
+GROUP		USER	
+
+
+Please take the inputs from /etc/group file and search the entries in /etc/passwd
+
+#!/bin/bash
+for x in `cat /etc/group`;
+do for y in `cat /tmp/passwd`;
+do grp_gid=`echo $x|cut -d: -f3`;
+pass_gid=`echo $y|cut -d: -f4`;
+if [ "$pass_gid" == "$grp_gid" ];then
+name=`echo $y|cut -d: -f1`;
+grp_name=`echo $x|cut -d: -f1`;
+[ $grp_gid -gt 500 ] && echo -e "$grp_name\t$grp_gid\t$name";
+fi;
+done;
+done
+
+
+
+
+

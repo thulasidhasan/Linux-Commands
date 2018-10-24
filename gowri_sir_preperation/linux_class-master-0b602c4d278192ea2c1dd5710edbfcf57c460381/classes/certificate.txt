@@ -1,0 +1,161 @@
+how certification authority works ?
+
+http   80 without certificate ... works with plain text format
+
+https 443 
+
+there is a certificate , verified
+
+from when and till when 
+
+common name corresponding to it 
+
+organisationalUnit info
+
+signing authority signed the certificate 
+
+serial number 
+
+issued date
+
+create a key 
+
+ceriticate signing request using the key 
+
+certification authority signs and sends back to you , which is ready to use on a web server
+
+key becomes must while using csr
+
+cd /etc/pki/tls
+
+transport layer security
+
+/etc/pki/tls/openssl.conf
+
+"
+[ ca ]
+default
+
+/etc/pki/CA (confirm)
+
+certs   ... to put the certificate 
+
+crl - ceritificate revokation list
+
+touch index.txt under /etc/pki/CA
+
+to keep the tracks of indexes 
+
+change cacert.pem ..... ca.crt
+
+touch serial under /etc/pki/CA
+
+crl crl.pem
+
+private_key private/ca.key
+
+openssl genrsa -des3 2048 > private/ca.key
+
+asks passphrase: myca
+
+ls -ld private ... has to be 700
+
+default_days = 365
+
+
+policy = policy_match 
+
+countryname =match
+stateprovince =match
+organisationalUnit =match
+commonName =supplied
+emailAddress =optional
+
+
+[ req ]
+
+2048
+
+privkey.pem
+
+[ distinguished_name ]
+
+IN
+Karnataka
+Bangalore
+
+ou veecitech
+
+write and quit
+
+create certificate 
+
+for organisation use self signed 
+
+openssl req -new -x509 -key private/ca.key -out ca.crt -days 365
+enter the passphrase : myca
+country 
+.. default
+
+
+analyse the CA once again :
+
+openssl x509 -n ./ca.crt -dates -issuer -noout
+
+issuer and subject are same being it is a self signed authority 
+
+openldap:
+
+ldaps protocol works on 636
+
+ssl conf
+private key 
+generate request or certificate signing request csr 
+
+get the certicate signed from signing authority
+
+openssl genrsa -des3 2048 > ldap1.key
+
+openssl req -new -key ./ldap1.key -days 365 -out ldap1.csr
+
+provide passphrase 
+
+IN 
+Karnataka
+Bangalore
+veecitech
+IT
+<same.server.name>
+scp ldap1.csr to certificate authority 
+openssl ca -in /tmp/ldap1.csr -out /tmp/ldap1.crt
+send back the certicate 
+
+send the ca.crt also
+
+ldif :
+
+dn: cn=config
+changetype: modify
+add: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/openldap/ca.crt
+-
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/openldap/ldap1.crt
+-
+add: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/openldap/ldap1.key
+
+remove the passwd from ldap1.key
+
+
+mv ldap1.key ldap1.key.pass
+
+openssl rsa -in ldap1.key.pass -out ldap1.key 
+
+preparation of certicate authority server :
+
+
+
+
+
+http://epel.mirror.net.in/epel/7/x86_64/	epel-release-7-10.noarch.rpm

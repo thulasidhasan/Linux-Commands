@@ -1,0 +1,92 @@
+
+
+###############   how to install oracle java on centos 7 ################################### to install tomcat we need to config java & set javapath
+
+to get java 
+[root@localhost ~]# wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jre-9.0.4_linux-x64_bin.rpm"
+
+you can download latest version of oracle java on website
+
+
+[root@localhost ~] yum localinstall jre-9.0.4_linux-x64_bin.rpm  this is the pkg you downloded from internet
+
+$ java -version =====> to check the java version
+
+$ sudo update-alternatives --config java ======>To print the programs that provide the java command that are managed by alternatives, use this command:
+
+now copy the /usr/java   ====> full path and open /etc/enviroment/  type JAVA_HOME="/usr/java/jre-9.0.4/bin/java" save it
+
+###################  how to install tomcat ################################33
+
+
+
+   60  groupadd tomcat  
+   61  useradd -g tomcat tomcat
+   62  useradd tomcat
+   63  usermod -g tomcat tomcat    ( add that tomcat user to tomcat group)
+   56  chmod -R 777 /opt            /opt is use too install 3rd party pkg
+   70  cd /opt/
+   71  wget http://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.30/bin/apache-tomcat-8.5.30.tar.gz    (this .tar.gz file you will get in tomcat site   
+   72  tar -xvf apache-tomcat-8.5.30.tar.gz  ===> extract the downloaded file
+   73  mv apache-tomcat-8.5.30 tomcat
+   74  chgrp -R tomcat /opt/tomcat
+   76  cd tomcat/
+   84  chmod -R g+r conf
+   85  chmod g+x conf
+   86  chown -R tomcat:tomcat webapps/ work/ temp/ logs/
+   87  netstat -tulpn   =========>  check the port 8080 is listening or not  ( if not listening means start it in bin directory) 
+   88  cd bin/
+   89  ./startup.sh  check the port is listening or not  ( in browser type http://yourip:8080)
+              now tomcat is started
+                  
+            NOW try to login with (manager app)
+             
+                  source ===>  https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-8-on-centos-7
+
+             vi webapps/manager/META-INF/vi context.xml
+
+
+      (for ubuntu users) 
+Get the default java path by running below command.
+$ sudo update-java-alternatives -l
+
+2.   Edit the enviroment file.
+
+vi /etc/environment
+
+3. setup java_home path based on the output received in step 1.
+
+JAVA_HOME=”/usr/lib/jvm/java-8-oracle”
+
+4. reactivate the enviroment.
+
+source /etc/environment
+
+5. test it
+
+echo $JAVA_HOME
+
+output :-           /usr/lib/jvm/java-8-oracle
+
+ Source :- http://askubuntu.com/a/175547
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+   
+   
+
+
+
+

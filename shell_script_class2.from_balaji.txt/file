@@ -1,0 +1,7 @@
+anaconda-ks.cfg
+file
+tee.sh
+./tee.sh: line 4: lsa: command not found
+anaconda-ks.cfg
+file
+tee.sh

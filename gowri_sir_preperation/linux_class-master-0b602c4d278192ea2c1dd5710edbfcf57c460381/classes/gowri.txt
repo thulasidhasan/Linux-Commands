@@ -1,0 +1,49 @@
+ip route add 192.168.1.0/24 dev eth0
+
+ip route delete 192.168.1.0/24 dev eth0
+
+ip route show 
+
+ip route list 
+
+route -n
+
+route-eth0
+
+ifdown eth0;ifup eth0
+
+default Gateway
+
+
+
+
+client /etc/rsyslog.conf
+authpriv.*     @@dlp.srv.world:514
+ # for exmaple, output logs for "authpriv.*" to remote host
+
+authpriv.*     @@dlp.srv.world:514
+# line 73: uncomment all
+
+$WorkDirectory /var/lib/rsyslog # where to place spool files
+$ActionQueueFileName fwdRule1   # unique name prefix for spool files
+$ActionQueueMaxDiskSpace 1g     # 1gb space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+$ActionQueueType LinkedList     # run asynchronously
+$ActionResumeRetryCount -1      # infinite retries if host is down
+
+[root@node01 ~]# /etc/rc.d/init.d/rsyslog restart 
+
+
+
+
+server:
+
+ # line 17, 18: uncomment
+
+$ModLoad imtcp
+$InputTCPServerRun 514
+# specify senders you permit to access
+
+$AllowedSender TCP, 127.0.0.1, 10.0.0.0/24, *.srv.world
+[root@dlp ~]# /etc/rc.d/init.d/rsyslog restart 
+

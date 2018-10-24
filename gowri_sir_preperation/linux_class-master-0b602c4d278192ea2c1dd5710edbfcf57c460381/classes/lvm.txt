@@ -1,0 +1,70 @@
+LVM:
+====
+
+Logical Volume Manager:
+
+what is the need ?
+
+1) online (mounted) or offline (unmounted) extending is not possible with using direct partition or device as file system.
+
+2) Direct recovery of Partition is also not possible
+
+3) Migrating a partition is also a tough task
+
+4) Mirroring a partition is not possible
+
+5) all the above 4 statements are common for both device with Partition and the device without partition
+
+what is LVM ?
+
+one or more disks (physical volume) clubbed together to form a volume group, from which Logical volumes can me made.
+
+Commands for creation :
+=======================
+
+1) pvcreate <device>
+
+2) vgcreate <new_vg_name> <pv_name>
+
+3) lvcreate -L <size> -n <lv_name> <vg_name>
+
+	(or) 
+
+3) lvcreate -l <extents> -n <lv_name> <vg_name>
+
+
+for display :
+=============
+
+1) pvs & pvdisplay
+
+2) vgs & vgdisplay
+
+3) lvs & lvdisplay
+
+
+extents:
+========
+
+Physical extents are units of default size 4MB or while creating the Volume Group the size can be altered.
+
+for example:
+
+1GB = 256 extents while single extent=4MB.
+
+
+How to address a physical volume ?
+
+/dev/sdb /dev/sdc1   ..... same name of the device itself
+
+How to address a Volume Group ?
+
+<vg_name>
+
+How to address a Logical Volume ?
+
+/dev/vg_name/lv_name
+
+	(or)
+
+/dev/mapper/vg_name-lv_name

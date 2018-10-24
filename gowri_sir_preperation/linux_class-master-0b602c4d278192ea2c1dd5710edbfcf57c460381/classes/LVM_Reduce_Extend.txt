@@ -1,0 +1,73 @@
+LVM Extend:
+-----------
+
+pv ----> vg -----> lv
+
+vgextend  
+---------
+
+vgs
+vgextend <vg_name> <new_device>
+vgs
+
+
+vgreduce 
+--------
+
+vgs
+vgreduce <vg_name> <existing_device>
+vgs
+
+--------------------------------------------------------------------
+
+lvextend
+---------
+
+*VG should have free extents
+*Mounted file systems are called online File systems
+
+with Size:
+==========
+
+lvextend -L +1G /dev/<vg_ name>/<lv_name>
+
+??? if the file system is already mounted, then 
+
+resize2fs /dev/<vg_name>/<lv_name> 
+
+df -h   ### for mounted file systems
+lvs    
+
+
+(or)
+
+
+lvextend -L +1G /dev/<vg_ name>/<lv_name> -r 
+
+
+with Extents:
+=============
+
+lvextend -l +<number_of_extents> /dev/<vg_ name>/<lv_name>
+resize2fs /dev/<vg_name>/<lv_name>
+
+(or)
+
+lvextend -l +<number_of_extents> /dev/<vg_ name>/<lv_name> -r
+
+
+lvreduce:
+---------
+
+diff_size = actual_size - final_size
+
+1) file system should not be in mounted state or online reduce is not possible
+
+	a) umount /dev/<vg_name>/<lv_name>
+	b) e2fsck -f /dev/<vg_name>/<lv_name>
+	c) resize2fs /dev/<vg_name>/<lv_name> <final_size>
+	d) lvreduce -L -<diff_size> /dev/<vg_name>/<lv_name>
+
+mount 
+df -h
+

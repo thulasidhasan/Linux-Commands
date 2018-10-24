@@ -1,0 +1,93 @@
+Linux:
+======
+
+* It is an operating system
+
+* Multi user Environment - remote 
+
+* Flavour of Unix
+
+* REDHAT ENTERPRISE LINUX - RHEL
+
+System:
+=======
+
+Input ----> Processing ------> Output
+		       ------> Error
+
+STDIN 0
+STDOUT 1
+STDERR 2 
+
+Access:
+=======
+
+* Authentication
+
+	a) Username & Password  -- text CLI command Line Interface
+	b) Finger Print - Bio_Metric -- GUI Graphical User Interface
+	c) Face recognization -- GUI Graphical User Interface
+	d) Key Based auth -- CLI & GUI
+
+ROOT:
+=====
+
+The Top most object in Linux file system hierarchy is the root  / 
+
+The directories can be compared to Branches in a tree
+
+The Files can be compared to the Leaves
+
+For example:
+
+/etc/sysconfig/network
+
+commands:
+---------
+
+pwd - present working directory
+
+whoami - which user i have logged in as ?
+
+##user=root , highly previleged user -- super user
+
+useradd <user_name>  ### user creation
+passwd <user_name>   ### change/apply password to an user
+su <user_name>   ### switch user
+exit     ### back to the previous shell
+hostname   ### shows the present machine's name
+cd ~    ### go to home dir
+su - <user_name>  ### switch user plus change pwd to the user's home
+
+
+#### Non-Previleged Users ---- /home/<user_name>
+
+#### for root user ---- the home directory is /root
+
+a) / -- top most object of a file system called ROOT
+
+b) root  -- user, who is highly previleged
+
+c) /root -- the home directory of the user: root
+
+
+what is a Shell ?
+
+Shell is an interface between the system and the user
+
+
+Practice Machine:
+-----------------
+
+IP : 192.168.1.175
+User: root
+Password : redhat
+
+cat class1 |more
+ 
+
+ 
+
+
+	
+

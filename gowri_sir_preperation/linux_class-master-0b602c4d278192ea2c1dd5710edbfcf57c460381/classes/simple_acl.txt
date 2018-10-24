@@ -1,0 +1,6 @@
+ldapmodify -Y EXTERNAL -H LDAPI:///
+dn: olcDatabase={2}bdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {0} to attrs=userPassword by self write by * auth
+olcAccess: {1} to * by * read

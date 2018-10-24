@@ -1,0 +1,19 @@
+setuid:
+-------
+
+chmod u+s <executable_file>
+
+
+Out of the super user command set (/sbin & /usr/sbin or /usr/local/sbin) if any of the commands needs to be given to unprivileged user's execution, then setuid can be used.
+
+
+setgid:
+-------
+
+same like setuid, but here the permission added to the group owner of the file
+
+chmod g+s <executable_file>
+
+
+
+ 

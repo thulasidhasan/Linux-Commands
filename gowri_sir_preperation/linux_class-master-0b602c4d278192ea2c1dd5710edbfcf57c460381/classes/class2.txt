@@ -1,0 +1,155 @@
+Directory Use:
+==============
+
+
+/  The root directory. This is where the file system tree starts.
+
+/bin  In here, you find executable programs that are needed to repair a system in a minimal troubleshooting mode. This directory is essential during boot.
+
+/boot 	Contains all files and directories that are needed to boot the Linux kernel.
+
+/dev Device files that are used for accessing physical devices. This directory is essential during boot.
+
+for Eg: /dev/hda   IDE HDD
+	/dev/sda   SATA/SCSI/SAS
+	/dev/mda   RAID
+
+
+/etc Contains configuration files that are used by programs and services that are used on your server. This directory is essential during boot.
+
+
+/home Used for local user home directories.
+
+
+/lib, /lib64 Shared libraries that are used by programs in /boot, /bin and /sbin
+
+
+/media, /mnt Directories that are used for mounting devices in the file system tree
+
+
+/opt This directory is used for optional packages that may be installed on your server.
+
+
+/srv Directory that may be used for data that is used by services like NFS, FTP and HTTP .
+
+
+/sys 	Used as an interface to different hardware devices that is managed by the Linux kernel and associated processes.
+
+
+/proc	This directory is used by the proc file system. This is a file system structure that gives access to kernel information.
+
+
+/root The home directory of the root user.
+
+
+/run Contains process and user specific information that has been created since the last boot.
+
+
+/sbin is Like /bin, but for system administration commands that are not necessarily needed by regular users.
+
+
+/tmp Contains temporary files that may be deleted without any warning during boot.
+
+
+/usr 		Directory that contains subdirectories with program files, libraries for these program files and documentation about them. Typically, many	subdirectories exist in this directory that mimic the contents of the / directory. The contents of /usr are not required during boot.
+
+
+/var Directory that contains files which may change in size dynamically, 	such as log files, mail boxes, and spool files.
+
+
+Help:
+=====
+
+which <command>   ---> location
+
+whatis <command>  ---> Description
+
+<command> --help
+
+man <command>
+
+
+Wildcards:
+==========
+
+* - to replace many characters or pattern
+
+? - to replace with one character
+
+
+to create an empty file:
+========================
+
+touch <file_name>
+
+
+list:
+=====
+
+ls  
+
+ls -l  (long_list) has several field details:
+
+a) very first letter shows the type of the file
+
+	1) -  Regular file
+	2) d  directory file
+	3) b  block file  --- /dev/sda /dev/sdb /dev/sr0 /dev/cdrom
+	4) l  symbollic link    (in windows short cut)
+	5) c  character file   -- all the interfaces /dev/tty
+	6) s  socket file     
+	7) p  pipe file
+
+b) next 9 chars shows the permission
+
+c) number used links
+
+d) User owner
+
+e) group owner
+
+f) Time and Date stamp of last modification
+
+g) file_name
+
+
+-----
+
+ls -a     (lists all with hidden files too) 
+
+the files start with . (dot) are hidden files.
+
+-----
+
+ls -R     (Recurssive)
+
+-----
+
+ls -ltr   (shows the latest at the bottom)
+
+-----
+
+ls -lt    (shows the latest file at the top)
+
+-----
+
+ls *gz    shows the files ending with gz
+
+-----
+
+ls c*     shows the files starting with c
+
+ls c?t    shows files with 3 chars , those start with c and end with t
+
+Please try :  ls c[ao]t
+
+HELP:
+=====
+
+1) <command> --help
+
+2) man <command>     (Manual page)
+
+3) whatis <command>
+
+   

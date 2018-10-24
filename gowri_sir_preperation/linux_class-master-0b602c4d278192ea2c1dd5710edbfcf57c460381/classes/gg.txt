@@ -1,0 +1,76 @@
+for help please use -h
+
+if [ "$1" == "-h" ];then echo -e '\n usage is like: \n dns.sh oldap 192.168.0.55';fi
+
+function help {
+echo "the format has to be add/del name without domain and the last_octet_of_ip. covers only 192.168.0 series"
+echo -e "\n usage is like: \n dns.sh oldap 192.168.0.55"
+}
+
+
+[epel]
+name=Extra Packages for Enterprise Linux 6 - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/6/$basearch
+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+
+[epel-debuginfo]
+name=Extra Packages for Enterprise Linux 6 - $basearch - Debug
+#baseurl=http://download.fedoraproject.org/pub/epel/6/$basearch/debug
+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-debug-6&arch=$basearch
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+gpgcheck=1
+
+file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+
+
+Alias /phpldapadmin /usr/share/phpldapadmin/htdocs
+Alias /ldapadmin /usr/share/phpldapadmin/htdocs
+
+<Directory /usr/share/phpldapadmin/htdocs>
+  Order Deny,Allow
+  Deny from all
+  Allow from 127.0.0.1 192.168.0.0/24
+  Allow from ::1
+</Directory>
+
+
+<VirtualHost 192.168.0.203:80>
+    #ServerAdmin webmaster@192.168.0.203
+    DocumentRoot /var/www/html
+    ServerName ldapserver1.veecitech.com
+    Redirect permanent /superldap   http://ldapserver1.veecitech.com/superldap
+    ErrorLog logs/dummy-host.example.com-error_log
+    CustomLog logs/dummy-host.example.com-access_log common
+</VirtualHost>
+
+
+yum install httpd 
+
+vi /etc/httpd/conf/httpd.conf
+
+vi /var/www/html/index.html
+
+<VirtualHost 192.168.0.203:80>
+    #ServerAdmin webmaster@192.168.0.203
+    DocumentRoot /var/www/html
+    ServerName ldapserver1.veecitech.com
+<Directory /var/www/html/sample>
+    Order Allow,Deny
+    Allow from all
+</Directory>
+
+
+
+
+
+
+
+
+
+

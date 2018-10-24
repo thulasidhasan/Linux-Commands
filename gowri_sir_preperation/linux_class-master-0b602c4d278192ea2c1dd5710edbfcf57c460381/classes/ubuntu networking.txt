@@ -1,0 +1,62 @@
+## Network manager
+# Stop the current process
+sudo /etc/init.d/NetworkManager stop
+# Start: sudo /etc/init.d/NetworkManager start
+
+# The inofficial way:
+sudo chmod -x /etc/init.d/NetworkManager
+# Reverse: sudo chmod +x /etc/init.d/NetworkManager
+# The official way:
+sudo update-rc.d -f NetworkManager remove
+# Reverse: sudo update-rc.d -f NetworkManager defaults 50
+
+# Or remove the network manager package.
+sudo aptitude purge network-manager
+# Reverse: sudo aptitude install network-manager
+
+## wicd
+# Stop the current process
+sudo /etc/init.d/wicd stop
+# Start: sudo /etc/init.d/wicd start
+
+# The inofficial way:
+sudo chmod -x /etc/init.d/wicd
+# Reverse: sudo chmod +x /etc/init.d/wicd
+
+# The official way:
+sudo update-rc.d -f wicd remove
+# Reverse: sudo update-rc.d -f wicd defaults 20
+
+# Or remove the wicd package.
+sudo aptitude purge network-manager
+# Reverse: sudo aptitude install network-manager
+
+Note: At some point Ubuntu started using upstart instead of the /sbin/init/ daemon. Thus if the first command above does not stop Network Manager, try this.
+
+sudo stop network-manager
+
+sudo vi /etc/network/interfaces
+
+## To configure a dynamic IP address
+auto eth0
+iface eth0 inet dhcp
+
+## Or configure a static IP
+auto eth0
+iface eth0 inet static
+  address 192.168.1.14
+  gateway 192.168.1.1
+  netmask 255.255.255.0
+  network 192.168.1.0
+  broadcast 192.168.1.255
+
+For these settings to take effect you need to restart your networking services.
+
+sudo /etc/init.d/networking restart
+
+
+for LXC:
+--------
+
+sudo add-apt-repository ppa:ubuntu-lxc/lxc-stable
+sudo apt-get update

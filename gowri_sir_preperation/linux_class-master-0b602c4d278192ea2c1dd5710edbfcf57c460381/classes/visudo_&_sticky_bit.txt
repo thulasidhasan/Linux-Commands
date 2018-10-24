@@ -1,0 +1,45 @@
+Non-Privileged user -to- privileged user:
+-----------------------------------------
+
+visudo 
+
+###set the permission to the Non-Privileged user as same like the  root has.
+
+root    ALL=(ALL)       ALL
+murali  ALL=(ALL)       ALL
+
+#save the file and exit
+
+##try running super_user commands with a prefix of sudo commmon
+
+sudo fdisk -l
+
+##for the first time in a session, system would ask your password for running a super user commond with sudo prefix
+##from the next time, the system will not ask for the password while running any super user commond with sudo prefix.
+
+### the same visudo can also be done with "vi /etc/sudoers"
+
+murali  ALL=(ALL)       NOPASSWD: ALL
+##NOPASSWD allows me to run super user commonds with sudo prefix, without password
+
+### in this case "sudo -i" can make to login as root user without any password
+
+STICKY_BIT:
+-----------
+
+##It is a common area, where users can write their files and none of the other users can delete/modify an user file/dir. Precisely as usual "root" user can delete/modify any users file/dir.
+
+
+creating a sticky_bit:
+----------------------
+
+mkdir /test
+
+chmod 777 /test
+
+chmod o+t /test
+ 
+### a good example of sticky_bit is "/tmp" by default.
+
+
+

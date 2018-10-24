@@ -1,0 +1,123 @@
+Perm & Ownership 
+================
+
+user ownership:
+----------------
+
+chown <user_name/uid> <file/dir>     
+
+same commond can also be run with "-R" as recurssive.
+
+
+Group ownership:
+----------------
+
+chgrp <group_name/gid> <file/dir>
+
+same commond can also be run with "-R" as recurssive.
+
+
+changing user&group ownership at a time:
+----------------------------------------
+
+chown <user_name:group_name> <file/dir>
+
+
++++++++++++++++++++++++++++++++++++++++++++++
+
+DEC	HEX 	BIN
+----    ----    ----
+
+00	00	00
+01	01	01
+02	02	10
+03	03	11	
+04	04	100
+05	05	101
+06	06	110
+07	07	111
+08	08	1000
+09	09	1001
+10	A	1010
+11	B	1011
+12	C	1100
+13	D	1101
+14	E	1110
+15	F	1111
+
+OWNERSHIP:
+----------
+USER_OWN	GROUP_OWN	OTHERS_OWN
+
+U		G		O
+
+
+ACCESS:
+-------
+
+READ	WRITE	EXECUTE
+
+R	W	X	
+--------------------------
+u --- rwx	g --- rwx	o --- rwx
+---------------------------
+
+For Eg:
+-------
+
+ls -l /test/file2
+
+rw-r--r--       110 100 100
+		6    4   4
+
+change permission:
+------------------
+
+chmod 777 /test/file2	
+
+ls -l /test/file2
+
+rwxrwxrwx
+
+example 2:
+---------
+
+no permission for g and o
+
+chmod 700 <file/dir> 
+
+this command also can be run with -R as recurssive
+
+
+example 3:
+-----------
+
+
+chmod g+r <file/dir>
+
+example 4:
+----------
+
+chmod u-x  <file/dir>
+
+
+exmaple 5:
+---------
+
+chmod ugo+w <file/dir>
+
+Rule : without execute permission none can enter a dir
+
+
+example 6:
+----------
+
+chmod -R 755 <DIR> 
+
+
+	 
+
+
+
+
+

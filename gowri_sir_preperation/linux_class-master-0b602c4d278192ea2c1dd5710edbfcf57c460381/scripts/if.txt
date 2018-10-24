@@ -1,0 +1,165 @@
+syntax:
+-------
+
+1) 
+if condition; then 
+<statements>
+fi
+
+if the condition succeeded then execute the statements.
+
+
+2) 
+if condition; then
+<statements 1>
+else
+<statements 2>
+fi
+
+if the condtion succeeded then execute the statements-1, else execute the statements-2
+
+3) 
+if condition1; then
+<statements 1>
+elif condition2;then
+<statement 2>
+elif condition3;then
+<statement 3>
+else
+<statements 4>
+fi
+
+if the condtion succeeded then execute the statements-1, else if try the second condition, else if try the third condition, if all fails (else) execute the statements-2
+
+conditional operators:
+-----------------------
+=======================
+
+Logical Operators:
+==================
+
+NOT:
+----
+
+!	Logical NOT.
+
+Inverts the result of the EXPRESSION	! EXPRESSION
+
+AND:
+----
+-a
+&&	Both EXPRESSION1 and EXPRESSION2 are true	EXPRESSION1 –a EXPRESSION2
+EXPRESSION1 && EXPRESSION2
+
+OR:
+---
+-o
+||	Either EXPRESSION1 or EXPRESSION2 is true	EXPRESSION1 –o EXPRESSION2
+EXPRESSION1 || EXPRESSION2
+
+
+String Operators:
+----------------
+-n	the length of STRING is nonzero	-n STRING
+-z	the length of STRING is zero	-z STRING
+=	the strings are equal	STRING1 = STRING2
+!=	the strings are not equal	STRING1 != STRING2
+
+
+
+Comparison Operators:
+--------------------
+-eq	INTEGER1 is equal to INTEGER2	INTEGER1 -eq INTEGER2
+-ge	INTEGER1 is greater than or equal to INTEGER2	INTEGER1 -ge INTEGER2
+-gt	INTEGER1 is greater than INTEGER2	INTEGER1 -gt INTEGER2
+-le	INTEGER1 is less than or equal to INTEGER2	INTEGER1 -le INTEGER2
+-lt	INTEGER1 is less than INTEGER2	INTEGER1 -lt INTEGER2
+-ne	INTEGER1 is not equal to INTEGER2	INTEGER1 -ne INTEGER2
+
+
+
+File Test Operators:
+--------------------
+-ef	FILE1 and FILE2 have the same device and inode numbers	FILE1 -ef FILE2
+-nt	FILE1 is newer (modification date) than FILE2	FILE1 -nt FILE2
+-ot	FILE1 is older than FILE2	FILE1 -ot FILE2
+-b	FILE exists and is block special	-b FILE
+-c	FILE exists and is character special	-c FILE
+-d	FILE exists and is a directory	-d FILE
+-e	FILE exists	-e FILE
+-f	FILE exists and is a regular file	-f FILE
+-h	FILE exists and is a symbolic link (same as -L)	-h FILE
+-L	FILE exists and is a symbolic link (same as -h)	-L FILE
+-r	FILE exists and read permission is granted	-r FILE
+-s	FILE exists and has a size greater than zero	-s FILE
+-w	FILE exists and write permission is granted	-w FILE
+-x	FILE exists and execute (or search) permission is granted	-x FILE
+
+
+##################################################################################
+Examples:
+---------
+
+1) #### reading a file name as input and verifying the existence of the file:
+
+#!/bin/bash
+echo "enter the file name to check"
+read file;
+if [ -e $file ];then
+echo "file present"
+else
+echo "file is not present"
+fi
+
+2) #### the same above given example 1 can be modified with test condition:
+
+#!/bin/bash
+echo "enter the file name to check"
+read file
+[ -e $file ] && echo "file present" && exit 
+echo "file is not present"
+
+3)#### the same above given example 2 can be modified with read input command to void echo:
+
+#!/bin/bash
+read -p "enter the file name to check: " file
+[ -e $file ] && echo "file present" && exit 
+echo "file is not present"
+
+4)#### the same above given example 3 can be modified with CLI ARG:
+
+#!/bin/bash
+![ $1 ] && echo "please enter a file name while executing the script $0" && exit 1
+[ -e $1 ] && echo "file present" && exit 
+echo "$1 is not present"
+
+5)####example for elif
+
+#!/bin/bash 
+![ $1 ] && echo "please enter a string while executing the script $0" && exit 1
+
+if [ "$1" == "userinfo" ];then 
+cat /etc/passwd
+elif [ "$1" == "groupinfo" ];then 
+cat /etc/group
+elif [ "$1" == "passwdinfo" ];then 
+cat /etc/shadow
+else 
+echo "entered string is invalid"
+fi 
+
+6) ####example for nested if 
+
+#!/bin/bash
+if [ $1 ];then
+echo "CLI ARG1 is present"
+###nested if starts
+if [ -e $1 ];then 
+echo "$1 file is present"
+else
+echo "$1 file is not present"
+fi
+###nested if ends
+else
+echo "No CLI ARG1 is present"
+fi

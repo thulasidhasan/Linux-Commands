@@ -1,0 +1,148 @@
+Make Directory:
+---------------
+syntax 
+	mkdir <Dir_name>
+	mkdir -p <Dir_path_with_name>
+
+change Dir:
+-----------
+syntax:
+	cd <dir_name> 
+	cd <dir_path_name>
+	cd ..      #one step back
+	cd (or) cd ~  #change to home_dir
+
+Absoulte Path:
+--------------
+for example:
+I) How to read --- /etc/sysconfig/network-scripts/ifcfg-eth0 ?
+
+	a1) cd /etc/sysconfig/network-scripts/   #use 'pwd' to confirm
+	a2) cat ifcfg-eth0
+
+	b1) cat /etc/sysconfig/network-scripts/ifcfg-eth0
+	
+II) How to copy /etc/sysconfig/network-scripts/ifcfg-eth0 to /tmp ?
+
+	a1) cd /tmp
+	a2) cp /etc/sysconfig/network-scripts/ifcfg-eth0 .
+
+	b1) cd /etc/sysconfig/network-scripts/
+	b2) cp ifcfg-eth0 /tmp
+	b3) cp ifcfg-eth0 /tmp/ifcfg-eth1  (copying with another name)
+
+	c) i don't care where i'm
+	c1) cp /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp	 
+
+COPY:
+-----
+	
+a) copy file 
+
+syntax:
+
+within a directory:	cp <source_file> <destination_file>
+
+out of the directory:	cp <source_file_path> <destination_file_path>
+
+
+b) copy directory
+
+syntax:
+
+within a directory:	cp -r <source_dir> <destination_dir>
+
+out of the directory:	cp -r <source_dir_path> <destination_dir_path>
+
+copying with wildcard:
+
+
+cp /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp
+
+cp /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp/ifcfg-eth2
+
+cp -r /etc/sysconfig/network-scripts/* /tmp
+
+cp -r /etc/sysconfig/network-scripts /tmp
+   
+
+MOVE or RENAME:
+---------------
+
+syntax:
+
+	mv <source> <destination>
+	mv <source_path> <destination_path>
+ 
+	Important: create a file or dir and then move them
+
+Concatenation:
+--------------
+
+cat <file_name> 
+
+cat <file_path_with_name>
+
+cat > <file_name>
+text1
+text2
+ctrl-d
+
+#now file has only two text lines text1 and text2
+
+cat >> <file_name>
+text3
+text4
+text5
+ctrl-d
+
+#now file has five  text lines text1,2,3,4 and text5
+
+cat > <file_name>
+text6
+text7
+text8
+ctrl-d
+
+#now file has five  text lines text6,7 and text8
+
+How to catch the STDERR ?:
+------------------------ 
+
+IO Re-Direction:
+----------------
+
+> 
+
+>>
+
+any commands output can be redirected to a file (perhaps only STDOUT)
+
+in case if you want to redirect the STDERR  
+
+command or script 2> <file_name>
+
+##create a file and put all the known commonds to it.
+
+##sh <file_name>  to execute 
+
+sh <file_name> 2>/dev/null  ###only STDOUT in screen
+sh <file_name> 1>/dev/null  ###only STDERR in screen
+
+sh <file_name> 2>/dev/null >> <file>
+sh <file_name> 1>/dev/null >> <file>
+
+sh <file_name> >/dev/null 2>&1
+
+Remove:
+-------
+
+rm <file_name>   ###asks confirmation
+
+rm -r <dir_name> ###recurssive is must to remove a directory
+
+rm -f <file>   ### force remove ... without confirmation
+
+rm -rf <dir_name>  ###remove dir and its tree without confirmation
+
+#####danger rm -rf / ###########

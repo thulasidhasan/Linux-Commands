@@ -1,0 +1,94 @@
+Apache:
+-------
+*Web Server
+
+name of the service : httpd  Port: 80    https: 443
+
+
+Installation:
+-------------
+
+yum install httpd
+
+
+Set the /etc/hosts file:
+------------------------
+
+<ip_addr> <hostname.domainname>
+
+
+Main configuration file:
+------------------------
+
+/etc/httpd/conf/httpd.conf
+
+
+setting up the virtual host:
+----------------------------
+
+copy and paste the bottom 7-9 lines like as shown down:
+
+<VirtualHost <ip>:80>
+ServerAdmin 
+DocumentRoot
+...
+..
+.
+</VirtualHost>
+
+<VirtualHost 192.168.1.173:80>
+    DocumentRoot /var/www/html
+    ServerName host173.veecube.com
+</VirtualHost>
+
+
+create a new file /var/www/html/index.html:
+-------------------------------------------
+
+<type any text>
+
+
+syntax verification:
+--------------------
+
+httpd -t
+
+
+systemctl start httpd    RHEL7
+
+service httpd start	 RHEL6
+
+
+adding a Directory to virtual host:
+-----------------------------------
+
+<VirtualHost 192.168.1.173:80>
+    DocumentRoot /var/www/html
+    ServerName host173.veecube.com
+    <Directory "apache_dir1">
+    Order allow,deny
+    Allow from all
+    Options FollowSymLinks
+    </Directory>
+</VirtualHost>
+
+
+Create the directory:
+----------------------
+
+mkdir -p /var/www/html/apache_dir1
+
+
+create a symbollic Link of your FTP YUM:
+----------------------------------------
+
+ln -s /var/ftp/Packages /var/www/html/apache_dir1/Packages
+
+
+systemctl start httpd    RHEL7
+
+service httpd start	 RHEL6
+
+
+
+

@@ -1,0 +1,51 @@
+http://192.168.1.111/classes/linux_class/blob/master/classes/initial_commands.txt
+
+Initial commands:
+=================
+
+whoami  --> who am i logged in as
+
+useradd <user_name> --> to add an user
+
+passwd  <user_name> --> to set the password for the user 
+
+echo <some text> --> to print the text in the STDOUT device
+
+clear  --> to clear the screen
+
+su <user_name>  --> switch user
+
+su - <user_name> --> switch user + change directory to the HOME of the user
+
+exit --> to exit from a sub_shell
+
+pwd --> present working directory
+
+cd  --> change directory to the user's HOME
+
+cd <dest_dir>  --> change directory to the destination given
+
+touch <file_name> --> to create an empty file
+
+ls -- to list the files and directories on the present working directory
+
+echo <some_text> >> <file_name>  ---> here >> is double redirection
+
+cat <file_name> --> to view the content of a file
+
+echo <some_text> > <file_name>  ---> here > is single redirection
+
+
+Diff bt > and >> :
+==================
+
+
+>>   appends the content
+
+>    clears the existing content and places the new content
+
+------------------------------
+
+a file  can also be created with single re-direction, but not safe -- being it may delete the file contents if the file_name already exists.
+
+  

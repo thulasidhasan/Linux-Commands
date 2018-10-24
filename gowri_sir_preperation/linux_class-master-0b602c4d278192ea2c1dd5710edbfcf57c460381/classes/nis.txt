@@ -1,0 +1,92 @@
+NIS:    Network Information Server
+====
+
+YP: Yellow Pages
+
+yum install ypserv
+
+services: 
+=========
+ypserv
+yppasswdd
+ypxfrd
+ypbind
+rpcbind
+
+(chkconfig/enable rhel6/7)
+
+port: uses rpc port 111
+
+
+/etc/sysconfig/network
+----------------------
+NISDOMAIN=domain.com
+
+
+/etc/hosts
+----------
+<ip> server.domain.com	server
+<ip> client.domain.com	client
+
+/etc/yp.conf
+------------
+domain <domain.com> server <server_ip/hostname>
+
+
+/var/yp/Makefile:
+-----------------
+
+MERGE_PASSWD=false
+
+MERGE_GROUP=false
+
+all: passwd shadow group hosts rpc service netid protocols
+
+
+/var/yp/securenets:
+-------------------
+
+255.0.0.0	127.0.0.0
+255.255.255.0	192.168.1.0
+
+DATABASE GENERATION:
+====================
+
+/usr/lib/yp/ypinit -m
+
+cd /var/yp && make  
+
+
+
+on client:
+==========
+
+yum install ypbind rpcbind authconfig
+
+service: ypbind
+
+
+/etc/sysconfig/network
+----------------------
+NISDOMAIN=domain.com
+
+
+/etc/hosts
+----------
+<ip> server.domain.com	server	
+<ip> client.domain.com	client
+
+/etc/yp.conf
+------------
+domain <domain.com> server <server_ip/hostname>
+
+/var/yp/ypservers
+-----------------
+
+<server_ip/hostname>
+
+
+authconfig-tui
+
+
+  

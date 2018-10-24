@@ -1,0 +1,66 @@
+CRONTAB:
+========
+
+<Minute> <Hour> <Day_of_the_Month> <Month_of_the_Year> <Day_of_the_Week> <Year>
+
+
+* * * * * *
+| | | | | | 
+| | | | | +-- Year              (range: 1900-3000)
+| | | | +---- Day of the Week   (range: 1-7, 1 standing for Monday)
+| | | +------ Month of the Year (range: 1-12)
+| | +-------- Day of the Month  (range: 1-31)
+| +---------- Hour              (range: 0-23)
++------------ Minute            (range: 0-59)
+ 
+
+Scheduler: 
+==========
+
+crontab -l to list all the Jobs
+
+crontab -e edit the jobs
+
+crontab -r to remove all the jobs
+
+Name of the service : crond
+
+systemctl status crond
+
+service crond status
+
+try:
+====
+
+crontab -e
+
+*/2 * * * * echo "cron test" #for every two minutes once
+
+0 2 21 3 2019 sh script ### night 2 AM on 21-03-2019
+
+* */2 * * * <script/commond> every two hours once
+
+
+/etc/cron.deny:
+===============
+###here place a username i.e, that particular user will  not allowed to run any cron jobs
+
+at schedular:
+=============
+
+at 9:30 PM Tue
+
+at> echo "alarm, it's 9:30 PM on Tuesday."
+
+at > <ctrl-d ^d>
+
+to queue:
+=========
+
+You can use the program atq to view your currently-queued at jobs. Type atq to display the queue.
+
+atq
+
+
+
+

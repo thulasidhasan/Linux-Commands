@@ -1,0 +1,117 @@
+conf:
+
+#!/bin/bash
+id='00'
+if [ -r /etc/sysconfig/ldap${id} ] ; then
+        . /etc/sysconfig/ldap${id}
+fi
+if [ -r /etc/init.d/function_slapd ];then
+        . /etc/init.d/function_slapd
+fi
+
+slap_start='/usr/sbin/slapd'
+inst=`echo "inst${id}"`
+pid_dir='/var/run'
+pid_file=`echo "$pid_dir/slapd-${inst}.pid"`
+conf=`echo "/etc/openldap/slapd-inst${id}.conf"`
+port=`echo "${id}389"`
+#ldap://$IP:$port/ ldapi://var%2Frun%2Fopenldap%2Fslapd-${inst}.pid
+arg=`echo "$slap_start -h ldap://192.168.2.20:$port -F /etc/openldap/inst${id} -f $conf -u ldap -g ldap"`
+
+if [ $2 ];then
+pass=`echo $1|cut -d- -f2|sed 's/inst//g'`;
+if [ "$pass" == "$id" ];then  run $2;else "wrong INST value";exit 11;fi;
+elif [ $1 ];then
+pass=`echo $0|awk -F "/" '{print $4}'|cut -d- -f2|sed 's/inst//g'`;
+if [ "$pass" == "$id" ];then run $1;fi;
+else
+echo "try something else"
+fi
+
+
+Function:
+
+#slap_start='/usr/sbin/slapd'
+#inst=`echo "inst${id}"`
+#pid_dir='/var/run'
+#pid_file=`echo "$pid_dir/slapd-${inst}.pid"`
+#conf=`echo "/etc/openldap/slapd-inst${id}.conf"`
+#port=`echo "${id}389"`
+#arg=`echo "$slap_start -h ldap://192.168.2.20:$port -f $conf"`
+
+function action_inst ( ) {
+if [ -f $pid_file ] || [ -f $pid_dir/openldap/slapd-${inst}.pid ];then
+echo "there is a running instance already with Process_id = `cat $pid_file`"
+exit 10
+else
+$arg &
+if [ $? -eq 0 ];then
+sleep 2
+ps -ef | grep "slapd-${inst}"|grep -v grep|awk '{print $2}'|head -2|tail -1 >$pid_file
+echo "starting..."
+cat $pid_file > $pid_dir/openldap/slapd-${inst}.pid
+echo $arg >$pid_dir/openldap/slapd-${inst}.args
+else
+echo "did not started...Failed,"
+fi
+fi
+}
+
+function stop ( ) {
+if [ -f $pid_file ] && [ -f $pid_dir/openldap/slapd-${inst}.pid ];then
+peeid=`head $pid_file`
+kill $peeid
+rm -f $pid_file && rm -f $pid_dir/openldap/slapd-${inst}.*
+echo "stopped"
+else
+echo "no PID_FILES or no running instance of slapd-${inst} found.... please do a manual verification, if doubted"
+fi
+}
+
+function status ( ) {
+if [ -f $pid_file ];then
+chk=`head $pid_file`
+if ps aux |grep -q $chk;then echo "running with PID: $chk";else echo "not running";fi
+else
+echo "not running"
+fi
+}
+
+function run ( ) {
+
+        case "$1" in
+
+        configtest)
+                configtest
+                ;;
+        start)
+                action_inst
+                RETVAL=$?
+                ;;
+        stop)
+                stop
+                RETVAL=$?
+                ;;
+        status)
+                status
+                RETVAL=$?
+                ;;
+        restart|force-reload)
+                stop
+                action_inst
+                RETVAL=$?
+                ;;
+        condrestart|try-restart)
+                status -p $pidfile ${slapd} > /dev/null 2>&1 || exit 0
+                stop
+                start
+                ;;
+        usage)
+                echo $"Usage: $0 {start|stop|restart|force-reload|status|condrestart|try-restart|configtest|usage}"
+                RETVAL=0
+                ;;
+        *)
+ echo $"Usage: $0 {start|stop|restart|force-reload|status|condrestart|try-restart|configtest|usage}"
+
+esac
+}

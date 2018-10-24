@@ -1,0 +1,169 @@
+uid=admin1,ou=People,dc=veecitech,dc=com
+
+dn: olcDatabase={2}bdb,cn=config
+changetype: modify
+add: olcAccess
+
+olcAccess:{0} to attrs=userPassword by self write by anonynous by dn.children="ou=admins,dc=veecitech,dc=com" write by * none
+olcAccess:{1} to attrs=userPassword by self write by * auth
+olcAccess:{2} to * by * read
+
+
+
+olcAccess:{0} to dn="ou=people,dc=veecitech,dc=com" attrs=userPassword by self write by * auth by dn="ou=admins,dc=veecitech,dc=com" write
+
+
+ldap      6572     1  0 May24 ?        00:49:12 /usr/sbin/slapd -u ldap -g ldap -h ldap://X.Y.Z.104:389 -f /etc/openldap/slapd.conf -l LOCAL4
+ldap      6612     1  0 May24 ?        00:49:09 /usr/sbin/slapd -u ldap -g ldap -h ldap://X.Y.Z.105:389 -f /etc/openldap/slapd_i3.conf -l LOCAL6
+ldap      8031     1  0 01:01 ?        00:01:26 /usr/sbin/slapd -u ldap -g ldap -h ldap://X.Y.Z.104:389 -f /etc/openldap/slapd_i2.conf -l LOCAL5
+
+
+dn: olcDatabase={3}bdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by
+  dn="cn=Manager,dc=balaji,dc=com" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=Manager,dc=balaji,dc=com" write   by * read
+read
+
+/usr/sbin/slapd -h ldap://192.168.2.20:00389 -f /etc/openldap/slapd-inst00.conf
+
+/usr/sbin/slapd -h ldap://192.168.2.20:10389 -f /etc/openldap/slapd-inst10.conf
+
+/usr/sbin/slapd -h ldap://192.168.2.20:20389 -f /etc/openldap/slapd-inst20.conf
+
+
+
+dn: olcDatabase={2}bdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by
+dn="cn=Manager,dc=veecube,dc=com" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=Manager,dc=veecube,dc=com" write   by * read
+read
+
+=============================
+
+ldapsearch -x -H ldap://192.168.2.20:389 -b "" -LLL -s base supportedSASLMechanisms
+
+
+yum install cyrus-sasl.x86_64
+yum list cyrus*
+yum list cyrus-sasl-md5.x86_64 cyrus-sasl-plain.x86_64 cyrus-sasl-sql.x86_64
+yum install -y  cyrus-sasl-md5.x86_64 cyrus-sasl-plain.x86_64 cyrus-sasl-sql.x86_64
+
+===========================
+ldapmodify -x -H ldap://192.168.2.20:389  -f /tmp/acl_admin.ldif -D "cn=Manager,cn=config" -w redhat
+===========================
+ldapsearch  -Y EXTERNAL -H ldapi:/// -b cn=config 'olcDatabase={2}
+===========================
+===========================
+access to * by * none
+===========================
+access to * by * read
+===========================
+access to attrs="userPassword"
+        by self =w
+        by * auth
+===========================
+access to *
+        by * read
+===========================
+access to attrs="userPassword"
+     by dn.exact="uid=admin,dc=people,dc=example,dc=org" =w
+     by self =w
+     by * auth
+===========================
+access to attrs=userPassword,shadowLastChange
+    by anonymous auth
+    by self write
+    by group.exact="cn=admins,ou=groups,dc=veecube00,dc=com" manage
+    by group.exact="cn=Operators,ou=groups,dc=veecube00,dc=com" read
+
+access to *
+    by self write
+    by dn.exact="uid=austek,ou=Technical,ou=people,dc=veecube00,dc=com" manage
+    by group.exact="cn=admins,ou=groups,dc=veecube00,dc=com" manage
+    by group.exact="cn=Operators,ou=groups,dc=veecube00,dc=com" read
+    by * break
+===========================
+access to dn.exact="dc=people,dc=example,dc=org"
+     attrs="children"
+     by dn.exact="uid=admin,dc=people,dc=example,dc=org"
+        write
+     by * break
+===========================
+access to dn.onelevel="dc=people,dc=example,dc=org"
+     filter="(objectClass=inetOrgPerson)"
+     by dn.exact="uid=admin,dc=people,dc=example,dc=org"
+        write
+     by * break
+===========================
+access to dn.exact="dc=groups,dc=example,dc=org"
+     attrs="children"
+     by dn.exact="uid=admin,dc=people,dc=example,dc=org"
+        write
+     by * break
+access to dn.onelevel="dc=groups,dc=example,dc=org"
+     filter="(objectClass=groupOfNames)"
+     by dn.exact="uid=admin,dc=people,dc=example,dc=org"
+        write
+     by * break
+===========================
+access to * by * read
+===========================*******************
+
+***********NEW**********************
+
+access to dn.subtree="dc=example,dc=org"
+        attrs="userPassword"
+        by self =w
+        by * auth
+************************************
+access to dn.chilren="ou=eng,dc=plainjoe,dc=org"
+  attrs=userPassword
+  by self write
+  by * auth
+  by dn.children="ou=admins,ou=eng,dc=plainjoe,dc=org" write
+
+*************************************
+what to access:
+===============
+access to dn=".*,ou=People,dc=Veecube00,dc=com"
+  attrs=userPassword
+
+by whom :
+=========
+  by self write
+  by * auth
+  by dn=".*,ou=Admins,dc=Veecube00,dc=com" write
+
+is equivalent to :
+
+what to access:
+================
+access to dn.chilren="ou=People,dc=veecube00,dc=com"
+  attrs=userPassword
+
+by whom :
+=========
+  by self write     ;;;self -- authenticated users
+  by * auth         ;;;how ? --- thorugh auth
+  by dn.children="ou=Admins,dc=Veecube00,dc=com" write
+
+access to * by * read
+
+olcAccess:{0} to dn.children="ou=People,dc=veecube00,dc=com" attrs=userPassword by self write by * auth by dn.children="ou=Admins,dc=Veecube00,dc=com" write
+olcAccess:{1} to dn.children="ou=Admins,dc=Veecube00,dc=com" attrs=userPassword by self write by * auth by dn.children="ou=Admins,dc=Veecube00,dc=com" write
+olcAccess:{2} to * by * read
+
+==============================BEST ADMIN ACL==========================
+dn: olcDatabase={2}bdb,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess:{0} to dn.children="dc=veecube00,dc=com" attrs=userPassword by self write by dn.children="ou=Admins,dc=Veecube00,dc=com" write by * auth
+olcAccess:{1} to * by * read
+======================================================================
+

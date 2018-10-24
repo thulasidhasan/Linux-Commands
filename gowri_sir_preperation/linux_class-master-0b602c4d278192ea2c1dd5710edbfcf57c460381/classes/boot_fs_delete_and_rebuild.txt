@@ -1,0 +1,77 @@
+1) take a backup of /boot/grub/grub.conf
+
+cp /boot/grub/grub.conf /root
+
+2) remove the files in /boot
+
+rm -rf /boot/*
+
+3) reboot the machine
+
+4) machine found to be stuck in grub 
+
+5) boot the machine with the right centos/redhat iso version
+
+6) go to rescue mode
+
+7) once after rescue bash prompt appears, please do chroot 
+
+chroot /mnt/sysimage
+
+8) once after chroot, make sure that your /boot is mounted with 
+/dev/sda1
+
+9) then mount the iso to /mnt
+
+mount /dev/sr0 /mnt
+
+10) change directory to /mnt/Packages (where you find rpms)
+
+cd /mnt/Packages
+
+11) first install grub-<version>
+
+rpm -ivh --replacefiles --replacepkgs grub-<version>
+
+12) Install the kernel
+
+rpm -ivh --replacefiles --replacepkgs kernel-2<version>
+
+13) Install the redhat-logos
+
+rpm -ivh --replacefiles --replacepkgs redhat-logo<version>
+
+14) make sure that the below present in /boot
+
+vmlinux<version>
+initrd<version>
+grub ####directory
+### try installing the grub
+
+grub-install /dev/sda
+
+### Important: make sure that /boot/grub/device.map has only /dev/sda
+
+(hd0)	/dev/sda
+
+### if any edit you do in /boot/grub/device.map then please re-install the grub (as given above)
+
+15) change directory to /boot/grub 
+
+cd /boot/grub
+
+16) copy the grub.conf from /root to here
+
+cp /root/grub.conf /boot/grub
+
+17) create a symbollic link 
+
+ln -s /boot/grub/grub.conf /boot/grub/menu.lst
+
+18) exit 
+
+19) reboot
+
+20) make sure that the system boots with /dev/sda
+
+ 

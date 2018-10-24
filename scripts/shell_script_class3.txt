@@ -1,0 +1,367 @@
+
+
+
+stat -c "%u %D %s" /etc/passwd
+
+
+[root@pm ~]# cat script.sh|ssh 192.168.1.24 "cat >/tmp/tmp1;sh /tmp/tmp1;rm -f /tmp/tmp"			
+cat: script.sh: No such file or directory			
+^C			
+[root@pm ~]# for x in 173 174 153 140 ;do cat script.sh|ssh 192.168.1.24 "cat >/tmp/tmp1;sh /tmp/tmp1;rm -f /tmp/tmp"			
+> ^C			
+[root@pm ~]# for x in 173 174 153 140 ;do cat script.sh|ssh 192.168.1.$x "cat >/tmp/tmp1;sh /tmp/tmp1;rm -f /tmp/tmp";done			
+
+
+
+
+
+21/07/2018
+ssh -o StrictHostKeyChecking=no
+
+
+#!/usr/bin/bash
+if [ $1 ]
+then
+echo " The First CLI ARG is $1"
+else
+echo "The CLI ARG IS missing"
+fi
+
+
+
+
+#!/usr/bin/bash
+read -p "Enter a text: " word
+read -p "Enter a number: " num
+if [ "$word" == "good" ];then #in word using ==
+echo "Input is proper"
+else
+echo "Input is missmatch"
+fi
+if [ "$num" -eq "10" ];then #in integer(num) using -eq
+echo "The input is equal to 10"
+else
+echo "Input value is wrong"
+fi
+---------------------------------------------------------------------------------
+#!/usr/bin/bash
+if ! [ $2 ];then
+for (( x=1;x<=$1;x++ ))
+do
+echo $x
+done
+else
+for (( x=$1;x<=$2;x++ ))
+do
+echo $x
+done
+fi
+--------------------------------------------------------------------------------
+
+
+
+
+#!/usr/bin/bash
+! [ $1 ]&& echo "$0: missing operand"&& exit 1
+if ! [ $2 ];then
+for (( x=1;x<=$1;x++ ))
+do
+echo $x
+done
+else
+for (( x=$1;x<=$2;x++ ))
+do
+echo $x
+done
+fi
+---------------------------------------------------------------------------
+
+[balajis@veecube7 ~]$ cat /etc/passwd |wc -l
+29
+[balajis@veecube7 ~]$ getent passwd |wc -l
+40
+[balajis@veecube7 ~]$ cat /etc/passwd |wc -l
+29
+
+
+
+
+
+
+getet passwd |wc -l
+
+wc- l | /etc/passwd
+
+[root@pmaster ~]# if grep root /etc/passwd;then echo "the user is present";else  "the user is not present";fi
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+the user is present
+[root@pmaster ~]# if grep -q root /etc/passwd;then echo "the user is present";else  "the user is not present";fi
+the user is present
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+#!/bin/bash
+read -p "Please enter user name: " user
+if getent passwd |grep -q $user
+then
+echo "balaji is ldap user"
+else
+echo "balaji is not ldap user"
+fi
+if cat /etc/passwd |grep -q $user
+then
+echo "balaji user there in /etc/passwd"
+else
+echo "balaji is not in /etc/passwd file"
+fi
+
+
+#!/bin/bash
+read -p "Please enter user name: " user
+if getent passwd |grep -q $user
+then
+echo "balaji is ldap user"
+elif !  getent passwd |grep -q $user
+then
+echo "balaji is not ldap user"
+fi
+
+
+
+---------------------------------------------------------
+==========================================================
+
+#!/bin/bash
+read -p "Please enter user name: " user
+if getent passwd |grep -q $user;then
+if cat /etc/passwd |grep -q $user;then
+echo "$user is local user"
+else
+echo "$user is Ldap user"
+fi
+else
+echo "$user is not present"
+fi
+
+
+
+[balajis@veecube7 ~]$ sh sc.sh
+Please enter user name: root
+root is local user
+[balajis@veecube7 ~]$ sh sc.sh
+Please enter user name: balajis
+balajis is Ldap user
+[balajis@veecube7 ~]$ sh sc.sh
+Please enter user name: root1
+root1 is not present
+
+
+
+
+==============================================================================
+
+
+
+#!/bin/bash
+! [ $3 ] && echo "The argument is missing"&& exit
+if [ "$2" == "add" ];then
+echo "added value of $1 and $3 is :" `expr $1 + $3`
+elif [ "$2" == "sub" ];then
+echo "subtracted value of $1 and $3 is :" `expr $1 - $3`
+elif [ "$2" == "mul" ];then
+echo "multiply value of $1 and $3 is :" `expr $1 \* $3`
+elif [ "$2" == "div" ];then
+echo "diveded value of $1 and $3 is :" `expr $1 / $3`
+else
+echo "$2 is not a valid input"
+fi
+
+===============================================================================
+
+
+
+22/07/2018
+
+
+
+echo "hi hello how are you" |awk '{($1 = "");print }'
+
+echo "hi hello how are you" |awk '{($1 = "");print }'
+
+echo "hi hello how are you" |awk -F "_" '{print $1 " "$2}'
+
+echo "hi hello how are you" |awk -F "_" '{print $1 " "$2}'
+
+echo "hi hello how are you" |awk '{($1=$2= "");print }'
+
+echo "hi hello how are you" |awk -F "_"'{($1=$2= "");print }'
+
+echo "hi hello how are you" |awk -F "_" '{($1=$2= "");print }'
+
+echo "hi hello how are you" |awk -F {($1=$2= "");print }'
+
+echo "hi hello how are you" |awk '{($1=$2= "");print }'
+
+echo "hi hello how are you" |awk '{($1=$2= "");print }'
+
+
+--------------------------------------------------------------------------
+http://192.168.1.111/classes/linux_class/blob/master/scripts/awk_with_examples.txt
+
+
+echo "hi hello how are you" |awk '{print}'  --- printing the whole
+
+
+echo "hi hello how are you" |awk '{print $1}'  --- printing the selected   ## only "hi" is getting printed
+
+echo "hi hello how are you" |awk '{print $1" "$2}' --- printing with space
+
+echo "hi hello how are you" |awk '{print $NF}' --- prints the last column
+
+
+echo "hi hello how are you" |awk '{Print $(NF-1)}' --- prints the column 1 b4 the last
+
+
+echo "hi hello how are you" |awk '{($1 = "");print }' ---avoiding the first field
+
+
+echo "hi_hello_how_are_you" |awk -F "_" '{print $1" "$2}' ---with delimeter
+
+
+echo "Hi_hello_how_are_you" |awk -F "_" '{($1=$2="");print}' ---omits $1 and $2
+
+
+awk -F: '/root/ { gsub("root","good",$1);print}' /etc/passwd --search  and replace
+
+
+awk -F ":" 'BEGIN{s=1}{s=s+$3;print s }' /etc/passwd  ---with variable
+
+
+awk 'BEGIN {FS=":";OFS="|"}{print $1,$3}' /etc/passwd  --- print with delimeter
+
+
+awk -F ":" ' BEGIN { print "number occurances of nologin in an user information 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#!/bin/bash
+size=$1
+if [ $size -gt 1024 ] && [ $size -lt 1048576 ]; then
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1024}')K
+elif [ $size -gt `expr 1024 \* 1024` ] && [ $size -lt 1073741824 ]; then
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1048576}')M
+elif [ $size -gt 1073741824 ]; then
+size=$(awk 'BEGIN {printf "%.4f", '$size'/1073741824}')G
+else
+size=`echo "${1}B"`
+fi
+echo $size
+
+
+
+
+
+
+
+
+#!/bin/bash
+size=`stat -c "%s" $1`
+if [ $size -gt 1024 ] && [ $size -lt 1048576 ]; then
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1024}')K
+elif [ $size -gt `expr 1024 \* 1024` ] && [ $size -lt 1073741824 ]; then
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1048576}')M
+elif [ $size -gt 1073741824 ]; then
+size=$(awk 'BEGIN {printf "%.4f", '$size'/1073741824}')G
+else
+size=`echo "${size}B"`
+fi
+echo "$1 $size"
+
+================================================================================
+
+
+
+
+
+
+
+[root@pmaster ~]# sh awk4.sh balaji: 45 56 78 32 89
+balaji: 45 56 78 32 89 => Fail
+[root@pmaster ~]# cat awk4.sh
+#!/bin/bash
+echo "$@" |awk '{
+if ($3 >= 35 && $4 >= 35 && $5 >= 35)
+        print $0,"=>","Pass";
+else
+        print $0,"=>","Fail";
+}'
+----------------------------------------------------------------------------
+
+
+
+awk -F: '{ if ( $3 < 500 ) print $0 }' /etc/passwd
+
+
+
+#!/bin/bash
+#for x in `awk -F : '{print $1}' /etc/passwd`;do echo $x;done
+#for x in `cut -d: -f1 /etc/passwd`;do echo $x;done
+
+for x in `awk -F: '{print $1":"$2":"$3}' /etc/passwd`;do
+chk=`echo $x |awk -F: '{print $NF}'`;
+[ $chk -lt 500 ] && grep $x /etc/passwd;
+done
+
+
+
+
+cat /etc/passwd |cut -d: -f1,2,3
+
+
+
+
+#!/bin/bash
+#for x in `awk -F : '{print $1}' /etc/passwd`;do echo $x;done
+#for x in `cut -d: -f1 /etc/passwd`;do echo $x;done
+
+for x in `cut -d: -f1,2,3 /etc/passwd`;do
+chk=`echo $x |cut -d: -f3`;
+[ $chk -lt 500 ] && grep $x /etc/passwd;
+done
+~

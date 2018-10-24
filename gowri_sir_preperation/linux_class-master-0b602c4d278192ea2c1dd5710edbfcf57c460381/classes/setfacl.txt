@@ -1,0 +1,23 @@
+ACL: Access Control List for Files/Directories
+====
+
+getfacl  -- to read
+
+setfacl  -- to write
+
+Example:
+--------
+
+setfacl -m u:murali:x <file/dir>
+
+ls -ld <file/dir>
+
+getfacl <file/dir>
+
+Syntax:
+-------
+
+<command> <opt-mod> u:<user>:<perm> <file/dir>
+
+
+

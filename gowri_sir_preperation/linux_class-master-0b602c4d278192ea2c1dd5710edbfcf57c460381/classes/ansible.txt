@@ -1,0 +1,328 @@
+Ansible:
+--------
+
+1) Base machine has to be ubuntu
+
+2) Provided with LXC
+
+a) Controller Node			b) Managed Client Nodes
+
+		
+Ansible is agent less , rather connects thorugh SSH
+
+
+3) Controller has the inventory
+
+a) Groupping
+
+[DB]
+db1
+db2
+[Application]
+App1
+App2
+[Web]
+web1
+web2
+
+#ansible Web -m yum -a "name=http state=latest"
+
+Defining Users: In mutiple ways
+
+[ DB ]
+db1   ansible_ssh_user=root ansible_ssh_pass
+db2
+
+[ Application ]
+App1
+App2
+
+[ Webserver ]
+web1
+web2
+
+Better ways:
+------------
+
+[ DB ]
+db1   ansible_ssh_user=root ansible_ssh_pass=redhat
+db2
+
+[ Application ]
+App1
+App2
+
+[ Webserver ]
+web1
+web2
+  
+[ Myparent:children ]
+DB
+Application
+Webserver
+
+[ Myparent:vars ]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+If we have a sudo environment :
+
+for all:
+---------
+
+ansible all -m yum -a "name=openssl state=latest"
+
+Selective servers can be grouped
+
+LXC in ubu:
+-----------
+
+lxc-create -t download -n centos6_1
+lxc-ls
+lxc-start -n centos6_1
+lxc-info -n centos6_1 (make a note of your IP here)
+lxc-attach -n centos6_1
+yum install openssh
+service sshd restart
+/sbin/chkconfig sshd on
+<ctrl-d> to come out
+ 
+ 
+ansible-playbook db1,db2,db3 -i <inventory_path>
+
+<create a script to start all the containers>
+
+In the base machine:
+--------------------
+
+sudo apt-get install ansible 
+
+ansible --version
+
+the configuration file can be defined:
+
+under the user's home dir
+
+
+if the current path doesn't have the ansible.cfg, it would go for default configuration file. 
+
+validation : is the version command which looks for the ansible.cfg in the current path
+
+Inventory can be specified at the runtime also
+
+~/ansible/tmp --> path for temp files
+
+for ping ..it connects through ssh and checks even the otherway
+
+ansible_ssh_user=root ansible_ssh_pass=redhat
+
+[allhosts:children]
+database
+webserver
+
+[allhosts:var]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
+
+
+ansible all -m ping -i <inventory>
+
+
+[database:var]  ---> possible
+
+ansible database -m ping -i <inventory>
+
+
+shell module:
+----------------
+
+-a '<commands>'
+
+-m shell -a "<commands>"
+
+yum module:
+----------------
+
+-m yum -a "name=tree state=latest"
+
+state=absent
+
+copy module:
+----------------
+
+-m copy -a 'src=<path/file> dest=<path/file>'
+
+-a 'ls /tmp/passwd' 
+
+STDERR:
+-------
+
+0 - success
+
+0 - failed :    execution failed at the node
+
+2 - unreachable : node could not be reached
+
+
+
+Playbook:
+---------
+
+contains:
+
+Host details
+
+variables
+
+tasks:
+   contains Plays
+
+
+***syntax of python 
+
+{{    }}
+
+   lists       -----> array
+   dictionary
+:   (represented by a colon)
+
+Name:
+  First_name: Veecube
+  Last_name: infratech
+
+
+YAML:
+-----
+fruits:
+	- apple
+	- orange
+	- mango
+
+
+
+Book:
+  Author_Name:
+    FName:
+    LName:
+  Chapters:
+    Chapter_01:
+
+
+ansible-playbook <file.yaml> --syntax-check
+
+ansible-playbook <file.yaml>
+
+
+- hosts: <group>
+  tasks:
+  - name: <comment>
+    yum: name=<pckg> state=<latest/absent>
+  - name: <comment>
+    service: name=<daemon> state=<restarted/stopped/enabled>
+
+puppet  -- facter
+
+ansible -- facts
+
+
+{{ ansible_default_IPV4.address }}
+
+
+****Instead of copy module, the template module can be used for dynamic variables for jinja2
+
+
+lineinfile
+
+
+implementing task control:
+--------------------------
+
+construct conditional and loops in a playbook :
+
+Handlers: if there any conf changes would do the action
+
+tag: 
+
+error handling:
+
+
+tag: production
+
+--skip-tag dev
+
+
+- hosts: mailservers
+  tasks: 
+  - name: installing postfix and sendmail
+  - yum: 
+    name: postfix
+    state: latest
+      tag: production
+  - yum: 
+    name: postfix
+    state: latest
+      tag: dev
+
+
+- user:
+  name: present
+  uid: 
+  
+list of hashes:
+===============
+
+
+ 
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+1. List the password and its related details for an user
+
+chage --list <user_name>
+
+2. Set Password Expiry Date for an user using chage option -M
+
+chage -M 3 <user_name>
+
+verify:
+-------
+
+chage --list <user_name>
+
+#try login to the user and get the below warning mssg:
+
+<user_name>@testingserver's password:
+Warning: your password will expire in 3 days
+
+3. User Forced to Change Password after Expiry Date
+
+#user must change his passwd
+
+4. Set the Account Expiry Date for an User
+
+chage -E "2019-05-31" <user_name>
+
+5. Force the user account to be locked after X number of inactivity days
+
+chage -I 10 <user_name>
+
+6. How to disable password aging for an user account?
+
+chage -m 0 -M 99999 -I -1 -E -1 <user_name>
+
+#where in as:
+ 
+
+    -m 0 will set the minimum number of days between password change to 0
+    -M 99999 will set the maximum number of days between password change to 99999
+    -I -1 (number minus one) will set the “Password inactive” to never
+    -E -1 (number minus one) will set “Account expires” to never.
+

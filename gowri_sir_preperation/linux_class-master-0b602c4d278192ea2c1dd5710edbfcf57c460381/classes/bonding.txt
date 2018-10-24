@@ -1,0 +1,61 @@
+Bonding:
+========
+
+Let us take two NICs in a machine. 
+
+
+For eg.:
+--------
+
+eth0&1  in case of RHEL6  
+
+ens32&33 incase of RHEL7 
+
+* Please remove the IPADDR, NETMASK, GATEWAY, DNS from the NIC configuration.
+
+* Please specify BOOTPROTO=none
+
+* Please add SLAVE=yes, MASTER=bond0
+
+create a file /etc/sysconfig/network-scripts/ifcfg-bond0
+
+DEVICE=bond0
+BOOTPROTO=static
+IPADDR=
+NETMASK=
+GATEWAY=
+BONDING_OPTS="mode=0 miimon=100"
+ONBOOT=yes
+
+*bond0 should not have any HWADDR (MAC ID)
+
+
+what is miimon=100 ?
+
+Specifies the MII link monitoring frequency in milliseconds. This determines how often the link state of each slave is inspected for link failures. A value of zero disables MII link monitoring. A value of 100 is a good starting point.
+
+
+
+===================================================================================
+
+vi /etc/modeprobe.d/modprobe.conf
+
+alias bond0 bonding
+
+#options bond0 mode=balance-alb miimon=100
+
+restart the network service:
+----------------------------
+
+systemctl restart network    RHEL7 
+
+
+service network restart      RHEL6
+
+
+verification:
+-------------
+
+in a separate terminal from a remote machine ping the bond0 and in a separate window login to the machine dealt and ifdown the eth0/eth1 (ens?/ens?) and see still the bond0 is pingable  
+
+

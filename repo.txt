@@ -1,0 +1,21 @@
+creating repositry 
+
+cd /etc/yum.repos.d				: get in to the directory of the directory of reposotory
+mv Cent* /tmp					: move all the file which starts from cent to tmp file
+vi yadav.repo					: creat a .repo file in yum.repos.d and give the entry
+[yadav]
+name= yadav
+baseurl=ftp:///var/ftp/pub/Packages
+gpgcheck=0
+enabled=1
+:wq!
+mount -t iso9660 /dev/sr0 /media  -o ro 		: mount the iso file in media.
+cd /var						: get in  to var directory.
+mkdir -p pub/Packages				: create a pub/Packages directory in ftp
+cp /media/Packages/*  /var/ftp/pub/Packages/.	: pakages wil take sm time to copy
+cd /var/ftp/pub/Packages 
+rpm -ivh createrepo<tab>
+rpm -ivh python-deltarpm
+rpm -ivh deltarpm
+createrepo -v /var/ftp/pub/Packages 
+yum repolist

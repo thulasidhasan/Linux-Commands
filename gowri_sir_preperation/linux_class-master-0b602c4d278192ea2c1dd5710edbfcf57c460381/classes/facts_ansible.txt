@@ -1,0 +1,70 @@
+FACTS in ANSIBLE:
+-----------------
+
+This module is automatically called by playbooks to gather useful variables about remote hosts that can be used in playbooks. It can also be executed directly by /usr/bin/ansible to check what variables are available to a host. Ansible provides many facts about the system, automatically.
+
+ Display facts from all hosts and store them indexed by I(hostname) at C(/tmp/facts).
+#  
+
+# Display only facts regarding memory found by ansible on all hosts and output them.
+# ansible all -m setup -a 'filter=ansible_*_mb'
+
+# Display only facts returned by facter.
+# ansible all -m setup -a 'filter=facter_*'
+
+# Collect only facts returned by facter.
+# ansible all -m setup -a 'gather_subset=!all,!any,facter'
+
+# Display only facts about certain interfaces.
+# ansible all -m setup -a 'filter=ansible_eth[0-2]'
+
+# Restrict additional gathered facts to network and virtual (includes default minimum facts)
+# ansible all -m setup -a 'gather_subset=network,virtual'
+
+# Collect only network and virtual (excludes default minimum facts)
+# ansible all -m setup -a 'gather_subset=!all,!any,network,virtual'
+
+# Do not call puppet facter or ohai even if present.
+# ansible all -m setup -a 'gather_subset=!facter,!ohai'
+
+# Only collect the default minimum amount of facts:
+# ansible all -m setup -a 'gather_subset=!all'
+
+
+ansible <HOST_GROUP> -m setup -a "filter=ansible_distribution*"
+
+
+Items:
+-------
+
+
+---
+# This role contains common plays that will run on all nodes.
+- hosts: veecube6.veecube.com
+  gather_facts: false
+  tasks:
+    - name: Install ldap client and auth
+      yum: name={{ item }} state=present update_cache=yes
+      with_items:
+       - openldap-clients
+       - nss-pam-ldapd
+
+
+Sudoers:
+--------
+
+---
+
+- hosts: veecube6.veecube.com
+  tasks:
+    - name: Add remote user to sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%admins ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+
+
+
+

@@ -1,0 +1,259 @@
+ULIMIT:
+-------
+
+Set or change the open file limits in Linux
+
+cat /proc/sys/fs/file-max  ---no. of files that a user can have opened per login session.
+
+ulimit -Hn  ------ shows the open file limits
+
+ulimit -Sn  ------ show harsd and soft limits
+
+How to check system wide file descriptors ?
+
+while running some servers like mysql/mariadb or apache, the associated user may require higher limits for opened file descriptors.
+
+This can be achieved in the runtime by editing the kernel directive fs.file-max
+
+sysctl is used to configure kernel parameters at runtime
+
+sysctl -w fs.file-max=50000
+
+above commond increases the open file limit to 50k 
+
+check the current value:
+------------------------
+
+cat /proc/sys/fs/file-max
+
+sysctl fs.file-nr
+
+check by process:
+-----------------
+
+Please check /proc/<PID>/fd directory
+
+to come upon while booting:
+---------------------------
+
+vi /etc/sysctl.conf
+fs.file-max=500000   -- add the line
+
+sysctl -p  -- to bring the change to place
+
+set user level open file limits:
+--------------------------------
+
+vi /etc/security/limits.conf
+
+
+by params:  <domain>     <type>  <item>  <value>
+
+#Where:
+#<domain> can be:
+#        - a user name
+#        - a group name, with @group syntax
+#        - the wildcard *, for default entry
+#        - the wildcard %, can be also used with %group syntax,
+#                 for maxlogin limit
+#
+#<type> can have the two values:
+#        - "soft" for enforcing the soft limits
+#        - "hard" for enforcing hard limits
+#
+#<item> can be one of the following:
+#        - core - limits the core file size (KB)
+#        - data - max data size (KB)
+#        - fsize - maximum filesize (KB)
+#        - memlock - max locked-in-memory address space (KB)
+#        - nofile - max number of open file descriptors
+#        - rss - max resident set size (KB)
+#        - stack - max stack size (KB)
+#        - cpu - max CPU time (MIN)
+#        - nproc - max number of processes
+#        - as - address space limit (KB)
+#        - maxlogins - max number of logins for this user
+#        - maxsyslogins - max number of logins on the system
+#        - priority - the priority to run user process with
+#        - locks - max number of file locks the user can hold
+#        - sigpending - max number of pending signals
+#        - msgqueue - max memory used by POSIX message queues (bytes)
+#        - nice - max nice priority allowed to raise to values: [-20, 19]
+#        - rtprio - max realtime priority
+
+
+what is hard limit and soft limit ?
+The hard limit is the ceiling for the soft limit, where the soft limit is what is actualy enforced for a session or a process
+
+in other words:
+
+a hard limit is the maximum allowed to a user, set by the superadmin/root. This value is set in the file /etc/security/limits.conf
+
+a soft limit is the effective value right now for the user. the user can increase 
+the soft limit on thier own in times of needing more resources, but cannot set that 
+heigher than hard limit.
+
+
+###example hard limit for max opened files
+apache	hard	nofile	4096
+###example soft limit for max opened files
+apache	soft	nofile	1024
+
+
+ulimit -S -a view all soft limits
+ulimit -H -a view all hard limits
+ulimit -S [option][number] ---setting specifically a soft limit
+ulimit -H [option][number] ---setting specifically a hard limit
+
+for example:
+------------
+
+user soft stack 8192
+user hard stack unlimited
+
+
+or 
+
+ulimit -S -s 8192
+
+
+system <--------restrict ulimit -------<------SHELL
+
+to see all the ulimit values
+
+ulimit -a
+
+core file:
+----------
+
+when service crashes or a program terminates unexpectedly, core file gets created.
+useful for dignosis. 
+
+for 100MB :
+
+ulimit -c 1000000000
+
+or
+
+ulimit -c unlimited
+
+creating a test core file:
+--------------------------
+
+kill -s SIGSEGV $$
+
+this command crashes your shell
+
+nproc:
+------
+
+max processes
+
+System call fork() is used to create processes. It takes no arguments and returns a process ID. The purpose of fork() is to create a new process, which becomes the child process of the caller. After a new child process is created, both processes will execute the next instru  ction following the fork() system call.
+
+
+
+max size:
+--------------
+
+a 32 bit cpu supports upto 16TB of file system, at the same time ext3 supports only 
+4TB
+
+fsize:
+------
+
+max file size is a variable in the inode structure that holds the size field.
+
+datasize:
+---------
+
+ulimit -d ----sets the data segment size
+
+
+try:
+----
+lsof -nP | grep '(deleted)'
+find /proc/*/fd -ls | grep  '(deleted)'
+df -k | awk 'NR>1 { print $NF }' | xargs fuser -Vud
+lsof -a +L1
+
+Kernel crash dump:
+------------------
+
+kexec acts as a second kernel to capture the crashed kernel dump at event of failure.
+
+Redhat suggest to regularly update kexec-tools
+
+Memory needs to be reserved through the kernel parameters
+
+yum install kexec-tools
+yum install system-config-kdump
+
+in grub configuration:
+----------------------
+GRUB_CMDLINE_LINUX="rd.lvm.lv=rhel/swap crashkernel=auto rd.lvm.lv=rhel/root rhgb quiet"
+
+make it crashkernel=128M
+
+in RHEL7:
+
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+in /etc/kdump.conf:
+------------------
+
+path /usr/local/cores
+
+##optinally this can be written to a different partition
+
+core collector is a core dump compression utility.
+
+enable the service:
+-------------------
+
+kdump.service
+
+
+destroying a disk:
+-------------------
+
+dd if=/dev/zero of=/dev/sda bs=512 count=1
+
+delete the mbr only:
+--------- -----------
+
+dd if=/dev/zero of=/dev/sda bs=446 count=1
+
+.....try testdisk
+
+....
+
+grep -v rootfs /proc/mounts >/etc/mtab
+
+grub-install --no-floppy /dev/sda
+
+
+creating test --- kernel panic:
+-------------------------------
+
+echo c > /proc/sysrq-trigger
+
+when crash dump will occur ?
+----------------------------
+
+    Kernel Panic
+
+    Non Maskable Interrupts (NMI)
+
+    Machine Check Exceptions (MCE)
+
+    Hardware failure
+
+    Manual intervention
+
+
+ram size 	crashkernel parameter 	ram / crashkernel factor
+>0GB 		128MB 			15
+>2GB 		256MB 			23
+>6GB 		512MB 			15
+>8GB 		768MB 			31

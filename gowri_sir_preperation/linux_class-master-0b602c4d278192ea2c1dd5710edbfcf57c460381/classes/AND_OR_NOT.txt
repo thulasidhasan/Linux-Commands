@@ -1,0 +1,39 @@
+#!/bin/bash
+echo "please enter a user_name"
+read user
+echo "please enter a uid_number"
+read uid
+echo "plese enter the home_dir"
+read home
+echo "please enter the gid_number"
+read gid
+echo "please enter a description"
+read descp
+echo "please enter the shell"
+read shell
+echo -e "\nforming a meaning full user creation command\n"
+echo "useradd --uid $uid --gid $gid --home $home --shell %shell -c $comment $user"
+
+CONDITIONS:
+-----------
+
+AND OR NOT:
+-----------
+
+success 1 && check success2
+success 1 || doesn't check success2
+
+Failure 1 && doesn't check success2
+Failure 1 || check success2
+ 
+
+! false || echo "true"
+! true || echo "true"
+
+! true && echo "true"
+! false && echo "true"
+
+[ -e /etc/passwd1 ] && echo "file is there"
+
+
+

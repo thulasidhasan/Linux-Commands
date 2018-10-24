@@ -1,0 +1,75 @@
+fdisk:
+------
+
+* used for partitioning the disk
+
+The first 512 bytes (Cyl 0, Sec 1) of the disk has 
+
+1) MBR - Master boot record, having info about where the Kernel and Initial RAM disk is stored
+
+	a) Kernel is the core of the OS
+	b) Initial RAM disk acts as a temp root while booting
+	c) Initial RAM disk has additional drivers for the kernel to understand the Hardware 
+	d) size of the MBR is 446
+
+2) Partition table 64 bytes
+
+
+3) Magic Bytes - validation of the MBR. 2 bytes in size  
+
+
+commands:
+---------
+
+fdisk -l (list)
+
+fdisk </dev/<disk>>
+
+disk naming:
+------------
+
+IDE HDD --- hda
+
+SATA HDD --- same like scsi sda
+
+SCSI HDD --- sda
+
+RAID HDD --- mda
+
+note:  device needs to be specified with absolute path like "/dev/sda"
+
+scanning:
+---------
+
+* after adding a disk
+
+echo "- - -" > /sys/class/scsi_host/host<number>/scan
+
+the 3 '-'s  :
+--------------
+The three values stand for channel, SCSI target ID, and LUN. 
+The dashes act as wildcards meaning "rescan everything"
+
+what is LUN:
+------------
+
+Logical unit number
+
+Logical unit number (LUN) can refer to an entire physical disk, 
+or a subset of a larger physical disk or disk volume. 
+
+*after scanning
+
+dmesg
+
+Log for hardware changes
+
+The dmesg Command. The dmesg command is used to write the kernel 
+messages in Linux and other Unix-like operating systems to 
+standard output (which by default is the display screen).
+
+Note: dmesg, doesn't have a time stamp
+
+(or) lsscsi can show the overall Block devices in the machine
+
+

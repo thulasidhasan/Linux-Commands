@@ -1,0 +1,36 @@
+[root@vaithee /]# lxc-info -n muthu_cent6_1 | grep -i ip
+IP:             10.110.208.15
+[root@vaithee /]# lxc-info -n muthu_cent6_2 | grep -i ip
+IP:             10.110.208.34
+[root@vaithee /]# lxc-info -n muthu_cent6_3 | grep -i ip
+IP:             10.110.208.146
+[root@vaithee /]# lxc-info -n muthu_cent7_1 | grep -i ip
+IP:             10.110.208.115
+[root@vaithee /]# lxc-info -n muthu_cent7_2 | grep -i ip
+IP:             10.110.208.47
+[root@vaithee /]# lxc-info -n muthu_cent7_3 | grep -i ip
+IP:             10.110.208.229
+[root@vaithee /]#
+
+Managed Nodes  --   IP Address
+===============================
+
+muthu_cent6_1  --   10.110.208.15
+muthu_cent6_2  --   10.110.208.34
+muthu_cent6_3  --   10.110.208.146
+muthu_cent7_1  --   10.110.208.115
+muthu_cent7_2  --   10.110.208.47
+muthu_cent7_3  --   10.110.208.229
+
+
+10.110.208.15
+10.110.208.34
+10.110.208.146
+10.110.208.115
+10.110.208.47
+10.110.208.229
+
+
+
+
+

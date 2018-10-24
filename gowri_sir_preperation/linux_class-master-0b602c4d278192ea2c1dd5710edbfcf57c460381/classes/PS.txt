@@ -1,0 +1,215 @@
+what is a process ?
+
+Process is the running instance of a program
+
+ps:
+---
+process status
+
+To see every process on the system using standard syntax:
+          ps -e
+          ps -ef
+          ps -eF
+          ps -ely
+
+To print a process tree:
+          ps -ejH
+
+To get info about threads:
+          ps -eLf
+          ps axms
+
+To get security info:
+          ps -eo euser,ruser,suser,fuser,f,comm,label
+          ps axZ
+          ps -eM
+
+ps -ef:
+-------
+
+UID        PID  PPID  C STIME TTY          TIME CMD
+
+
+UID: User ID which invoked the Process
+
+PID: Current Process ID
+
+PPID: Parental Process ID
+
+C: 
+
+STIME: Start Time
+
+TTY: terminal
+
+TIME: Since how long the process is been running
+
+CMD: command or program 
+
+
+c              C           integer value of the processor utilisation percentage.
+                           (see %cpu)
+tname          TTY         controlling tty (terminal). (alias tt, tty).
+args           COMMAND     command with all its arguments as a string. May chop as
+                           desired. Modifications to the arguments are not shown.
+                           The output in this column may contain spaces.
+                           (alias cmd, command)
+cmd            CMD         see args. (alias args, command)
+
+
+
+Direct Draw to create ISO file from CDROM/DVD:
+-----------------------------------------------
+
+dd if=/dev/sr0 of=/tmp/rhel.iso
+
+
+creating a load:
+----------------
+
+dd if=/dev/zero of=/dev/null
+
+
+Foreground Process:
+--------------------
+
+process execution is visible in the STDOUT
+
+user needs to wait to get the prompt till the process ends
+
+ctrl-c:
+-------
+
+Terminating a process... forceful preemption
+
+ctlr-z:
+-------
+
+Suspending a process to get the prompt
+
+Background Process:
+------------------
+
+Process invoked with a reference (&) so that process execution is not visible at the STDOUT
+
+dd if=/dev/zero of=/dev/null &
+
+terminate a background process:
+------------------------------
+
+kill -9 <PID> 
+
+
+Jobs:
+-----
+
+jobs -- lists the Backround processes invoked by the current user/terminal
+
+TOP:
+----
+
+table of processes
+
+shows time, system_uptime, Load AVG for 1 min, 5mins, 15mins
+
+user invoked process CPU load
+
+system invoked process CPU load
+
+ideal status
+
+IOWAIT  -- CPU wait cycles for IO operation. CPU is fast and IO is slow
+
+Memory utilization
+
+Process status
+
+separate column for Zombie count
+
+Virtual Memory (SWAP) utilization
+
+* can terminate a process with explicit signals
+
+* change the priority of a process NICE/RENICE
+
+renice:
+-------
+
+*can be done from CLI or from TOP
+
+renice -n +19 -p 13097
+
+(or)
+
+##top with option 'r' 
+## -19 is the top most priority and +19 is the least
+
+How to send a foreground process to backround ?
+-----------------------------------------------
+
+### suspend a foreground process using ctrl-z
+
+###then run just 'bg' command, which removes the suspend and to continue the process in background
+
+to bring a latest background process to foreground:
+---------------------------------------------------
+
+fg ##brings the latest backround process to foreground
+
+Signals:
+--------
+
+Signals interrupt system call:
+------------------------------
+
+
+kill:
+=====
+
+The kill command is used to send a termination signal to the specified process or group.
+The default termination signal is a SIGTERM (15) signal. A process which receives a SIGTERM may be programmed to trap signals and perform specific functions or ignore the signal entirely.
+
+-1 or -HUP 
+----------
+
+This argument makes kill send the "Hang Up" signal to processes.
+Processes have to be programmed to actually listen to this process and do something 
+with it.
+
+-2 or -SIGINT
+-------------
+
+This is the same as starting some program and pressing CTRL+C during execution.
+
+-9 or -KILL
+-----------
+
+The kernel will let go of the process without informing the process 
+of it.
+
+An unclean kill like this could result in data loss. 
+This is the "hardest", "roughest" and most unsafe kill signal available, and should only be used to stop something which is
+un-stoppable.
+
+-15 or -TERM:
+-------------
+
+Tell the process to stop whatever it's doing, and end itself. When you don't specify any signal, this signal is used. It should be fairly safe to perform, but better start with a "-1" or "-HUP".
+
+
+kill -l:
+--------
+
+to list all the signals.
+
+
+top:  table of processes
+----
+
+command stime uptime users load average 1min 5mins 15mins
+tasks     active    sleeping   stopped   zombie
+CPU%    IDLE%    nice_value   id  iowait hi si st
+total mem   free   used   buff/cache
+swap   free  used  available mem
+
+pid user  priority  Nice value  res  

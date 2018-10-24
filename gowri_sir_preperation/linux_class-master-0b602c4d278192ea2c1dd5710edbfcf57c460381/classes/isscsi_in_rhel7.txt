@@ -1,0 +1,106 @@
+Storage:
+--------
+
+iscsi and target:
+-----------------
+
+* server has the target
+
+* client adds target as a block device
+
+install:
+--------
+
+1) yum install targetcli
+
+
+2) add a new disk
+
+3) scan the disk 
+
+4) create a pv
+
+pvcreate /dev/<disk>
+
+5) create a vg
+
+vgcreate <new_vg_name> /dev/<device>
+
+6) create a lv with 100%FREE
+
+lvcreate -l 100%FREE -n <new_lv_name> <vg_name>
+
+Creating iSCSI target:
+-----------------------
+
+targetcli
+
+### make sure that you get a targetcli prompt '>'
+
+/> cd backstores/block
+
+create <ref_name> /dev/<vg_name>/<lv_name>
+
+/> cd /iscsi 
+
+/iscsi> create <LUN_Name>
+
+for eg:
+
+create iqn.2018-02.server:disk1
+
+/iscsi> cd /iscsi/<Lun_Name>/tpg1/acls
+
+/iscsi/iqn.20...sk1/tpg1/acls> create iqn.2018-02.server:node1node2
+
+/iscsi/iqn.20...sk1/tpg1/acls> cd iqn.2018-02.server:node1node2
+
+/iscsi/iqn.20...er:node1node2> set auth userid=user
+
+/iscsi/iqn.20...er:node1node2>  set auth password=password
+
+/iscsi/iqn.20...er:node1node2> cd /iscsi/iqn.2018-02.server:disk1/tpg1/luns
+
+/iscsi/iqn.20...sk1/tpg1/luns> create /backstores/block/scsi_disk1_server
+
+/iscsi/iqn.20.../tpg1/portals> cd /
+
+/> ls
+
+/> saveconfig
+
+/> exit
+
+ systemctl enable target.service
+ systemctl restart target.service
+
+Client side:
+------------
+
+yum install iscsi-initiator-utils -y
+
+vi /etc/iscsi/initiatorname.iscsi
+
+	InitiatorName=iqn.2018-02.server:node1node2
+
+iscsiadm -m discovery -t st -p <target_ip>
+
+vi /etc/iscsi/iscsid.conf
+
+	node.session.auth.authmethod = CHAP
+
+	node.session.auth.username = user
+
+	node.session.auth.password = password
+
+systemctl restart iscsid.service
+systemctl enable iscsid.service
+
+
+verification:
+-------------
+
+lsscsi
+
+fdisk -l |grep /dev/sd
+

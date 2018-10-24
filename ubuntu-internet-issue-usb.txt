@@ -1,0 +1,14 @@
+
+if every thing is working fine except internet 
+
+step 1 :  check ipaddress foor eg : 192.168.122.150 Netmask,Gateway=192.168.122.1
+step2  :  Sometimes flushing the interface before bringing it up works=====> ip addr flush dev enp2s0
+
+
+usb not showing====> 
+
+do fdisk  -l ====> it shows your usb & create one new partition then 
+
+mkfs.ext4 /dev/sdb1 && /dev/sdb1 /mnt -t auto
+
+

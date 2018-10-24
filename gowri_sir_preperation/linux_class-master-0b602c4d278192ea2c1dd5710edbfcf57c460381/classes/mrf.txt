@@ -1,0 +1,12 @@
+mkdir: cannot create directory `no\\': Permission denied
+mkdir: cannot create directory `of\\': Permission denied
+mkdir: cannot create directory `pages\\': Permission denied
+mkdir: cannot create directory `335_wcb\\': Permission denied
+mkdir: cannot create directory `printing\\': Permission denied
+mkdir: cannot create directory `8\\': Permission denied
+mkdir: cannot create directory `date\\': Permission denied
+mkdir: cannot create directory `10272017\\': Permission denied
+mkdir: cannot create directory `reprint\\': Permission denied
+mkdir: cannot create directory `error-manual\\': Permission denied
+
+date 10272017 reprint error-manual printing 101817 cmsw wcb no of pages 335_wcb printing 8 pages

@@ -1,0 +1,114 @@
+creatinglvm-----------------------------------------------------------------------------------------
+echo"- - -" > /sys/class/scsi_host/host 0/scan		: will scan the added disk 
+fdisk /dev/sdb
+m
+n
+p                                                                                                                                                                            08067995700
+1
+t
+8e
+w
+...................................................................................................................
+create a physical volume 
+pvcreate /dev/sdb1 /dev/sdc1
+................................................................................................................
+creating a volume group
+vgcreate <vg name> /dev/sdb /dev/sdc
+.................................................................................................................
+creating a logical volume
+lvcreate -L +1G or +500M  -n <logical volume name > <volume group name>
+				or
+lvcreate -l 100%FREE -n <lvname> <vgname>
+..................................................................................................................................................................
+making a file system
+mkfs.ext4 /dev/<vgname>/<lvname>
+mount the dev in fstab
+vi /etc/fstab                    
+/dev/<vgname>/<lvname>
+wq!
+mount  -a
+
+...................................................................................................................................................
+					increasling a volume group on fly(online)
+vgextend <vgname> /dev/sdc1
+...................................................................................................................................................
+extending lvm
+resize2fs /dev/<vgname>/<lvname> +200M
+lvextend -L +100M /dev/<vgname>/<lvname>
+.........................................................................................................................................
+----------------------------reducing vg and lv--------------------------------------------------------------------------------------------------------------------------------------------
+
+* unmount the disk
+e2fsck -f /dev/<vgname>/<lvname>
+resize2fs /dev/<vgname>/<lvname> <size to be redused>
+lvchange -a n /dev/<vgname>/<lvname>
+lvreduce -L -100M /dev/<vgname>/<lvname>
+lvchange -a y /dev/<vgname>/<lvname>
+resize2fs /dev/<vgname>/<lvname>
+mount the lvm
+
+
+-----------------------------------lv  snapshort--------------------------------------------------------------------------------------------------- 
+lvcreate -L +<sizeof  the snapshort> -s -n <snapshortname> /dev/vgname/lvname 
+                                                            note: -s=snapshort -n name of snapshort
+vi /etc/fstab
+/dev/<vgname>/<snapshort name> /<mount folder>
+:wq!
+mount -a
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+```````````````````````````````````````lvmirror`````````````````````````` 
+
+add a new disk to the volume group
+lvconvert -m 1 /dev/<vgname>/<lvname> /dev/sdc	: creating a mirror on /dev/sdc
+									note:m= mirror,1= no of mirrors
+                         this wil take some time to convert
+
+lvs -o+devices				: to verify the mirror is converted or not
+lvconvert -m 0 /dev/<vgname>/<lvname> /dev/sb1 	: to remove the old harddisk /dev/sdb1 after the mirror
+lvs -o+devices 		to recheck
+vgreduce <vgname> /dev/sdb1  		: removing the old hard disk /dev/sdb1
+-------------------------------------------------------------------------------------------------
+````````````````````````````` pv move ``````````````````````````````````````
+
+pvmove -n /dev/<vgname>/<lvname> /dev/<sdb1> /dev/<sdc1>  : will mirror all the data from /dev/sdb1 to /dev/sdc1
+
+.................................................changing the root reservation................................................................
+
+tune2fs -m 1 /dev/<vgname>/<lvname> 		: this wil change the root reservation to 1%
+						note: default reservation for root is 5%
+.................................................restoring lv.......................................................
+umount the lv
+lvremove /dev/<vgname>/<lvname>
+
+vgcfgrestore -l <vgname> : wil list the records of 
+
+output wil b like this of vgcfgrestore -l <vgname>
+File:         /etc/lvm/archive/samplevg_00000-8403848.vg
+ 	 VG name:      samplevg
+  	Description:  Created *before* executing 'lvrename /dev/samplevg/smaplelv samplelv'
+  	Backup Time:  Sat Jul  8 17:10:22 2017
+
+
+  	File:         /etc/lvm/archive/samplevg_00001-1694195553.vg
+  	VG name:      samplevg
+  	Description:  Created *before* executing 'lvremove /dev/samplevg/samplelv'
+  	Backup Time:  Sat Jul  8 17:29:51 2017
+
+
+  	File:         /etc/lvm/backup/samplevg
+  	VG name:      samplevg
+  	Description:  Created *after* executing 'lvremove /dev/samplevg/samplelv'
+  	Backup Time:  Sat Jul  8 17:29:51 2017
+
+vgcfgrestore -f <cp *before* executing 'lvremove' above line and past hear> <vgname>	: this command wil restore  thr lv
+................................................................................................................................
+
+
+
+adXFq*-m
+
+
+
+
+
+

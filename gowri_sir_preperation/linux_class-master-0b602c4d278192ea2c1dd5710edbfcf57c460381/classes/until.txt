@@ -1,0 +1,42 @@
+The until loop:
+==============
+
+The until loop is very similar to the while loop, except that the loop executes until the TEST-COMMAND executes successfully. As long as this command fails, the loop continues. The syntax is the same as for the while loop:
+
+until TEST-COMMAND; do CONSEQUENT-COMMANDS; done
+
+The return status is the exit status of the last command executed in the CONSEQUENT-COMMANDS list, or zero if none was executed. TEST-COMMAND can, again, be any command that can exit with a success or failure status, and CONSEQUENT-COMMANDS can be any UNIX command, script or shell construct.
+
+
+#!/bin/sh
+
+a=0
+
+until [ ! $a -lt 10 ]
+do
+   echo $a
+   a=`expr $a + 1`
+done
+
+
+
+#!/bin/bash
+i=1
+until [ $i -gt 6 ]
+do
+	echo "Welcome $i times."
+	i=$(( i+1 ))
+done
+
+
+#!/bin/bash
+# checking until command
+num=10
+until [ $num -eq o ]
+do
+echo $num
+num=$[$num-1]
+done
+
+
+

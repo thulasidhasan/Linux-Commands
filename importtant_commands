@@ -1,0 +1,1 @@
+ssh -o StrictHostKeyChecking=no spaneos@192.168.1.194  ====> for without checking the host key

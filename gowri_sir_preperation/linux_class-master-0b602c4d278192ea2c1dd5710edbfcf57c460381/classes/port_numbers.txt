@@ -1,0 +1,73 @@
+Port Numbers:
+=============
+
+ssh	22		ftp	21		telnet	23
+
+smtp	25		pop3	110		ntp	123	
+
+ldap	389		ldaps	636		http	80	
+
+https	443		samba	445 137 139	mysql	3306
+
+rpcbind	111		nfs	2049		iscsi	3260
+
+dhcp	67		dns	53		tftp	69
+
+
+* if the server is installed in the machine, then please refer /etc/services
+
+Command to find whether a port is opened on a server from remote :
+------------------------------------------------------------------
+
+telnet <ip/host> <port>   ###eshtablish connection
+
+(or)
+
+nc -zv -w3 <ip/host> <port>  (RHEL6)
+
+nc -v -w3 <ip/host> <port>   (RHEL7)
+
+nmap ???
+
+Tracing a route:
+----------------
+
+traceroute <ip/host>
+
+*it uses 30 hops
+
+what is a hop ?
+
+Each time packets are passed to the next network device, a hop occurs.
+
+tracepath <ip/host>
+
+
+list the ports opened on a machine through shell:
+-------------------------------------------------
+
+netstat -antu 
+
+ss -antu
+
+Process using the port:
+-----------------------
+
+netstat -antulp
+
+
+Files holded by processes:
+--------------------------
+
+lsof
+
+
+Process using a port:
+----------------------
+
+lsof -i:<port>
+
+
+
+
+

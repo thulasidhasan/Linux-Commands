@@ -1,0 +1,415 @@
+Tuned:
+------
+
+Tuned is a profile-based system tuning tool that uses the udev device manager to monitor connected devices, and enables both static and dynamic tuning of system settings. Dynamic tuning is an experimental feature and is turned off by default in Red Hat Enterprise Linux 7.
+
+tuned is a dynamic adaptive system tuning daemon that tunes system settings dynamically depending on usage. For each hardware subsystem a specific monitoring plugin collects data periodically. This information is then used by tuning plugins to change system settings to lower or higher power saving modes in order to adapt to the current usage. Currently monitoring and tuning plugins for CPU, ethernet network and ATA harddisk devices are implemented.
+In order to make it easier to switch between settings for different setups or locations we now have an additional tool to switch between profiles. Several pre defined profiles have already been included, but new ones can easily be added or existing ones modified. For more details look at tuned-adm(1).
+
+Options
+-d, --daemon
+This options starts tuned as a daemon as opposed to in the foreground without forking at startup.
+-c, --conffile="conffile"
+Specify the name and path of the configuration file, default is /etc/tuned.conf.
+-D, --debug
+Sets the highest logging level. This could be very useful when having trouble with tuned.
+Files
+/etc/tuned.conf
+/usr/share/doc/tuned-*/README
+
+1. Installing tuned
+# yum install tuned
+
+
+2. To view a list of available tuning profiles
+
+[root@myCentOS ~]# tuned-adm list
+Available profiles:
+- laptop-ac-powersave
+- server-powersave
+- laptop-battery-powersave
+- desktop-powersave
+- virtual-host
+- virtual-guest
+- enterprise-storage
+- throughput-performance
+- latency-performance
+- spindown-disk
+- default
+
+3. Tuning to a specific profile
+
+# tuned-adm profile latency-performance
+Switching to profile 'latency-performance'
+Applying deadline elevator: dm-0 dm-1 dm-2 sda             [  OK  ]
+Applying ktune sysctl settings:
+/etc/ktune.d/tunedadm.conf:                                [  OK  ]
+Calling '/etc/ktune.d/tunedadm.sh start':                  [  OK  ]
+Applying sysctl settings from /etc/sysctl.conf
+Starting tuned:                                            [  OK  ]
+
+4. Checking current tuned profile used and its status
+
+# tuned-adm active
+Current active profile: latency-performance
+Service tuned: enabled, running
+Service ktune: enabled, running
+
+5. Turning off the tuned daemon
+# tuned-adm off
+
+
+tuned-adm list
+
+tuned-adm recommend
+
+virtual-guest
+
+tuned-adm verify
+
+service tuned restart
+
+
+CentOS and RHEL Performance Tuning Utilities and Daemons[edit]
+Tuned and Ktune[edit]
+Tuned is a daemon that can monitors and collects data on the system load and activity, by default tuned won't dynamically change settings, however you can modify how the tuned daemon behaves and allow it to dynamically adjust settings on the fly based on activity. I prefer to leave the dynamic monitoring disabled and just use tuned-adm to set the profile once and be done with it. By using the latency-performance profile, tuned can significantly improve performance on CentOS 6 and CentOS 7 servers.
+
+You can install tuned on a CentOS 6.x server by using the command below. For CentOS 7, tuned is installed and activated by default.
+
+yum install tuned
+To activate the latency-performance profile, you can use the "tuned-adm" command to set the profile. Personally I've found that latency-performance is one of the best profile to use if you want high disk IO and low latency. Who doesn't want better performance?
+
+tuned-adm profile latency-performance
+To check what tuned profile is currently in use you can use the "active" option which lists the active tuned profile.
+
+tuned-adm active
+Ktune provides many different profiles that tuned can use to optimize performance.
+
+tuned-adm has the ability to set the following profiles on CentOS 6 or CentOS 7:
+
+default - Default power saving profile, this is the most basic. It enables only the disk and cpu pligins. This is not the same as turning tuned-adm off.
+latency-performance - This turns off power saving features, cpuspeed mode is turned to performance. I/O elevator is changed to deadline. cpu_dma_latency requirement value 0 is registered.
+throughput-performance - Recommended if the system is not using "enterprise class" storage. Same as "latency-performance" except:
+kernel.sched_min_granularity_ns is set to 10 ms
+kernel.sched_wakeup_granularity_ns is set to 15 ms
+vm.dirty_ratio is set to 40% and transparent huge pages are enabled.
+enterprise-storage - Recommended for enterprise class storage servers that have BBU raid controller cache protection and management of on-disk cache. Same as "throughput-performance except:
+file systems are re-mounted with barrier=0
+virtual-guest - Same as "enterprise storage" but it sets readahead value to x 4 of what it normally is. Non boot / root FS are remounted with barrier=0
+virtual-host - Based on "enterprise storage". This reduces swappiness of virtual memory and enables more aggressive writeback of dirty pages. Recommended for KVM hosts.
+perf[edit]
+Basic command to get some info on a running process:
+
+perf stat -p $PID
+You can also view process info in real time by using perf's top like command:
+
+perf top -p $PID
+SystemTap[edit]
+Lots of stuff here, will be going over this later.
+
+https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/SystemTap_Beginners_Guide/index.html
+
+CPU Overview[edit]
+[Additional CPU and Numa Information]
+
+SMP and NUMA[edit]
+Older systems used to have only a few CPUs per system, this was known as SMP (Symmetric Multi-Processor). This means that each CPU in the system had more or less the same access to available memory. This was done by laying out physical connections between CPUs and RAM. These connections were known as Parallel Buses.
+
+Newer systems have many more CPUs (and multiple cores per CPU), so giving them all the same access to memory can be expensive in terms of space needed to draw all the physical connections. This is known as NUMA (Non-Uniform Memory Access).
+
+AMD has used this for a long time with Hyper Transport Interconnects (HT).
+Intel has starting implementing NUMA with Quick Path Interconnect (QPI)
+Tuning applications depends on whether or not a system is using SMP or NUMA. Most modern systems will be using NUMA, however this really only becomes a factor on multi socket systems. A server that has a single E3-1240 processor will not need the same tuning as a 4 socket AMD Opteron 6230.
+Threads[edit]
+A unit of execution is known as a thread. The OS schedules threads for the CPU. The OS is mainly concerned with keeping all the CPUs as busy as possible all the time. The issue with this is that the OS could decide to start a thread on a CPU that does not have the process's Memory in it's local bank, which means that there is latency involved, which ca n reduce performance.
+
+Interrupts (IRQs)[edit]
+An interrupt (known as IRQ) can impact an applications performance. The OS handles these events, and are used by peripherals to signal the arrival of data or the completion of an operation. IRQs don't effect the applications functionality, however they can cause performance issues.
+
+Parallel and Serial Buses[edit]
+Early CPUs were designed to have the same path to a single pool of memory on the system. This meant that each CPU could access the same pool of RAM at the same speed. This worked up to a point, however as more CPUs were added, more physical connections needed to be added to the board, which take up more space, and don't allow for new features to be added to the board.
+However, once more CPUs were added, there was a space issue on the board, and the paths were taking up too much space. These paths are known as parallel buses.
+On newer systems, a serial bus is used, which is a single wire communication path that has a very high clock rate. Serial buses are used to connect CPUs and pools of RAM. So instead of having 8 - 16 parallel buses for each CPU, there is now one bus that carrys information to and from the CPU and RAM. This means that all the CPUs talk to each other through this path, bursts of information are sent so that multiple CPUs can issue requests, much like how the Internet works.
+Questions to ask yourself while performance tuning[edit]
+If we have a two socket motherboard, and two quad core CPUs, each socket would also have it's own bank of RAM. Let's say that each CPU socket has 4 GB of RAM in it's local bank. The local bank includes the RAM, along with a built in memory manager.
+
+Socket One has 4 CPUs, known as CPU 0-3. It also has 4 GB of RAM in it's local bank, with it's own memory controller.
+Socket Two has 4 CPUs, known as CPU 4-7. It also has 4 GB of RAM in it's local bank, with it's own memory controller.
+Each socket in this example has a corresponding NUMA node, which means that we have two NUMA nodes on this system.
+
+The ideal process for a CPU in Socket One, would be to execute processes on CPU 0 - 3 and also have the process use the RAM that is locted in Socket One's RAM bank.
+
+However, if there is not enough RAM in Socket One's bank, or the OS does not realize that NUMA is in use, then it is possible for a CPU in Socket One to use the RAM from Socket Two. This is not optimal because there are two times as many steps involved to access this RAM. Having to make additional hops causes latency, which is bad.
+
+To optimize performance for applications, you must ask the following questions:
+
+1) What is the topology of the system? (Is this NUMA, or not?)
+2) Where is the application currenly executing? (Using one Socket, or all of them?)
+3) If the application is using one CPU, what is the closest bank of RAM to it?
+NUMA in action
+
+The process for a CPU to get access to local memory is as follows:
+
+1) A CPU from Socket One tells it's local Memory Controller the address it wants to access.
+
+2) The memory controller setups up access to this address for that CPU.
+
+3) The CPU then starts doing work with this address.
+The process for a CPU to get access to Remote memory is as follows:
+
+1) A CPU from Socket One tells it's local Memory Controller the address it wants to access.
+
+2) Since the process is unable to use the local bank (not enough space, or started elsewhere) the local memory controller passes the request to Socket Two's memory manager.
+
+3) Socket Two's memory manager (remote) then setups up access for that CPU on Socket two's RAM.
+
+4) The CPU then starts doing work with this address.
+You can see that there are extra steps involved, which can really add up over time and slow down performance.
+
+CPU Affinity with Taskset[edit]
+This utility can be used to retrieve and set CPU affinity of a running process. You can also use this utility to launch a process on specific CPUs. However, this command will not ensure that local memory is used by whatever CPU is set.
+
+To control this, you would use numactl instead.
+
+CPU affinity is represented as a bitmask. The lowest order bits represent the first logical CPU, and the highest order bits would represent the last logical CPU.
+
+Examples would be 0x00001 = processor 0 and 0x00003 = processor 0 and 1
+
+Command used to set the CPU affinity of a running process would be:
+
+taskset -p $CPU_bit_mask $PID_of_task_to_set
+Command used to launch a process with a set affinity:
+
+taskset $CPU_bit_mask --$program_to_launch
+You can also just specify logical CPU numbers with this option:
+
+taskset -c 0,1,2,3 --$program_to_launch
+CPU Scheduling[edit]
+The Linux scheduler has a few different policies that it uses to determine where, and for how long a thread will run.
+
+The two main categories are:
+
+1) Realtime Policies
+
+SCHED_FIFO
+SCHED_RR
+2) Normal Policies
+
+SCHED_OTHER
+SCHED_BATCH
+SCHED_IDLE
+Realtime scheduling policies:
+
+Realtime threads are scheduled first, and normal threads are scheduled to run after realtime threads.
+
+Realtime policies are used for time-critical tasks that must complete without interruptions.
+
+SCHED_FIFO
+
+This policy defines a fixed priority for each thread (1 - 99). The scheduler scans the list of these threads and run t he highest priority threads first. The threads then run until they are blocked, exit or another thread comes along tha t has a higher priority to run.
+
+Even a low priority thread using this policy will run before any other thread under a normal policy.
+
+SCHED_RR
+
+This uses a Round Robin style, and it load balances between threads with the same priority.
+
+Memory[edit]
+Transparent HugePage Overview[edit]
+Most modern CPUs can take advantage of multiple pages sizes, however the Linux Kernel will usually stick with the smallest page size unless you tell it otherwise. The smallest page size is 4096 bytes or 4KB. Any page size that is above 4KB is considered a huge page, larger pages can improve performance in some cases because the larger page sizes reduce the amount of page faults needed to access data in memory.
+
+While this might be an over simplified example, it should explain why huge pages can be awesome. If an application needs, say, 2MB of data and I am using 4KB page sizes, there would need to be 512 page faults to read all the data from memory (2048KB / 4KB = 512). Now, if I was using 2MB page sizes, there would only need to be 1 page fault since all the data can fit inside a single "huge page".
+
+In addition to reduced page faults, huge pages also boost performance by reducing the performance cost of virtual to physical address translation since less pages need to be accessed to obtain all the data from memory. Since there are less lookups and translations going on, the CPU caches will become warmer, thus improving performance.
+
+The Kernel will map it's own address space with hugepages to help reduce the amount of TLB pressure, however the only way that a user space application can utilize huge pages is through hugetlbfs which can be a huge pain in the ass to configure. However, Transparent Huge Pages came along and rescued the day by automating some of the use of huge pages in a safe way that won't break an application.
+
+Since the Transparent HugePage patch was added to the 2.6.38 Kernel by Andrea Arcangeli. A new thread called khugepaged was introduced which scans for pages that could be merged into a single large page, once the pages have been merged into a single huge page, the smaller pages are removed and freed up. If the huge page needs to be swapped to disk, then the single page is automatically split back up into smaller pages and written to disk, so THP basically is awesome.
+
+Official Kernel Docs -- https://www.kernel.org/doc/Documentation/vm/transhuge.txt
+LWN article that covered transparent hugepages when the feature was initially released -- http://lwn.net/Articles/423584/
+How to Configure Transparent HugePages[edit]
+You can see if your OS is configured to use transparent huge pages by cating the file below. The file should exist and most of the time the value will return "always"
+
+cat /sys/kernel/mm/transparent_hugepage/enabled
+You can disable transparent huge pages by echoing "never" into the value. Although I do not suggest disabling THP unless you really know what you are doing/
+
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+If you want to see if there are any active huge pages, you can check /proc/meminfo. In this case I am not using Transparent Huge Pages, but if you were using Transparent Huge Pages there would be values other than zero in the output.
+
+cat /proc/meminfo  | grep -i huge
+
+AnonHugePages:    301056 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+NUMA[edit]
+Controlling NUMA with numactl[edit]
+If you are running CentOS 6 or CentOS 7, you can use numactl to run processes with specific scheduling or memory placement policies. These policies then applies to the process and any children processes that it creates.
+
+You can check the following locations to determine how the CPUs talk to each other, along with NUMA node info.
+
+/sys/devices/system/cpu
+/sys/devices/system/node
+Long running applications that require high performance should be configured so that they only use memory that is located as close to the CPU as possible.
+
+Applications that are multi-threaded should be locked down to a specific NODE, not CPU core. This is because of the way that the CPU caches instructions, it is better to lock down some cores for specific threads, otherwise it's possible that another applications thread will run, and clear out the previous cache, the CPU then wastes time re caching things.
+
+To display the current NUMA policy settings for a current process:
+
+numactl --show
+To display available NUMA nodes on a CentOS 7 system
+
+numactl --hardware
+To only allocate memory to a process from specific NUMA nodes, use the following command
+
+numactl --membind=$nodes $program_to_run
+To only run a process on specific CPU nodes, use the following command
+
+numactl --cpunodebind=$nodes $program_to_run
+To run a process on specific CPUs, (not NUMA nodes), run this command
+
+numactl --physcoubind=$CPU $program_to_run
+Viewing NUMA stats with numastat[edit]
+The numastat command can be used to view memory statistics for CentOS and what processes on running on which NUMA node, broken down on a per NUMA node basis. If you want to know if your server is achieving optimal CPU performance by avoiding NUMA hits, use numastat and look for low numa_miss and numa_foreign values. If you notice that there are a lot of numa misses (like 5% or more) you may want to try and pin the process to specific nodes to improve performance/
+
+You can run numastat without any options and will display quite a lot of information. If you run numastat on CentOS 7 the output might look slightly different than it does on CentOS 6
+
+numastat
+The default tracking categories are as follows:
+
+numa_hit - The number of successful allocations to this node.
+numa_miss - The amount of memory accesses / attempted allocations to another NUMA node that were instead allocated to this node. If this value is high, it means that some NUMA nodes are using remote memory instead of local memory. This will hurt performance badly since there is additional latency for every remote memory access, many remote accesses begin to slow down the application. Lots of NUMA misses could be caused by lack of available memory, so if your server is close to utilizing all memory you may want to look into adding more memory, or using taskset to balance out process placement on NUMA nodes.
+numa_foreign - Similar to numa_miss, but instead it shows the amount of allocations that were initially intended for this node, but were moved to another node. High values here are also bad. This value should reflect numa_miss
+interleave_hit - The number of attempted interleave allocations to this node that were a success.
+local_node - The number of times a process on this node successfully allocated memory on this node.
+other_node - The number of times a process on another node allocated memory on this node.
+NUMA Affinity Management Daemon (numad)[edit]
+Numad is a daemon that automatically monitors NUMA topology and resource usage within the OS, numad can run on CentOS 6 or CentOS 7 servers. Numad can help to dynamically improve NUMA resource allocation and management, which can help to improve performance by watching what CPU processes run on, and what NUMA nodes those processes access. Over time NUMAD will balance out processes so that they are able to access data from the local memory bank which helps to lower latency.
+
+The NUMA daemon looks for significant, long running processes, and then attempts to pin the process down to certain NUMA nodes, so that the CPU and Memory reside in the same NUMA node, this assumes there is enough free memory for the process to use..
+
+You will see significant performance improvements on systems that have long running processes that consume a lot of resources, but not enough to occupy multiple NUMA nodes. For instance, MySQL is a prime candidate for NUMA balancing, Varnish would be another good candidate.
+
+Applications such as large, in memory databases may not see any improvement, this is because you cannot lock down resources to a single NUMA node if all the system RAM is being used by one process.
+
+To start the numad process on CentOS 6 or CentOS 7
+
+service numad start
+To ensure NUMAD starts on reboot, use chkconfig to set numad to "on"
+
+chkconfig numad on
+File System Optimization[edit]
+Barriers
+
+Write barriers are a kernel mechanism used to ensure that file system meta data is correctly written and ordered on persistent storage. If this is enabled, it ensures that any data transmitted using fsynch persists accross power outages. This is enabled by default.
+
+If a system does not have volatile write caches, this can be disabled to help improve performance.
+
+Mount option:
+
+nobarrier
+Access Time
+
+Whenever a file is read, the access time for that file must be updated in the inode metadata, whic usually involves additional write I/O. If this is not needed, you can disable this to help with IO performance.
+
+Mount option:
+
+noatime
+Increased Read-Ahead Support
+
+Read-ahead speeds up file access by pre-fetching data and loading it into the page cache so that it can be available earlier in memory instead of from disk.
+
+To view the current read-ahead value for a particular block device, run:
+
+blockdev -getra device
+To modify the read-ahead value for that block device, run the following command. N represents the number of 512-byte sectors.
+
+blockdev -setra N device
+This will not persist accross reboots, so add this to a run level init.d script to apply after reboots.
+
+Syscall Utilities[edit]
+strace[edit]
+strace can be used to watch systems calls made my a program.
+
+strace $program
+sysdig[edit]
+Sysdig is newer than strace and there is a lot you can do with it. By default it shows all system calls on a server but you can filter out certain applications if you want.
+
+sysdig proc.name=$program
+For more information on how to install and use sysdig:
+
+http://www.sysdig.org/install/
+http://sysdigcloud.com/interpreting-sysdig-output/
+To install on CentOS 6
+
+rpm --import https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public  
+curl -s -o /etc/yum.repos.d/draios.repo http://download.draios.com/stable/rpm/draios.repo
+rpm -i http://mirror.us.leaseweb.net/epel/6/i386/epel-release-6-8.noarch.rpm
+yum -y install kernel-devel-$(uname -r)
+yum -y install sysdig
+System Calls[edit]
+http://sysdigcloud.com/fascinating-world-linux-system-calls/
+
+A System Call is how a program requests a service from an OS's kernel. System calls can ask for access to a harddrive, open a file, create a new process, etc, etc, etc.
+
+System calls require a switch from user mode to kernel mode.
+
+Clone[edit]
+The Clone syscall creates new processes and threads. It is one of the more complex system calls and can be expensive to run so if you notice tons of these syscalls and performance is low you may want to try and reduce the amount of times this happens by increasing the process lifetime or reducing the amount of processes in general.
+
+sysdig filter for clone
+
+sysdig evt.type=clone
+Execve[edit]
+This syscall executes programs, typically you will see this call after the clone syscall. Everything that gets executed goes through this call.
+
+sysdig filter for execve
+
+sysdig evt.type=execve
+Chdir[edit]
+This syscall changes the process working directory. If anything changes directory you can see it by filtering this syscall.
+
+sysdig filter for chdir
+
+sysdig evt.type=chdir
+open/creat[edit]
+These syscalls opens files and can also create them. If you trace this syscall you can view file creation and who is touching what.
+
+sysdig filter for open and creat
+
+sysdig evt.type=open
+sysdig evt.type=creat
+connect[edit]
+This syscall initiates connections on a socket(s). This syscall is the only one that can establish a network connection.
+
+sysdig filter for connect. You can also specify a port or IP to view specific services or IPs.
+
+sysdig evt.type=connect
+sysdig evt.type=connect and fd.port=80
+accept[edit]
+This syscall accepts a connection on a socket. You will always see this syscall when connect is called.
+
+sysdig filter for accept. You can also specify a port or IP to view specific services or IPs.
+
+sysdig evt.type=accept
+sysdig evt.type=accept and fd.port=80
+read/write[edit]
+These syscalls read or write data to or from a file.
+
+sysdig filter for IO
+
+sysdig evt.is_io=true
+You can also use chisel to view IO for certain files, ports, or programs, for example
+
+sysdig -c echo_fds fd.name=/var/lib/mysql/
+
+sysdig -c echo_fds proc.name=httpd and fd.port!=80
+unlink/rename[edit]
+These syscalls delete or rename files.
+
+sysdig evt.type=unlink
+sysdig evt.type=rename
+

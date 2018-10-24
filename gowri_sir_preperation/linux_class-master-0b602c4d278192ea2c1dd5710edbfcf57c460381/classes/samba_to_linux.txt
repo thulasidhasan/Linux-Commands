@@ -1,0 +1,35 @@
+Samba to Linux:
+===============
+
+client side:
+------------
+
+yum install samba-common cifs-utils samba-winbind samba-client
+
+smbclient -L //<server_ip>/<share> -U <valid_user>
+
+create a cred file:
+-------------------
+
+/etc/credentials
+
+username=
+password=
+
+/etc/fstab:
+-----------
+
+//<server_ip>/<share>  <mount_point> cifs  credentials=/etc/credentials  0 0
+
+
+mount -a
+
+verify:
+-------
+
+df -h
+
+In Autofs:
+==========
+
+<secret_name>  -fstype=cifs,rw,credentials=<path_of_cred> ://<server_ip>/<share>

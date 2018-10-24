@@ -1,0 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   IPTABLES   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+sudo iptables -L  ===> list the input,forward and output rules
+
+sudo iptables -I INPUT -s 192.168.1.10 -p tcp --dport ssh -j ACCEPT ===> to accept particular ssh connection
+
+iptables -A INPUT -s 10.10.10.10 -j DROP ===> block all connections from the IP address 10.10.10.10.
+
+iptables -D INPUT 2 ===> to delete line no 2 in input chain
+
+iptables -A INPUT -p tcp --dport 2195 -j ACCEPT  ===> input a particular port
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&  how to use iptables on centos-7 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+systemctl stop firewalld
+systemctl mask firewalld
+
+yum install iptables-services
+
+systemctl enable iptables ===> Enable the service at boot-time:
+
+UBUNTU users: restart the iptables by systemctl restart ufw ===> it will restart iptables
+
+Use the iptables-save command to save current firewall rules:
+$ sudo iptables-save > $HOME/firewall.txt
+
+Use the iptables-restore command to restore firewall rules:
+$ sudo iptables-restore < $HOME/firewall.txt
+
+
+
+
+ 

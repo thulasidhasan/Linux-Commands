@@ -1,0 +1,32 @@
+PATH:
+-----
+* It is an environmental variable
+
+* used to make executables to global, for those paths specified
+
+to see all the Environmental variables:
+---------------------------------------
+
+env
+
+to see the PATH variable:
+-------------------------
+
+echo $PATH
+
+to add more variables to the PATH:
+----------------------------------
+
+PATH=$PATH:<NEW_PATH>
+
+for example:
+------------
+
+PATH=$PATH:/gowri
+
+-------------------------------------------------------------
+
+
+
+
+  

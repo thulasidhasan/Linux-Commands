@@ -1,0 +1,148 @@
+Arrays:
+==========
+
+name[index]=value
+declare -a arrayname=(element1 element2 element3)
+=================================================
+
+#! /bin/bash
+Unix[0]='Debian'
+Unix[1]='Red hat'
+Unix[2]='Ubuntu'
+Unix[3]='Suse'
+echo ${Unix[1]}
+
+declare -a Unix=('Debian' 'Red hat' 'Red hat' 'Suse' 'Fedora');
+
+echo ${#Unix[@]} #Number of elements in the array
+
+echo ${Unix[@]:2:1}
+
+echo ${Unix[2]:0:4}
+
+echo ${Unix[@]/Ubuntu/SCO Unix}  # search and replace
+
+
+Add more elements to the array:
+===============================
+
+Unix=("${Unix[@]}" "AIX" "HP-UX")
+echo ${Unix[7]}
+
+Remove elements from an Array:
+===============================
+
+unset Unix[3]
+echo ${Unix[3]}
+
+Print Null in place of a variable:
+==================================
+
+pos=3
+Unix=(${Unix[@]:0:$pos} ${Unix[@]:$(($pos + 1))})
+echo ${Unix[@]}
+
+Pattern Delete:
+================
+
+declare -a Unix=('Debian' 'Red hat' 'Ubuntu' 'Suse' 'Fedora');
+declare -a patter=( ${Unix[@]/Red*/} )
+echo ${patter[@]}
+
+Array to new Array:
+====================
+
+Linux=("${Unix[@]}")
+echo ${Linux[@]}
+
+Concatenation of two Arrays:
+============================
+
+Unix=('Debian' 'Red hat' 'Ubuntu' 'Suse' 'Fedora' 'UTS' 'OpenLinux');
+Shell=('bash' 'csh' 'jsh' 'rsh' 'ksh' 'rc' 'tcsh');
+
+UnixShell=("${Unix[@]}" "${Shell[@]}")
+echo ${UnixShell[@]}
+echo ${#UnixShell[@]}
+
+Deleting an Array:
+===================
+
+UnixShell=("${Unix[@]}" "${Shell[@]}")
+unset UnixShell
+echo ${#UnixShell[@]}
+
+File content to Array:
+=======================
+
+$ cat logfile
+Welcome
+to
+thegeekstuff
+Linux
+Unix
+
+$ cat loadcontent.sh
+#!/bin/bash
+filecontent=( `cat "logfile" `)
+
+for t in "${filecontent[@]}"
+do
+echo $t
+done
+echo "Read file content!"
+
+$ ./loadcontent.sh
+Welcome
+to
+thegeekstuff
+Linux
+Unix
+Read file content!
+
+
+#!/bin/bash
+index=0
+while true
+do
+        read -p "Enter a new element:  " x
+        [ "$x" = "" ] && break
+        inputarray[$index]=$x
+        (( index++ ))
+done
+echo "the array now contains ${#inpuarray[*]} elements"
+
+
+
+
+Two Dimentional Arrays:
+=======================
+
+#!/bin/bash
+declare -A matrix
+num_rows=4
+num_columns=5
+
+for ((i=1;i<=num_rows;i++)) do
+    for ((j=1;j<=num_columns;j++)) do
+        matrix[$i,$j]=$RANDOM
+    done
+done
+
+f1="%$((${#num_rows}+1))s"
+f2=" %9s"
+
+printf "$f1" ''
+for ((i=1;i<=num_rows;i++)) do
+    printf "$f2" $i
+done
+
+
+
+
+
+
+
+
+
+

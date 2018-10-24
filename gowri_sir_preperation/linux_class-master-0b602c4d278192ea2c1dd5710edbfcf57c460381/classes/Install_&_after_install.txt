@@ -1,0 +1,98 @@
+Installation Linux:
+-------------------
+
+1) if you use Hypervisor type -2, better create Linux VMs with minimal mode of installation
+
+2) set hostname and set root password
+
+
+-----
+
+
+after the VM comes up:
+----------------------
+
+disble selinux (security enabled Linux)
+
+vi /etc/sysconfig/selinux
+
+selinux=disabled   (permanent disble)
+
+
+(or)
+
+
+setenforce 0 (temperarory disable)
+
+status checking:
+----------------
+
+getentforce
+
+disbled (permanent)
+
+permissive (selinux allows everything) (result of setenforce 0)
+
+
+firewall stop/disable:
+----------------------
+
+to view the firewall:
+
+iptables -L
+
+###shows the rules
+
+iptables -t nat -L
+
+temperarory stop/flush:
+-----------------------
+
+iptables -F
+
+iptables -t nat -F
+
+service iptables save
+
+permanent stop/disable:
+-----------------------
+
+rhel6 or below:
+----------------
+
+service iptables stop
+
+rhel7 :
+-------
+
+systemctl stop firewalld
+ 
+permanent:
+----------
+
+rhel6 or below:
+---------------
+
+chkconfig off iptables
+
+rhel7 :
+-------
+
+systemctl disable firewalld
+
+
+setting hostname:
+------------------
+
+rhel6 or below:
+---------------
+
+vi /etc/sysconfig/network
+
+HOSTNAME=saravana1.veecube.com
+
+rhel7:
+------
+
+hostnamectl set-hoatname saravana1.veecube.co --static
+

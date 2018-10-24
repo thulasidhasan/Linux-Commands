@@ -1,0 +1,432 @@
+PERL:
+====
+Perl is a procedural, high-level, general-purpose, dynamic programming language, known for its native support of regular expressions and string parsing capabilities.
+
+Editor: vi, CLI, nano
+======
+
+compile:
+=======
+
+either by having #!/usr/bin/perl
+
+Version:
+=======
+
+perl --version
+
+use 5.10.1;
+
+Modules:
+========
+
+???
+
+Prog1: STDOUT
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+say "\nHello Gowri \n
+welcome to the perl class";
+print "\nHello Gowri, your first program works well\n";
+
+Prog2: STDIN & scalar variables
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+print "\nEnter the value of A: ";
+$A = <STDIN>;
+print "\nEnter the value of B: ";
+$B = <STDIN>;
+print "the entered values are A=$A , B=$B and the program terminated normally\n";
+
+
+Prog3: if-else with multiple conditions
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+print "enter a value for num1: ";
+$num1 = <STDIN>;
+print "enter a value for num2: ";
+$num2 = <STDIN>;
+if ( $num1 ne "\n" && $num2 ne "\n" ) {
+print "\na values entered are \n$num1 $num2";
+}
+else {
+print "\nNULL values are not allowed\n";
+}
+
+
+Prog4: if-else and chomp
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+print "\nPlease enter the text : ";
+$word = <STDIN>;
+chomp ($word);
+if ( $word eq "add" ) {
+print "\nthe action entered word is: addition\n";
+} elsif ( $word eq "sub" ) {
+print "\nthe action entered word is: subtract\n";
+} elsif ( $word eq "mul" ) {
+print "\nthe action entered word is: multiplication\n";
+} elsif ( $word eq "div" ) {
+print "\nthe action entered word is: division\n";
+} else
+{ print "\nthe action entered word is not valid\n";
+}
+
+Prog5: Repetition
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+print "\nPlease Enter a word\n";
+$word=<STDIN>;
+chomp($word);
+print "\nPlease Enter the repetitive value\n";
+$input=<STDIN>;
+chomp($input);
+print "$word" x $input ;print "\n"
+
+
+Prog6: if-elsif-else & STDOUT with delimeter & interpolation of scalar variables
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+use bignum ( p => -3 );
+print "\nEnter the value of A: ";
+$A = <STDIN>;
+print "\nEnter the value of B: ";
+$B = <STDIN>;
+print "\nPlease enter the action : ";
+$word = <STDIN>;
+chomp ($word);
+if ( $word eq "add" ) {
+print "\nthe action entered word is addition and the ${word}ed value is :", $A + $B,"\n";
+} elsif ( $word eq "sub" ) {
+print "\nthe action entered word is subtraction and the ${word}tracted value is :", $A - $B,"\n";
+} elsif ( $word eq "mul" ) {
+print "\nthe action entered word is multiplication and the ${word}tiplied value is :", $A * $B,"\n";
+} elsif ( $word eq "div" ) {
+print "\nthe action entered word is division and the ${word}ided value is :", $A / $B,"\n";
+} elsif ( $word eq "average" ) {
+print "\nthe action entered word is average  and the ${word} value is :", $A / $B * 100,"%\n";
+} elsif ( $word eq "rem" ) {
+print "\nthe action entered word is remainder  and the ${word} value is :", $A % $B * 100,"\n";
+} else
+{ print "\nthe action entered word is not valid\n";
+}
+
+
+(or)
+
+printf("%.3f", 6.02 * 1.25)
+
+(or)
+
+$result = substr($result,0,3);
+
+
+Prog7: Simple chomp
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+print "\nPlease enter the text : ";
+chomp ($word = <STDIN>);
+if ( $word eq "add" ) {
+print "\nthe action entered word is: addition\n";
+} elsif ( $word eq "sub" ) {
+print "\nthe action entered word is: subtract\n";
+} elsif ( $word eq "mul" ) {
+print "\nthe action entered word is: multiplication\n";
+} elsif ( $word eq "div" ) {
+print "\nthe action entered word is: division\n";
+} else
+{ print "\nthe action entered word is not valid\n";
+}
+
+concat1:
+-----
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$string1="gowri";
+$string2="shanker";
+$string3='thanga';
+$string4='vel';
+$addition = "\n$string1" .''. "$string2\n";
+print "$addition";
+
+
+concat2:
+------
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$string1="gowri";
+$string2="shanker";
+$string3='thanga';
+$string4='vel';
+$string5="joins";
+$addition1 = "\n$string1" .''. "$string2\n";
+print "$addition1";
+$addition2 = "\n$string3" ."". "$string4\n";
+print "$addition2";
+$addition1 = "\n$string1" .' '. "$string2\n";
+print "$addition1";
+$addition2 = "\n$string3" ." ". "$string4\n";
+print "$addition2";
+$addition1 = "\n$string1" .'$string5'. "$string2\n";
+print "$addition1";
+$addition2 = "\n$string3" ."$string5". "$string4\n";
+print "$addition2";
+
+while:
+=====
+
+as control structure:
+--------------------
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$count = 0;
+while ($count <= 10) {
+$count += 2;
+#print "the value is : $count \n"; (or)
+printf ("%d\n", $count);
+}
+
+undef value:
+===========
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$n = 1;
+while ($n < 10) {
+$sum += $n;                    (assuming $sum is zero)
+$n += 2;
+}
+print "the total value of $sum.\n";
+
+undef string:
+============
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$string = "hello ";
+$string1 .= "add text\n"; #added as empty string first;
+$string2 = "$string1" . "$string";
+$string3 .= "$string";
+print "$string2\n";
+print "$string3\n";
+
+
+defined function:
+================
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$input = <STDIN>;
+if  (  defined($input) ) {
+print "\ninput is $input \n";
+}
+
+Arrays:
+======
+
+with last:
+----------
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$x = 0;
+while ( defined($x) ) {
+chomp ($array[$x] = <STDIN>);
+if ($array[$x] eq ""){
+last;
+}
+$x += 1;
+}
+print "Number of elements : ", $#array,"\n";
+print "@array\n";
+
+adding new element to the array:
+-------------------------------
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$x = 0;
+while ( defined($x) ) {
+chomp ($array[$x] = <STDIN>);
+if ($array[$x] eq ""){
+last;
+}
+$x += 1;
+}
+print "Enter 'yes' to add an element to the array";
+chomp ($add = <STDIN>);
+if ($add eq "yes") {
+chomp ($array[$#array] = <STDIN>);
+}
+print "Number of elements : ", $#array,"\n";
+print "@array\n";
+
+using only adding at the end and shift:
+--------------------------------------
+
+#!/usr/bin/perl
+use 5.10.1;
+use utf8;
+$x = 0;
+$array[$x] = "a";
+while ( defined($x) ) {
+chomp ($array[$#array + 1] = <STDIN>);
+if ($array[$x + 1] eq ""){
+last;
+}
+$x += 1;
+}
+shift @array;
+print "Number of elements : ", $#array,"\n";
+print "@array\n";
+
+undef in Array:
+--------------
+
+$array[0] = "good"
+$array[99] = "ended"
+
+other than these two rest are undef
+
+special indices:
+---------------
+
+print $array[ -1 ]; 
+
+Literals:
+---------
+
+$array = (1, 2, 3);
+$array1 = (1..100);
+$array2 = (a, z, c, 3..9, 5, go);
+$array3 = ($x..$y);
+$array4 = (0..$#array1);
+$array5 = ($x+$y, $Y+$z);
+
+qw:
+---
+
+quoted words with white spaces
+
+$array = (good bad worst best);
+
+* can have any limiters
+* can have new line chars with white spaces
+like:
+
+$array=(good
+        bad
+        worst
+        best);
+
+Assignment:
+-----------
+
+($var1, $var2, $var3, $var4) = ("good", "bad", "best", undef);
+
+@array = (@array1, "new_word", @array2, $var)
+
+pop and push:
+------------
+
+@array = 1..9;
+$var = pop(@array); #$var gets 9 and the array has only 8 elements
+$var = pop @array;  #possible
+pop @array; #discards the last element
+
+
+push (@array, 0); #adds to the last 
+@others = qw/ 100 1001 10001 /; any limiter can be used
+push @array, @others;  #adds many elemnts at a time, appends from last
+
+
+shift & unshift:
+---------------
+
+*shifted can be stored to a variable
+*shifts from zero th element and reduces the number of elements
+
+*unshift inserts from the zero the element
+
+splice:
+------ 
+
+splice @array, 2; #where 2 is the element position -- as usual count is from zero, removes all the others after pos 2.
+
+splice @array, 1, 2; removes only pos1 and pos2
+
+foreach:
+--------
+
+foreach $element @array {
+statements....
+}
+
+$_ :
+---
+
+foreach (1..100) {
+print "$_\n";
+}
+
+$_="yeppo yemmo appada";print; #prints directly;
+
+
+reverse operator:
+----------------
+*reverse literals
+
+@array = reverse(@array1);
+
+sort:
+-----
+
+@array3 = sort(@array1);
+
+
+each:
+----
+
+
+
+
+
+
+ 
+
+
+
+
+ 

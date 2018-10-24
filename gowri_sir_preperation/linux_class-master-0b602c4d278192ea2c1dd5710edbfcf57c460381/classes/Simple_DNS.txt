@@ -1,0 +1,119 @@
+service:    named     DNS Domain Name Server       Port 53
+--------
+
+
+1) Forward Lookup
+
+Hostname ---> IP
+
+2) Reverse Lookup
+
+IP ---> Hostname
+
+Install:
+--------
+
+yum install bind-9* bind-utils
+
+
+Configuration Files:
+--------------------
+
+  
+
+/etc/named.conf			Main Configuration File
+
+/etc/named.rfc1912.zones	Zone Configuration File
+
+
+Variable Directory:
+-------------------
+
+/var/named			Zone setup
+
+
+Client side Configuration:
+--------------------------
+
+/etc/resolv.conf
+
+
+Configure Server:
+-----------------
+
+/etc/named.conf
+
+;;;add the required details:
+
+listen-on port 53 { 127.0.0.1; <IP>; };
+
+allow-query     { localhost; <Network>; };
+
+
+/etc/named.rfc1912.zones
+
+;;;;copy localhost.localdomain zone and 1.0.0.127.in-addr.arpa zone to the end of the file
+
+;;;;make the required changes provided file names for Forward and Reverse Lookups.
+
+
+Zone Setup:
+-----------
+
+DIR: /var/named
+
+
+create forward and reverse lookup files with the same name given in zone configuration
+
+better to copy named.local host to forward file and named.loopback to reverse file.
+
+
+change the group for both files:
+--------------------------------
+
+chgrp named named.forward
+chgrp named named.reverse
+
+
+Edit the forward and reverse files:
+-----------------------------------
+
+replace teh @ with your host.domain or domain names 
+
+
+remember to add . 'dot' at the end of any domain names metioned 
+
+Records:
+--------
+
+NS   name server 
+
+A    Address
+
+PTR  Pointer
+
+Note: please remove AAAA being it is used for IPV6
+
+start the service:
+------------------
+
+systemctl start/enable named      RHEL7
+
+service named start && chkconfig named on  RHEL6
+
+Verify:
+-------
+
+host <hostname>
+
+host <ip>
+
+you can also try the same with :
+
+nslookup <hostname/ip> 
+
+(and)
+ 
+dig -x <hostname/ip>
+
+

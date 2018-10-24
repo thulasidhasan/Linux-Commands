@@ -1,0 +1,63 @@
+For RHEL6:
+-----------
+
+Single User Mode:
+-----------------
+
+go to the console and press any key while booting, you would get GRUB boot menu kernel version line
+
+there press 'e' then go to the second line (Kernel) then press 'e', give 'space' then '1'
+
+press enter, then press 'b'
+
+e edit
+b boot
+1 single user mode
+
+once after getting to single user mode:
+
+chage -E -1 root 
+
+(or) 
+
+chage -M 99999 root
+
+if you want to keep you shadow file attributed then:
+
+chattr +ia /etc/shadow (no local accounts passwd can be changed)
+
+to remove the attribute 
+
+chattr -ia /etc/shadow
+
+
+For RHEL7:
+----------
+
+1) First restart your CentOS 7 machine, once boot process starts, wait for the GRUB boot menu to appear 
+
+2) Next, select your Kernel version from the grub menu item and press e key to edit the first boot option
+
+3) Now use the Down arrow key to find the kernel line (starts with “linux16“), then change the argument ro to rw init=/sysroot/bin/sh 
+
+4) Once you have finished the task in the previous step, press Ctrl-X or F10 to boot into single user mode (access an emergency shell).
+
+5) Now mount root (/) filesystem using the following command.
+
+chroot /sysroot/
+
+mount -o rw,remount /
+
+Now you can change the root password by typing the passwd command. But that is not done. We need to relabel SELinux context. 
+If we skip relabeling the whole SELinux context we would be able to login using using password.
+
+# passwd root
+[Enter New Password]
+[Re-enter New Password]
+
+# touch /.autorelabel
+
+6) if you want to set age for password or to disable expiry use the chage command given above for RHEL6
+
+
+Note : In both RHEL6 & RHEL7 you need to reboot the machine, once everything is done

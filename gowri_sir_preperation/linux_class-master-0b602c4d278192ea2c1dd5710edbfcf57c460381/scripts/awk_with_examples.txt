@@ -1,0 +1,97 @@
+AWK:
+----
+
+echo "hi hello how are you" |awk '{print}'  --- printing the whole
+
+echo "hi hello how are you" |awk '{print $1}'  --- printing the selected
+
+## only "hi" is getting printed
+
+echo "hi hello how are you" |awk '{print $1" "$2}' --- printing with space
+
+echo "hi hello how are you" |awk '{print $NF}' --- prints the last column
+
+echo "hi hello how are you" |awk '{Print $(NF-1)}' --- prints the column 1 b4 the last
+
+echo "hi hello how are you" |awk '{($1 = "");print }' ---avoiding the first field
+
+echo "hi_hello_how_are_you" |awk -F "_" '{print $1" "$2}' ---with delimeter
+
+echo "Hi_hello_how_are_you" |awk -F "_" '{($1=$2="");print}' ---omits $1 and $2
+
+awk -F: '/root/ { gsub("root","good",$1);print}' /etc/passwd --search  and replace
+
+awk -F ":" 'BEGIN{s=1}{s=s+$3;print s }' /etc/passwd  ---with variable
+
+awk 'BEGIN {FS=":";OFS="|"}{print $1,$3}' /etc/passwd  --- print with delimeter
+
+awk -F ":" ' BEGIN { print "number occurances of nologin in an user information 
+file"; }
+/nologin/ { counter+=1 ; }
+END { printf "%s\n", counter ; }
+' /etc/passwd
+
+
+size=$1
+if [ $size -ge 1048576 ]; then 
+size=$(awk 'BEGIN {printf "%.2f", '$size'/1048576}'M
+fi
+echo $size
+
+$ awk '{
+if ($3 >=35 && $4 >= 35 && $5 >= 35)
+	print $0,"=>","Pass";
+else
+	print $0,"=>","Fail";
+}' student-marks
+
+
+
+SED:
+====
+
+Command 1: Display line multiple times
+sed '2p' file.txt
+sed -n '3p' file.txt (specific line => -n)
+sed -n '5p' file.txt
+
+Command 2: Display last line[$]
+sed '$p' file.txt (includes last line again along with original)
+sed -n '$p' file.txt (Specific)
+
+Command 3: Range of lines
+sed -n '2,4p' file.txt
+
+Command 4: Do not display specific lines
+sed -n '2!p' file.txt
+sed -n '2,4!p' file.txt
+- do not display specific range of lines(!)
+
+Context Addressing:
+
+Command 1: Display lines having a specific word
+sed -n '/Amit/p' file.txt
+sed -n '/[Aa]mit/p' file.txt (Ignoring Case)
+
+Command 2: Search lines and store in the file
+sed -n '/[Aa]/p' file.txt
+sed -n '/[Aa]/w result.txt' file.txt (Write to result.txt)
+
+Command 3: Replace context from the file
+sed 's/10000/1500/' file.txt
+sed 's/hello/hi/' file.txt
+
+Command 4: Replace multiple context in one command
+sed -e 's/100/150/' -e 's/200/250/' file.txt
+
+Command 5: Replace data by matching some condition
+sed '/Sai/s/100/150/' file.txt
+sed '/Msd/s/100/150/' file.txt [Check the match(Msd) and Substitute]
+
+Command 6: Delete data
+sed '/sai/d' file.txt
+sed '/[Aa]mit/d' file.txt
+
+Command 7: Add line to file
+sed '1i welcome to 24tutorials' file.txt
+sed '1i welcome to \n 24tutorials' file.txt [i- insert]

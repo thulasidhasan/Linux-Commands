@@ -1,0 +1,64 @@
+##########comparing two files###########################################################
+
+[root@CentOS ~]# cat ssh.sh
+#!/bin/bash
+sshpass -p thulasi@123 ssh server@192.168.1.18 "cat /etc/passwd > sshpass.txt 
+sshpass -p 123 scp /home/server/sshpass.txt root@192.168.122.222:~"
+
+awk -F: '{print $1}' /root/sshpass.txt > file100.txt
+awk -F: '{print $1}' /etc/passwd > file200.txt
+
+#grep -v /root/file100.txt /root/file200.txt
+for name in `cat file100.txt`
+do
+if ! grep -q $name file200.txt
+then
+echo $name
+fi
+done
+[root@CentOS ~]# 
+
+##################################### SED ##################################################################################3
+
+sed 's/root/good/g' file200.txt  ===>  only made change in output not in file
+ 
+# sed -n '/root/p' /etc/passwd  =====> search and print the root in /etc/passwd 
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+
+sed -n '/root/!p' /etc/passwd   ======>  search and print all lines except root  ==== equal to grep -v
+
+sed '/root/d' file200.txt   ======> delete a line in output not in file
+
+[root@CentOS ~]# echo "hello"
+hello
+[root@CentOS ~]# echo -e "hello\nnew"
+hello
+new
+###################################################################################################################################
+
+echo "hai    hello   new     hat" | sed 's/\s\+/ /g'  ===> replace with proper space
+hai hello new hat
+##############################################################
+
+sed '/^$/d' file200.txt =============>  delete the empty line in a output
+###################################################################################################################
+
+sed '/^$/d;/^#/d' sshd.txt ============> it will delete a empty line and # in a output not in file
+
+egrep -v '^#|^$' sshd.txt  ============> it will delete a empty line and # in a output not in file
+###################################################################################################################################33
+
+
+Example of functions
+
+
+#!/bin/bash
+
+hello ()
+{
+echo "hello world $1 $2 $0"
+}
+#invoke the command
+hello rak ram
+#########################################################################################################################################~                                                                                                                                                     

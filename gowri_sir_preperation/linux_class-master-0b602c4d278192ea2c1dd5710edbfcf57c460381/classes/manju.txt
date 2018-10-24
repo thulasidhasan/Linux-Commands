@@ -1,0 +1,57 @@
+User and group administration
+===============================
+
+How to create user
+
+useradd <username>
+useradd manju -c "PMC IT deportment"
+
+userdel <username>
+userdel manju
+
+User's Information
+
+cat /etc/passwd |grep manju
+
+manju:x:20005:20006:PMC IT deportment:/home/manju:/bin/bash
+
+Username:password:uid:gid:Description:user's home directory:shell
+
+
+How to set password :
+======================
+passwd manju
+
+cat /etc/shadow | grep manju
+manju:$6$X.eSiQyQ$QiX8oo7F9OKhc1oOLU3GtqlS1l2MnDlChBcKM92b4gdHV2WtNkV8j4Sb.h05d2fG4wEQgeU0GcuaxWjWUbJVn1:17268:0:99999:7:::
+
+manju:!!:17268:30:40:7:30::
+username:encrypassword:passwdid:minimumexpirydate:maximumexpirydate:notification:status
+
+How to create Groups:
+=====================
+
+groupadd <GroupName>
+
+groupadd pmc
+
+
+Group Information
+===================
+
+cat /etc/group |grep pmc
+pmc:x:20005:
+
+How to delete existing group 
+
+groupdel <groupname>
+
+groupdel pmc
+
+
+How to change the Group 
+
+
+chgrp pec /home/manju/groupadmin/ 
+chown manju:pmc groupadmin
+

@@ -1,0 +1,3 @@
+this is true for Red Hat Enterprise Linux OpenStack Platform (RHELOSP), Mirantis OpenStack, Platform9, and even for VMware's vSphere Integrated OpenStack (VIO) 
+
+Openstack

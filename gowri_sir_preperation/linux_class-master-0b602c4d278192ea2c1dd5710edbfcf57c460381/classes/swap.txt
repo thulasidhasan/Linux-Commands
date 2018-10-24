@@ -1,0 +1,90 @@
+Swap:
+-----
+
+Swap is virtual memory.
+
+what is virtual memory?
+
+Virtual memory is a memory management capability of an OS that uses hardware and software to allow a computer to compensate for physical memory shortages by temporarily transferring data from random access memory (RAM) to disk storage. Virtual address space is increased using active memory in RAM and inactive memory in hard disk drives (HDDs) to form contiguous addresses that hold both the application and its data.
+
+Memory to Swap ----> Swapin
+
+Swap to Memory ----> Swapout
+
+to view the Swap size:
+----------------------
+
+swapon -s 
+
+free -m
+
+top
+
+vmstat
+
+grep swap /etc/fstab
+
+
+Swap creation:
+--------------
+
+1) Either add a new disk and create swap directly on it
+
+2) or create any partition on the disk and create swap on it
+
+3) Create a logical volume and create swap on it
+
+4) Create a big file and create swap on it.
+
+
+command  -option  device
+------------------------
+
+mkswap -f /dev/<disk/part>
+
+mkswap -f /dev/disk
+
+mkswap -f /dev/<vg_name>/<lv_name>
+
+mkswap -f <path_to_the_file>
+
+
+to add to FSTAB:
+----------------
+
+<device>   swap      swap       defaults  0 0
+
+  
+on/off:
+-------
+
+swapon -a 
+
+swapon <device>
+
+swapoff <device>
+
+For example:
+------------
+
+[root@gowri1 ~]# swapon -s
+Filename                                Type            Size    Used    Priority
+/dev/dm-1                               partition       2097148 0       -1
+
+[root@gowri1 ~]# dmsetup info /dev/dm-1
+
+Name:              ol-swap             #####ol is the VG and swap is the lv
+State:             ACTIVE
+Read Ahead:        8192
+Tables present:    LIVE
+Open count:        2
+Event number:      0
+Major, minor:      249, 1
+Number of targets: 1
+UUID: LVM-rdy1OA7JwfqDwvXIonHHJt38M4ZAIsixOvPek8f3zzMhdUMfjl0CDtaNrY1y9X94
+
+
+uid=1004,gid=1004,forceuid,forcegid
+
+
+

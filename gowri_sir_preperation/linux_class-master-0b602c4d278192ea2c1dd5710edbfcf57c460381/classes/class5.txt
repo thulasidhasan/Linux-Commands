@@ -1,0 +1,251 @@
+Delimeter: separator
+
+
+
+a) super user b) Normal user  and c) Technical/system user
+
+
+/etc/passwd :   * Info about Users
+-------------
+
+Delimeter is   ':'
+
+1       username
+
+2       Password , normally x and password details are in /etc/shadow file
+
+3       uidNumber
+
+4       gidNumber  and group details are in /etc/group file
+
+5       Description or Gecos
+
+6       Home Directory
+
+7       shell    /bin/bash  /bin/ksh  /bin/tcsh  /bin/zsh /sbin/nologin
+
+
+
+
+/etc/shadow :
+-------------
+
+1    Username. Case-sensitive, usually all lowercase. A direct match to
+
+the username in the /etc/passwd file.
+
+2    Password. A blank entry (eg. ::) or :!!: indicates a password is not set
+
+(usually a bad idea), and a ``*'' entry (eg. :*:) indicates the account
+
+has been disabled, else encrypted passwd would be there.
+
+3    The number of days (since January 1, 1970) since the password was
+
+last changed.
+
+4    The number of days before password may be changed (0 indicates it
+
+may be changed at any time)
+
+5    The number of days after which password must be changed (99999
+
+indicates user can keep his or her password unchanged for many, many
+
+years)
+
+6    The number of days to warn user of an expiring password (7 for a
+
+full week)
+
+7    The number of days after password expires that account is disabled
+
+8    The number of days since January 1, 1970 that an account has been
+
+disabled
+
+9    A reserved field for possible future use
+
+
+/etc/group :
+------------
+
+1       group Name
+
+2       gPassword
+
+3       gidNumber
+
+
+===========================================================================
+Common Text related tools:
+---------------------------
+
+
+syntax:
+=======
+
+1) <command> <file_name>
+
+2) result | <command>
+
+
+a)  tail <file>
+
+shows last 10 lines
+
+    tail -15 <file_name>
+
+    cat <file_name> | tail -5
+
+
+b)  head <file_name>
+
+shows top 10 line
+
+    head -5 <file_name>
+
+    cat <file_name> | head -5
+
+
+c) less <file_name>
+
+   cat <file_name> | less
+
+both top and bottom scroll available
+
+
+d) more <file_name>
+
+   cat <file_name> | more
+
+only bottom scroll is available
+
+e) wc -l <file_name>    ##line count
+   wc -w <file_name>    ##word count
+   wc -c <file_name>   ##char count
+
+   cat <file_name> | wc -l
+   cat <file_name> | wc -w
+   cat <file_name> | wc -c
+
+f) sort <file_name>
+   cat <file_name> | sort
+   cat <file_name> |sort -u   ... shows without duplicates
+   cat <file_name> |sort |uniq -d  ...shows only the duplicates
+
+cut:
+====
+
+example1:
+---------
+
+
+
+cut -d ":" -f1 /etc/passwd    ##shows the feild 1
+
+-d to specify delimeter
+
+: as the delimeter
+
+-f to specify the field
+
+1 is the field number
+
+
+example2:
+---------
+
+echo "some output text" |cut -d " " -f2,3
+
+here space is the delimeter
+
+2,3 are two feilds in order, here we are cutting two fields together
+
+example3:
+---------
+
+echo "some output text" |cut -c1,2
+
+-c to specify the character number
+
+1,2 are the two character numbers in order here we are cutting two characters together
+
+grep is a filter utility:
+==========================
+
+cat /etc/passwd | grep root
+
+here root is a pattern
+
+voiding a pattern:
+------------------
+
+cat /etc/passwd |grep -v root
+
+-v to void the pattern and to print rest of the output
+
+same cases can be run like:
+---------------------------
+
+grep root /etc/passwd
+
+grep -v root /etc/passwd
+
+
+to remove case-sensitivity:
+---------------------------
+
+grep -i
+
+cat /etc/passwd|grep -i murali
+
+
+to check recursively:
+---------------------
+
+grep -r murali /etc
+
+
+to check more than one pattern:
+-------------------------------
+
+grep -e home -e murali
+
+grep -e murali -e home -e possible test1
+
+
+starting with:
+--------------
+
+grep ^<pattern> <file>
+
+
+Ending with:
+------------
+
+grep <pattern>$ file
+
+grep login$ /etc/passwd
+
+exact pattern
+-------------
+
+cat > file1
+hello,hi
+hello
+hello hi
+hi hello how are you ?
+you,me,they,then
+<ctrl -d>
+
+grep -w you file1
+grep -w hello file1
+
+quite mode:
+-----------
+
+grep -q <pattern> <file>;echo $?
+
+## 0 means success 
+## 1 means failure

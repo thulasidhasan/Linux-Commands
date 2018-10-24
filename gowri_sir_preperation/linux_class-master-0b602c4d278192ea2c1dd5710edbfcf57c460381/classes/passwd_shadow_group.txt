@@ -1,0 +1,59 @@
+Delimeter: separator
+
+
+
+a) super user b) Normal user  and c) Technical/system user
+
+
+/etc/passwd :   * Info about Users
+-------------
+
+Delimeter is   ':'
+
+1	username
+
+2	Password , normally x and password details are in /etc/shadow file
+
+3	uidNumber
+
+4	gidNumber  and group details are in /etc/group file
+
+5	Description or Gecos
+
+6	Home Directory
+
+7	shell    /bin/bash  /bin/ksh  /bin/tcsh  /bin/zsh /sbin/nologin 	
+
+
+/etc/shadow :
+-------------
+
+1    Username. Case-sensitive, usually all lowercase. A direct match to the username in the /etc/passwd file.
+
+2    Password. A blank entry (eg. ::) indicates a password is not set (usually a bad idea), and a ``*'' entry (eg. :*:) indicates the account has been disabled, else encrypted passwd would be there.
+
+3    The number of days (since January 1, 1970) since the password was last changed.
+
+4    The number of days before password may be changed (0 indicates it may be changed at any time)
+
+5    The number of days after which password must be changed (99999 indicates user can keep his or her password unchanged for many, many years)
+
+6    The number of days to warn user of an expiring password (7 for a full week)
+
+7    The number of days after password expires that account is disabled
+
+8    The number of days since January 1, 1970 that an account has been disabled
+
+9    A reserved field for possible future use
+
+
+/etc/group :
+------------
+
+1	group Name
+
+2	gPassword
+
+3	gidNumber
+
+	

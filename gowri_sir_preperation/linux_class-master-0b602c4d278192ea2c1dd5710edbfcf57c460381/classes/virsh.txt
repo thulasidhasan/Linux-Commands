@@ -1,0 +1,43 @@
+yum install kvm libvirt
+
+yum info libvirt
+
+yum info qemu-kvm
+
+service libvirtd restart
+
+lsmod | grep kvm
+
+virsh sysinfo
+
+cat /etc/udev/rules.d/80-kvm.rules
+
+virsh -c qemu:///system sysinfo
+
+virsh list --all
+
+Instance create:
+----------------
+
+virt-install --name=linuxconfig-vm \
+--vcpus=1 \
+--memory=1024 \
+--cdrom=/tmp/debian-9.0.0-amd64-netinst.iso \
+--disk size=5 \
+--os-variant=centos6
+
+Instance create:
+----------------
+
+# virt-install \  
+-n myRHELVM1 \ 
+--description "Test VM with RHEL 6" \  
+--os-type=Linux \  
+--os-variant=rhel6 \  
+--ram=2048 \  
+--vcpus=2 \ 
+--disk path=/var/lib/libvirt/images/myRHELVM1.img,bus=virtio,size=10 \
+--graphics none \  
+--cdrom /var/rhel-server-6.5-x86_64-dvd.iso \
+--network bridge:br0
+

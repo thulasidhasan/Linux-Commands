@@ -1,0 +1,108 @@
+step1:
+*Before installation assign a static ip and add a host entry for your domain to that IP in the /etc/hosts 
+step2:
+yum install postfix -y
+yum -y install cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-md5 cyrus-sasl-plain   :Now issue the below command to install SMTP AUTH packages
+===============================================
+step3: creating selfgenerated SSL Certificate.
+mkdir /etc/postfix/ssl		: create a directory 
+cd /etc/postfix/ssl/		: get into the directory to create certificate
+openssl genrsa -des3 -rand /etc/hosts -out smtpd.key 1024   : creating a key for smtpd
+chmod 600 smtpd.key   		: change the permision to read and write
+openssl req -new -key smtpd.key -out smtpd.csr
+openssl x509 -req -days 365 -in smtpd.csr -signkey smtpd.key -out smtpd.crt
+openssl rsa -in smtpd.key -out smtpd.key.unencrypted
+mv -f smtpd.key.unencrypted smtpd.key
+openssl req -new -x509 -extensions v3_ca -keyout cakey.pem -out cacert.pem -days 365
+===============================================
+vi /etc/postfix/main.cf  : edit the configuration file
+inet_interfaces = localhost #---> line no 116
+#mydestination = $myhostname, localhost.$mydomain, localhost #--> line no 164   add this line at the end of the file
+mydomain = cisvg.com			:add ur domainname
+myorigin = $mydomain
+home_mailbox = mail/
+mynetworks = 127.0.0.0/8		:add ur ip pool
+inet_interfaces = all
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = cyrus
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_sasl_authenticated_header = yes
+smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination
+smtpd_tls_auth_only = no
+smtp_use_tls = yes
+smtpd_use_tls = yes
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_key_file = /etc/postfix/ssl/smtpd.key
+smtpd_tls_cert_file = /etc/postfix/ssl/smtpd.crt
+smtpd_tls_CAfile = /etc/postfix/ssl/cacert.pem
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_timeout = 3600s
+tls_random_source = dev:/dev/urandom
+wq!
+==============================
+vi /etc/postfix/master.cf
+smtps     inet  n       -       n       -       -       smtpd  :add below this line
+      -o smtpd_sasl_auth_enable=yes
+      -o smtpd_reject_unlisted_sender=yes
+      -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject
+      -o broken_sasl_auth_clients=yes
+wq!
+service postfix start     : start postfix server
+service saslauthd start	  :
+chkconfig postfix on
+chkconfig saslauthd on
+==========testing smtp
+telnet locallost 25
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+220 mail.cisvg.com ESMTP Postfix
+ehlo localhost<--------- type this command
+250-mail.cisvg.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+quit
+221 2.0.0 Bye
+Connection closed by foreign host.
+====================installing dovecot
+yum -y install dovecot
+vi /etc/dovecot/dovecot.conf
+protocols = imap pop3
+mail_location = maildir:~/mail
+pop3_uidl_format = %08Xu%08Xv
+wq!
+service dovecot start    
+chkconfig dovecot on
+=========testing pop3
+telnet localhost 110
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
++OK Dovecot ready.     <------if u get this output ur pop is server is running 
+quit	
++OK Logging out
+Connection closed by foreign host.   :quite and come out
+================================
+
+create a mail user for test
+useradd -m pradeep -s /sbin/nologin
+useradd -m raju -s /sbin/nologin
+passwd pradeep
+passwd raju
+=====================================
+restart the server 1s
+=============
+/var/log/maillog     :if any issue check for the errors in /var/log/maillog
+======================
+
+ 

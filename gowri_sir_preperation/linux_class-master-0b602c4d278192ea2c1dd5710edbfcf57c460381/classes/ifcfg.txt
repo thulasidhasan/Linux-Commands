@@ -1,0 +1,31 @@
+service NetworkManager stop -----RHEL6
+
+systemctl stop NetworkManager -----RHEL7
+
+
+how many NIC/dev present in a machine:
+----------------------------------
+
+cat /proc/net/dev
+
+
+configuration:
+--------------
+
+DEVICE=eth0   ##Name of the device according to /proc/net/dev
+HWADDR=00:0C:29:38:E4:53    ##MAC ID
+TYPE=Ethernet   ##Type
+UUID=b4e91287-e34e-4786-8965-f114a59ae2f9  ##unique device ID given by the kernel
+ONBOOT=yes  ##to bring up the card automatically after a reboot/start
+NM_CONTROLLED=no   ##disabling NetworkManager control for the card
+BOOTPROTO=static   ## IP needs to be specified manually/explicitely
+IPADDR=192.168.1.181   ## IPV4
+NETMASK=255.255.255.0  ## class 
+GATEWAY=192.168.1.1    ## route       
+IPV6INIT=no	##IPV6 required or not
+DNS1=192.168.1.116  ## Domain Name Service 1 
+DNS2=8.8.8.8  ## Domain Name Service 2
+PEERDNS=yes  ## forces the entry in the /etc/resolv.conf
+
+
+

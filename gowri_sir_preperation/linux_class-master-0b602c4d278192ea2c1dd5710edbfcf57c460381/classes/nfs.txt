@@ -1,0 +1,58 @@
+NFS:  Network File system Version 2 , 3 & 4
+---- 
+
+
+1) the one who exports is the Server
+
+
+2) the one recieves is the client
+
+
+3) Install
+
+
+4) service start
+
+
+5) prepare your share
+
+
+6) put entry in /etc/exports 
+
+		for eg.,  <share_path>       <ip/host_name>(perm)
+
+7) exportfs -avr
+
+
+8) verification ------ showmount -e 
+
+9) verification ------ exportfs -avr 
+
+
+------------------------------------------
+
+Client Side:
+------------
+
+1) Install 
+
+2) showmount -e <server_ip>
+
+3) create a mount_point
+
+4) for permanent mount ---- /etc/fstab
+
+<server_ip>:<share_path>  <mount_point>   <type>  <options>  0 0 
+
+<options> ===== _netdev
+
+after putting entry in fstab "please run mount -a"
+
+verification :  df -h
+
+
+5) for a temporary mount:
+
+mount <server_ip>:<share_path>  -t nfs -o rw <mount_point>
+
+ 

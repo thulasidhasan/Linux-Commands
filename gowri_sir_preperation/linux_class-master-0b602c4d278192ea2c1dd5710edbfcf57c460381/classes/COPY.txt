@@ -1,0 +1,55 @@
+Client Name	"Client Upload Path
+Server: Rackspace"	"FTP download Path
+PC: 192.168.100.143"	"File Sync To
+Server: \CC3\mbdownload"
+LMC		I:\FTP\lmc\2017\<month>		/ftp/lmc/2017/			\\cc3\mbdownload\Workers Comp\LMC
+MMMS		I:\FTP\mmms\input\2017\<month>	/ftp/mmms/input/2017/10-Oct/ 	\\cc3\mbdownload\Workers Comp\MMMS
+CCMS		I:\FTP\CCMS\Dr.clarke		/ftp/ccms/Payments/2017		\\cc3\mbdownload\Workers Comp\CCMS\payments\2017
+CMSW		I:\FTP\cmsw\input		/ftp/cmsw/Input/2017		\\cc3\mbdownload\Workers Comp\CMSW
+WMS		I:\FTP\wms\input\2017		/ftp/wms/Input/2017/		\\cc3\mbdownload\Workers Comp\WMS\2017
+MORTON		I:\FTP\morton\input		/ftp/morton/Input		\\cc3\mbdownload\Workers Comp\MFMD
+YP		I:\FTP\yp\input\2017		/ftp/yp/Input/2017/Oct\ 2017/	\\cc3\mbdownload\Major medical\ActiveClients\YoPharm\2017
+ORTHOTICS	I:\FTP\orthotics\input		/ftp/orthotics/Input/2017/	\\cc3\mbdownload\Major medical\ActiveClients\Orthotics
+LMCMM		I:\FTP\lmc mm\2017		/ftp/lmcmm/2017/October\ 2017	\\cc3\mbdownload\Major medical\ActiveClients\LMCMM
+TNEUNER		I:\FTP\tneuner\input\2017	/ftp/tneuner/Input/2017/	\\cc3\mbdownload\Major medical\ActiveClients\Tneuner\2017
+GNC		I:\FTP\gnc\input\2017		/ftp/gnc/Input/2017		\\cc3\mbdownload\Major medical\ActiveClients\GNC
+
+
+
+$TTL 1D
+@       IN SOA  creainsol1.com. root.creainsol1.com. (
+                                        15000   ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      creainsol1.com.
+        A       192.168.0.55
+55      IN      PTR     oldap.creainsol1.com.
+
+
+
+$TTL 1D
+@       IN SOA  creainsol1.com. mail.creainsol1.com. (
+                                        15000   ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      creainsol1.com.
+        A       192.168.0.55
+                IN      NS      oldap.creainsol1.com.
+IN      NS      ldapclient.creainsol.com.
+IN      NS      revproxy.creainsol.com.
+IN      NS      esx.creainsol.com.
+IN      NS      router.creainsol.com.
+IN      NS      server.creainsol.com.
+IN      NS      code.creainsol.com.
+;1
+oldap           IN      A       192.168.0.55
+ldapclient      IN         A      192.168.0.56
+revproxy        IN         A      192.168.0.160
+esx     IN         A      192.168.0.50
+router  IN         A      192.168.0.1
+server  IN         A      192.168.0.18
+code    IN         A      192.168.0.201

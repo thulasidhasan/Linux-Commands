@@ -1,0 +1,44 @@
+Packages:
+=========
+
+* any command or any file or any directory got created in the machine while installing the Operating System is only out of packages.
+
+* After the installation, the requirement for repository araises when the system needs more packages to be installed.
+
+* RHEL uses YUM as the default repository, which is manually needed to be created. 
+
+* Else we can share the available repository in other machines through FTP or HTTP.
+
+* So there are totally three options to create a baseurl for repository :
+
+1) ftp://<ip>/<path>    Remote file transfer protocol repository.
+
+2) http://<ip>/<path>   Remote Web server repository.
+
+3) file://<path>     Local and cannot be shared to another machine.
+
+* yum repository uses xml metadata
+
+* Main directory for YUM repo files :  /etc/yum.repos.d
+
+yum commands:
+============
+
+yum install <package_name> -y
+
+yum reinstall <package_name> -y
+
+yum remove <package_name> -y
+
+yum repolist    => what are all the repositories available
+
+yum list ldap*    => way of search
+
+yum search ldap   => way of search
+
+yum provides */<command>
+
+yum groupinstall <group_package_name>
+
+yum clean all
+

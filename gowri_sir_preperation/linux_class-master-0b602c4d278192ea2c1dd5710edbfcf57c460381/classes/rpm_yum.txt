@@ -1,0 +1,210 @@
+Packages:
+=========
+
+* any command or any file or any directory got created in the machine while installing the Operating System is only out of packages.
+
+* After the installation, the requirement for repository araises when the system needs more packages to be installed.
+
+
+to view all the packages installed in a system :
+------------------------------------------------
+
+rpm -qa  ##query all
+
+to view all the packages installed in a system by order :
+---------------------------------------------------------
+
+rpm -qa --last
+
+to list the files from a package:
+---------------------------------
+
+rpm -ql <package_name> ##query list
+
+to list only the configuration files in a package:
+---------------------------------------------------
+
+rpm -qc <package_name>
+
+format of a package_name:
+-------------------------
+<name>-<major_version>.<minor_version>.<patch_release>.<rhel>.<arch>
+
+arch:
+-----
+i386 -- 32bit
+i686 -- 32bit
+x86_64 -- 64bit
+noarch -- any arch
+
+rhel:
+-----
+cat /etc/redhat_release
+
+uname -r ### kernel version  (please refer the man page of uname)
+
+in package name : the rhel is el5 for RHEL5, el6 RHEL6 & el7 for RHEL7
+
+to install a package:
+---------------------
+
+*we need rpm file
+
+rpm -ivh <package.rpm>   ### i - install v-verbose h-human readable
+
+
+to upgrade a package:
+---------------------
+
+rpm -Uvh <package.rpm>  ### U - Upgrade
+
+
+to check package been installed or not:
+---------------------------------------
+
+rpm -qa | grep <package*>
+
+to remove a package:
+--------------------
+
+rpm -e <package_full_name>
+
+to mount a cd/iso:
+------------------
+
+mount /dev/sr0 /mnt -o loop,ro
+
+*only one package can be handled at a time
+*dependency has to be resolved manually
+
+======================================================
+YUM: Yello Dog Update Manager:
+-------------------------------
+
+*resolves dependency automatically
+
+* RHEL uses YUM as the default repository, which is manually needed to be created. 
+
+* Else we can share the available repository in other machines through FTP or HTTP.
+
+* So there are totally three options to create a baseurl for repository :
+
+1) ftp://<ip>/<path>    Remote file transfer protocol repository.
+
+2) http://<ip>/<path>   Remote Web server repository.
+
+3) file://<path>     Local and cannot be shared to another machine.
+
+* yum repository uses xml metadata
+
+* Main directory for YUM repo files :  /etc/yum.repos.d
+
+Yum repo creation:
+------------------
+
+Method A:
+---------
+
+1) add your OS iso/DVD to the machine
+
+2) move all the *.repo from /etc/yum.repos.d to /tmp
+
+3) mount the iso/DVD to /mnt
+
+mount /dev/sr0 /mnt -o loop,ro
+
+4) create a repo file (local.repo) under /etc/yum.repos.d
+
+[repo]
+name=local
+baseurl=file:///mnt
+gpgcheck=0
+enabled=1
+
+##save and exit 
+
+what is gpgcheck ?
+------------------
+(If set to 1, verify the authenticity of the packages by checking the GPG signatures. You might need to set gpgcheck to 0 if a package is unsigned, but you should be wary that the package could have been maliciously altered.)
+
+
+yum clean all (clears the cache)
+yum repolist (shows the available repositories)
+
+yum install createrepo -y
+
+yum install vsftpd -y
+
+very safe file transfer protocol daemon -- vsftpd
+
+Method B:
+---------
+
+1) add your OS iso/DVD to the machine
+
+2) move all the *.repo from /etc/yum.repos.d to /tmp
+
+3) mount the iso/DVD to /mnt
+
+mount /dev/sr0 /mnt -o loop,ro
+
+4) cd /mnt/Packages
+
+5) rpm -ivh createrepo....rpm (will ask two dependencies)
+
+6) Install depndencies in upfront then install createrepo...rpm
+
+7) rpm -ivh vsftpd....rpm
+
+for both the Methods A & B:
+---------------------------
+(vsftpd is a service which creates ftp user in /etc/passwd)
+(home dir of ftp user can be filtered from /etc/passwd)
+
+cp -ra /mnt/Packages /var/ftp/pub
+
+createrepo /var/ftp/pub/Packages (creates xml metadata)
+
+##start the ftp 
+
+service vsftpd start (to start in RHEL6)
+chkconfig vsftpd on (to bring up the service on next reboot)
+
+
+systemctl start vsftpd.service (in RHEL7)
+systemctl enable vsftpd.service
+
+
+###edit the repo file (local.repo) /etc/yum.repos.d
+
+###change the baseurl to ftp://<ip>/pub/Packages
+
+yum clean all
+
+yum repolist
+
+###provided the same repo file can be copied to another machine for yum repo
+
+
+
+yum commands:
+============
+
+yum install <package_name> -y
+
+yum reinstall <package_name> -y
+
+yum remove <package_name> -y
+
+yum repolist    => what are all the repositories available
+
+yum list ldap*    => way of search
+
+yum search ldap   => way of search
+
+yum provides */<command>
+
+yum groupinstall <group_package_name>
+
+yum clean all
+

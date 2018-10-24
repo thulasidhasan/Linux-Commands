@@ -1,0 +1,81 @@
+FTP     Username        Password        parent dir format       sub dir format
+LMC     lmc     $N2wy0rk#       17-Aug  80117
+
+MMMS    mmms    $MMm$(213)#     8-Aug   8/1/2017
+
+WMS     wms     Wm$!12  2017    82317
+
+Morton  morton  M0rT0n!%        NILL    NILL
+
+YP      yp      yp*$#789        012117(mm/dd/yy)        5292017
+
+Orthotics       orthotics       $@rth@t!cs$     06_June'17      06072017(dd\mm\yyyy)
+
+LmcMM   lmcmm   Lmc%mm*000      .July 2017      Lung test-08122017
+
+Tneuner tneuner Tn3uner%567     06_June'17      LIKE folder names
+
+GNC     gnc     Gnc@#321        06_June'17      06072017
+
+CMSW    cmsw    CM3w!*123       06_June'17      82417
+
+
+
+%Kadavule7kapathu
+%Kadavule7Kapathu
+%Kadavule7kappathu
+%Kadavule7Kappathu
+%Kadavulekapathu7
+
+%Tr@nqu!l*%098
+
+
+sshfs#username@host:/  /mnt/here   fuse   auto,ssh_command=sshpass\040-f\040/root/.ssh/host.password\040ssh  0  0
+ftp://ftp2.tranquilmoney.com/
+
+while read line ; do user=`echo $line|awk '{print $2}'`;pass=`echo $line|awk '{print $3}'`;echo $pass|sshfs -o allow_other,password_stdin $user@166.78.82.20:/ /ftp/$user;done <cred
+
+
+
+
+
+echo 'Wm$!12'|sshfs -o allow_other,password_stdin wms@166.78.82.20:/ /ftp/wms
+
+
+echo $pass|sshfs -o allow_other,password_stdin $user@166.78.82.20:/ /ftp/$user
+
+
+
+rsync -av --ignore-existing
+/ftp/lmc/2017/					?
+
+/ftp/mmms/input/2017/10-Oct/ 			?
+
+/ftp/wms/Input/2017/				?
+
+/ftp/morton/Input -- nil
+
+/ftp/yp/Input/2017/Oct\ 2017/            /cc3/Major medical/Active clients/Yoo Pharm/2017
+
+/ftp/orthotics/Input/2017/06_June\'17/   /cc3/Major medical/Active clients/Orthotics/2017
+
+/ftp/lmcmm/2017/October\ 2017            /cc3/Major medical/Active clients/LMCMM/2017
+
+/ftp/tneuner/Input/2017/		/cc3/Major medical/Active clients/Dr Neuner/2017
+
+/ftp/gnc/Input/2017			/cc3/Major medical/Active clients/GNC/2017
+
+/ftp/cmsw/Input/2017                    /cc3/Major medical/Active clients/CMSW/2017
+
+	?				/cc3/Major medical/Active clients/Dr. Asmina khan/2017
+					
+	?				/cc3/Major medical/Active clients/Satish Reddy/2017
+
+	?				/cc3/Major medical/Active clients/Bloom/2017
+
+	?				/cc3/Major medical/Active clients/KWHG/2017
+
+
+for x in `cat go`;do if [ ! -d $x ];then echo $x|awk -F/ '{print $1"/"$2"/"$3" ---- Not Mounted"}';fi;done
+
+https://library.netapp.com/ecmdocs/ECMP1196986/html/GUID-F7A6C217-9CF7-4B93-9F20-E7482CDDEEA6.html

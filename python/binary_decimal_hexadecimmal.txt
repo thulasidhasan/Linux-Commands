@@ -1,0 +1,52 @@
+Binary###
+#########
+to convert 25 to binary ====> bin(25)
+to convert binary to decimal use ===> 0b11001                               >>> hex(34)
+                                                                                '0x22'
+                                                                            >>> oct(34)
+                                                                                '0o42'
+                                                                            >>> 
+to convert octal oct(25)                                                                                                  
+to convert hexadecimal hex(25)                                                                             
+
+decimal starts at (0 to 9)
+binary starts at ( 0 to 1)
+octal starts at (0 to 7)
+hexadecimal starts at (0 to 9 a to f)
+
+
+#####################  bitwise operator  ##################################
+
+complement(~) =====  ~10 => -11
+And(&)
+or(|)
+Xor(^)
+Leftshift (<<)
+rightshift(>>)
+
+#################### import math #############################
+
+import math
+x=math.sqrt(25)
+
+round of the value eg:
+math.ceil(2.3) ===> 3
+math.floor(2.7) ===> 2
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+want to import only certain things 
+>>> from math import sqrt, pow
+========================================================================
+
+ch = input("Enter the char": ) [0] ==========> to get only 1st charecter from the user
+num1 = int(input("Enter the Number1: "))  ====> get a input from the user as integer
+ch = input("Enter the charecter: ") ====>       get a input from the user as charecter
+
+>>> result = eval(input("enter the num:"))
+enter the num:2+7+9
+18
+>>> 
+==============================================================================================================================
+
+
+

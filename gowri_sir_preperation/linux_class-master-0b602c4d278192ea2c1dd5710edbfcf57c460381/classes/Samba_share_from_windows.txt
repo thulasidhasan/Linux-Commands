@@ -1,0 +1,58 @@
+SAMBA:
+------
+
+From windows to Linux:
+----------------------
+
+client side: Linux Machine
+------------
+
+yum install samba-winbind cifs-utils samba-common
+
+windows machine details:
+------------------------
+
+//192.168.1.5/test
+
+create a credential file:
+-------------------------
+
+vi /etc/cred
+
+username=veecube
+password=%Thangavel7
+
+save & exit
+
+for temporary mount:
+--------------------
+
+create a mount_point:
+---------------------
+
+mkdir /win_share
+
+mount -t cifs -o credentials=/etc/cred //192.168.1.5/test /win_share
+
+verify:
+-------
+
+df -hP
+
+Permanent mount:
+----------------
+
+Put entry in the File system table
+
+vi /etc/fstab
+
+//192.168.1.5/test /win_share cifs credentials=/etc/cred 0 0
+
+save & exit 
+
+mount -a
+
+verify:
+-------
+
+df -hP

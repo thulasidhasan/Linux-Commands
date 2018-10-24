@@ -1,0 +1,42 @@
+Setup Master Server:
+====================
+
+add a user for replication:
+--------------------------- dc=olcDatabase={2}bdb,cn=config
+
+dn: uid=repluser,dc=veecube00,dc=com
+objectClass: simpleSecurityObject
+objectclass: account
+uid: repluser
+description: Replication  User
+userPassword: root1234
+
+add syncprov_mod:
+----------------- cn=Manager,cn=config
+
+dn: cn=module,cn=config
+objectClass: olcModuleList
+cn: module
+olcModulePath: /usr/lib64/openldap
+olcModuleLoad: syncprov.la
+
+overlay_config:
+---------------   cn=config
+
+dn: olcOverlay=syncprov,olcDatabase={2}hdb,cn=config
+objectClass: olcOverlayConfig
+objectClass: olcSyncProvConfig
+olcOverlay: syncprov
+olcSpSessionLog: 100
+
+Client side ldif:
+------------------ 
+
+
+acl to repluser:
+----------------
+olcAccess: {0}to * by dn="cn=repluser,dc=veecube00,dc=com" read by * break
+
+
+
+access to * by self read by * auth

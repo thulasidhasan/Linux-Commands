@@ -1,0 +1,4 @@
+ProxyPass /pgresponse/ http://localhost:7060/pgresponse/
+ProxyPassReverse /pgresponse/ http://localhost:7060/pgresponse/
+
+/pgresponse is context path

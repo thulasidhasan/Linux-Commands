@@ -1,0 +1,17 @@
+ISCSI :
+-------
+Target ,where the Store is available (server side)
+
+Initiator:
+----------
+Client service (to get the Target)
+
+LUN:
+----
+Logical Unit Number, an unique name available for the Target
+
+---------------------------------------------------------------------
+
+
+
+

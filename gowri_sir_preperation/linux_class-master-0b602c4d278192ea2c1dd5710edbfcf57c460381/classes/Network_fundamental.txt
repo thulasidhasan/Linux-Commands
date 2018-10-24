@@ -1,0 +1,60 @@
+Nework Fundamentals:
+--------------------
+
+Addressing:
+------------
+
+IPV4
+-----
+having 4 octets  like :  xxx.xxx.xxx.xxx  192.168.1.175
+
+255.255.255.255 - 4228250625 addresses  Hex: FF.FF.FF.FF
+
+Here in the whole chapter we would only be dealing with IPV4
+
+IPV6
+----
+
+
+Classes:
+--------
+
+
+0 			127		191	223  249 255	
+	CLASS A			CLASS B	     C	    D
+
+class identification is calculated by the first octet.
+
+
+255.0.0.0  - Class A where it can support 255X255X255 IPs
+
+255 is the network address
+
+
+255.255.0.0 - Class B where it can support 255X255 IPs
+
+255.255 is the network address 
+
+
+255.255.255.0 - class C where it can support 255 IPs
+
+255.255.255 is the network
+
+this denotion is done as netmask.
+
+
+Gatway:
+-------
+
+Host1 (192.168.1.173)
+		|
+		|
+		|
+	Gateway(192.168.1.1) - is the router -- another end to Internet
+			|
+			|
+			|
+		Host2(192.168.1.175)		
+
+
+ 	

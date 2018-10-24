@@ -1,0 +1,84 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2017.12.11 20:16:03 =~=~=~=~=~=~=~=~=~=~=~=
+
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# ansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# phy[K[K[K
+Display all 1270 possibilities? (y or n)^C
+]0;root@vaithee:~[root@vaithee ~]# pyt[Kho[K[Kthon --version
+Python 2.7.5
+]0;root@vaithee:~[root@vaithee ~]# ansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# user [Kadd muthu
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# 
+]0;root@vaithee:~[root@vaithee ~]# su - muthu
+]0;muthu@vaithee:~[?1034h[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ m[Kpwd
+/home/muthu
+]0;muthu@vaithee:~[muthu@vaithee ~]$ md[Kkdri n[Kas[K[K
+-bash: mkdri: command not found
+]0;muthu@vaithee:~[muthu@vaithee ~]$ mkdir ansible
+]0;muthu@vaithee:~[muthu@vaithee ~]$ ls
+[0m[01;34mansible[0m
+]0;muthu@vaithee:~[muthu@vaithee ~]$ cd ansible/
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ls
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ pws[Kd
+/home/muthu/ansible
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ ansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ 
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ touv[Kch ansible.cfg
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ touch ansible.cfgansible --version
+ansible 2.3.1.0
+  config file = /home/muthu/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;muthu@vaithee:~/ansible[muthu@vaithee ansible]$ cd /[K
+]0;muthu@vaithee:~[muthu@vaithee ~]$ pwd
+/home/muthu
+]0;muthu@vaithee:~[muthu@vaithee ~]$ 
+]0;muthu@vaithee:~[muthu@vaithee ~]$ pwdcd ansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;muthu@vaithee:~[muthu@vaithee ~]$ touch ansible.cfg
+]0;muthu@vaithee:~[muthu@vaithee ~]$ touch ansible.cfgansible --version
+ansible 2.3.1.0
+  config file = /home/muthu/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;muthu@vaithee:~[muthu@vaithee ~]$ ls /home/muthu/ansible
+ansible.cfg
+]0;muthu@vaithee:~[muthu@vaithee ~]$ rm ansible.cfg
+]0;muthu@vaithee:~[muthu@vaithee ~]$ rm ansible.cfgls /home/muthu/ansible[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[5Pansible --version
+ansible 2.3.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.5 (default, Sep  5 2016, 02:30:38) [GCC 4.8.5 20150623 (Red Hat 4.8.5-9)]
+]0;muthu@vaithee:~[muthu@vaithee ~]$ [K[muthu@vaithee ~]$ exit
+logout
+]0;root@vaithee:~[root@vaithee ~]# exit
+logout

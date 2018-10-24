@@ -1,0 +1,21 @@
+.
++-- inst00
+¦   +-- ldap
+¦   ¦   +-- DB_CONFIG
+¦   +-- run
+¦   +-- slapd.conf
+¦   +-- slapd.d
++-- inst01
+    +-- ldap
+    ¦   +-- DB_CONFIG
+    +-- run
+    +-- slapd.conf
+    +-- slapd.d
+
+slapd=/usr/sbin/slapd
+slaptest=/usr/sbin/slaptest
+lockfile=/etc/srv/inst01/run/slapd
+configdir=/etc/srv/inst01/slapd.d/
+configfile=/etc/srv/inst01/slapd.conf
+pidfile=/etc/srv/inst01/run/slapd01.pid
+slapd_pidfile=/etc/srv/inst01/run/slapd_pid.pid

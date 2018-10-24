@@ -1,0 +1,514 @@
+SORT:
+-----
+sort <file_name>
+
+cat <file_name> | sort
+
+unique sort:
+------------
+
+sort -u   ###removes the duplicates from the STDOUT
+
+UNIQ:
+-----
+
+cat <file_name> | sort |uniq -d ###only the duplicates in STDOUT
+
+
+CUT:
+-----
+cut -d "<delimeter>" -f<field_num> <file_name>###comma can also be used for multiple fields
+
+cut -c<char_num> <file_name>
+
+
+sample prog:
+------------
+
+#!/bin/bash
+
+#STDOUT message to Input value and reading the value
+read -p "enter the line number: " line;
+
+#storing the line data into a variable
+line_value=$(head -${line} passwd|tail -1);
+
+#separating uid and storing it to a variable
+uid=$(echo $line_value|cut -d ":" -f3);
+
+#separating user_name and storing it to a variable
+user_name=$(echo $line_value|cut -d ":" -f1);
+
+#separating home and storing it to a variable
+home=$(echo $line_value|cut -d ":" -f6);
+
+#separating shell and storing it to a variable
+shell=$(echo $line_value|cut -d ":" -f7);
+
+#output title
+echo -e "\nUID\t\tUSER_NAME\t\tHOME\t\tSHELL";
+
+#clubbing all variables in the output to the title format
+echo -e "$uid\t\t$user_name\t\t$home\t\t$shell";
+
+
+GREP:
+-----
+grep <pattern> <file_name>
+
+STDOUT|grep <pattern>
+
+grep -w ###exact pattern
+
+###in the below example variable will not substituted
+
+patt='test';grep -w '$patt' passwd1
+
+###in the below example variable will not substituted
+
+patt='test';grep -w "$patt" passwd1
+
+try these:
+----------
+
+x="test1:x:624:624::/home/test1:/bin/bash";echo "${x^^}"
+x="test1:x:624:624::/home/test1:/bin/bash";echo "${x^^}" >>passwd1
+grep zabbix passwd1
+x=`grep zabbix passwd1`;echo $x
+x=`grep zabbix passwd1`;echo "${x^^}"
+x=`grep zabbix passwd1`;echo "${x^^}" >>passwd1
+
+grep -i ##removes the case sensitivity
+
+try this:
+---------
+grep -i zabbix passwd1
+
+grep -e <pattern_1> -e <pattern_2> <file_name> ###multi_pattern
+
+try this:
+---------
+
+grep -e "zabbix" -e "test" passwd1
+
+grep -r recurssive
+
+try this:
+---------
+
+grep -r test *
+
+grep -v ##void
+
+try this:
+---------
+
+grep -v test passwd1
+
+try combination:
+----------------
+
+grep -iv zabbix passwd1
+
+Try EGREP:
+----------
+
+**betterment of grep
+**advanced grep
+
+egrep -i 'zabbix|test' passwd1
+
+
+grep ^<pattern> ###grep starting pattern
+
+grep <pattern>$ ###grep ending pattern
+
+grep ^$         ###grep empty lines
+
+
+##write a program to list all the *.conf file in /etc and select the file number from STDIN with showing the file content with # and without # separately
+
+##write a program to print only the file_names under /etc having ROOT & UID as a pattern in content 
+
+
+DATE:
+-----
+When used without options, the date command displays the current system date and time, including the day of the week, month, time, timezone, and year.
+
+date
+Thu Apr 13 10:04:04 EDT 2017
+
+To operate on a specific date, you can provide one with the -d flag:
+
+date -d "1974-01-04"
+Fri Jan  4 00:00:00 EST 1974
+
+date has many display formatting options. Provide date with the formatting string by prefixing it with a plus sign:
+
+date +"Week number: %V Year: %y"
+Week number: 33 Year: 10
+
+Token 	Output
+%a 	locale’s abbreviated weekday name (e.g., Sun)
+%A 	locale’s full weekday name (e.g., Sunday)
+%b 	locale’s abbreviated month name (e.g., Jan)
+%B 	locale’s full month name (e.g., January)
+%c 	locale’s date and time (e.g., Thu Mar 3 23:05:25 2005)
+%F 	full date; same as %Y-%m-%d
+%s 	seconds since 1970-01-01 00:00:00 UTC
+
+date -d now
+Wed Aug 18 16:47:31 EDT 2010
+
+date -d today
+Wed Aug 18 16:47:32 EDT 2010
+
+date -d yesterday
+Tue Aug 17 16:47:33 EDT 2010
+
+date -d tomorrow
+Thu Aug 19 16:46:34 EDT 2010
+
+date -d sunday
+Sun Aug 22 00:00:00 EDT 2010
+
+date -d last-sunday
+Sun Aug 15 00:00:00 EDT 2010
+
+Other valid date time strings include: last-week, next-week, last-month, next-month, last-year, and next-year.
+
+Convert epoch to a datePermalink:
+--------------------------------
+
+date -d "UTC 1970-01-01 126507600 secs"
+Fri Jan  4 00:00:00 EST 1974
+
+date -d @126507600
+Fri Jan  4 00:00:00 EST 1974
+
+
+Determine which day of the week a given date wasPermalink
+
+date -d "1974-01-04" +"%A"
+Friday
+
+try this:
+---------
+
+STARTTIME=`date`
+echo $STARTTIME
+Fri Aug 20 11:46:48 EDT 2010
+sleep 5
+echo $STARTTIME
+Fri Aug 20 11:46:48 EDT 2010 
+
+set date:
+---------
+
+date --set="20170413 21:14"
+
+try these:
+---------
+date "+%Y-%m-%d %H:%M%S"
+
+date "+%Y-%B-%d %H:%M%S"
+
+date "+%Y-%b-%d %H:%M%S"
+
+##try updatind a log file using the date command in prefix
+
+
+
+##write a program to create a log file stating all the non root processes (ps aux |grep -v ^root). The log file should be updated every minute having a line started in up front with stamp and ending with a stamp at the bottom.
+
+user	pid	time	command
+
+use cronjob 
+
+*/1 * * * * sh <script>
+
+
+
+STAT:
+-----
+
+stat <OPTION> <FILE>
+
+-f, --filesystem 	display filesystem status instead of file status
+-c, --format=FORMAT 	use the specified FORMAT instead of the default
+-L, --dereference 	follow links
+-Z, --context 	print the SELinux security context
+-t, --terse 	print the information in terse form
+--help 	display this help and exit
+--version 	output version information and exit
+
+The valid format sequences for files (without --filesystem):
+
+%A 	Access rights in human readable form
+%a 	Access rights in octal
+%B 	The size in bytes of each block reported by '%b'
+%b 	Number of blocks allocated (see %B)
+%C 	SELinux security context string
+%D 	Device number in hex
+%d 	Device number in decimal
+%F 	File type
+%f 	Raw mode in hex
+%G 	Group name of owner
+%g 	Group ID of owner
+%h 	Number of hard links
+%i 	Inode number
+%N 	Quoted File name with dereference if symbolic link
+%n 	File name
+%o 	IO block size
+%s 	Total size, in bytes
+%T 	Minor device type in hex
+%t 	Major device type in hex
+%U 	Username of owner
+%u 	User ID of owner
+%X 	Time of last access as seconds since Epoch
+%x 	Time of last access
+%Y 	Time of last modification as seconds since Epoch
+%y 	Time of last modification
+%Z 	Time of last change as seconds since Epoch
+%z 	Time of last change
+
+Valid format sequences for file systems:
+%a 	Free blocks available to non-superuser
+%b 	Total data blocks in file system
+%c 	Total file nodes in file system
+%C 	SELinux security context string
+%d 	Free file nodes in file system
+%f 	Free blocks in file system
+%i 	File System id in hex
+%l 	Maximum length of file names
+%n 	File name
+%s 	Optimal transfer block size
+%T 	Type in human readable form
+%t 	Type in hex
+
+try these:
+----------
+
+stat -f /dev/sda ## to run on entire file system
+
+stat --format "%A" /var/log/syslog ### to show the access
+
+stat -c "%n %A" 
+
+stat -c "%n %a"
+
+
+###write a program to find all the files having 777 perm
+
+
+FIND:
+-----
+
+find . -name <file_name>
+
+find <path> -name <file_name>
+
+find <path> -iname <file_name> ##removes case-sensitivity
+
+find / -type d -name <dir_name>
+
+find . -type f -name <*.pattern> ##wildcards
+
+find . -type f -perm <perm_number> -print  ###
+
+find / -type f ! -perm <perm_number_not>
+
+find / -perm /u=s  ##find suid files
+
+find / -perm /g=s  ##find sgid files
+
+find / -perm /u=w  ##find writeable files by owner
+
+using -exec:
+------------
+
+find / -type f -perm 0777 -print -exec chmod 644 {} \;
+
+find . -type f -name <file or with wild card> -exec rm -f {} \;
+
+find /tmp -type f -empty  ###find all empty files
+
+find /tmp -type d -empty  ###find all empty dir
+
+find /tmp -type f -name ".*" 
+
+write a program to change the perm of /tmp/file* (777) to 644 
+
+user owner files:
+-----------------
+
+find / -user <user_name or UID> 
+
+find / -group <group_name or GID>
+
+To find all the files which are modified 50 days back:
+------------------------------------------------------
+
+find / -mtime 50
+
+To find all the files which are accessed 50 days back:
+------------------------------------------------------
+
+find / -atime 50
+
+Find Last 50-100 Days Modified Files:
+-------------------------------------
+
+find / -mtime +50 –mtime -100
+
+Find Changed Files in Last 1 Hour:
+----------------------------------
+
+find / -cmin -60
+
+###try mmim & amin
+
+To find all 50MB files:
+-----------------------
+
+find / -size 50M
+
+
+Find Size between 50MB – 100MB:
+-------------------------------
+
+find / -size +50M -size -100M
+
+
+Find and Delete 100MB Files:
+----------------------------
+
+find / -size +100M -exec rm -rf {} \;
+
+try this:
+---------
+
+find /etc -maxdepth 1 -perm 755 
+
+Process Management:
+-------------------
+
+List All Processes in Current Shell:
+------------------------------------
+
+ps ##process state
+
+Print All Processes in Different Formats:
+-----------------------------------------
+
+ps -A
+##(OR)
+ps -e
+
+To perform a full-format listing, add the -f or -F flag:
+--------------------------------------------------------
+
+ps -ef
+###(OR)
+ps -eF
+
+Display User Running Processes:
+-------------------------------
+
+ps -x
+
+user’s processes by real user ID (RUID) or name, use the -U flag:
+-----------------------------------------------------------------
+
+ps -fU <user_name>
+
+ps -fu <uid>
+
+###-fG for group and gid
+
+Print All Processes Running as Root (Real and Effecitve ID):
+------------------------------------------------------------
+
+ps -U root -u root
+
+for ppid:
+---------
+
+ps -f --ppid <pid>
+
+
+selective:
+----------
+
+ps -fp <pid>,<pid>,<pid>
+
+from terminal:
+--------------
+
+ps -t <terminal>  ####pst/0
+
+ps -ft <terminal> ###tty1
+
+process tree:
+-------------
+
+ps -e --forest
+
+ps -f --forest -C sshd  ###pattern command
+
+Threads of a process:
+---------------------
+
+ps -fL -C httpd ###pattern command
+
+
+custom output:
+--------------
+
+ps -eo pid,ppid,user,cmd
+
+ps -p <pid> -o pid,ppid,fgroup,ni,lstart,etime
+
+command of a process:
+---------------------
+
+ps -p 1154 -o comm=
+
+Child Processes:
+----------------
+
+ps -C sshd
+
+
+port used by which process:
+---------------------------
+
+netstat -antulp |grep <port_number>
+
+
+pid from command pattern:
+-------------------------
+
+ps -C httpd -o pid=
+
+Execution time:
+---------------
+
+ps -eo comm,etime,user | grep httpd
+
+performance:
+------------
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -10
+
+Find the unresponsive process:
+------------------------------
+
+ps -A | grep -i stress
+
+performance using watch:
+------------------------
+
+watch -n 1 'ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head'

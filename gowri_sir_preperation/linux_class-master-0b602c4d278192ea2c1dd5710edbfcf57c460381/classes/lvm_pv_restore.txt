@@ -1,0 +1,12 @@
+lvs -a -o +devices
+
+vgchange -an --partial
+
+pvcreate --uuid "FmGRh3-zhok-iVI8-7qTD-S5BI-MAEN-NYM5Sk" --restorefile /etc/lvm/archive/VG_00050.vg /dev/sdh1
+
+vgcfgrestore VG
+
+lvs -a -o +devices
+
+lvchange -ay /dev/VG/stripe
+

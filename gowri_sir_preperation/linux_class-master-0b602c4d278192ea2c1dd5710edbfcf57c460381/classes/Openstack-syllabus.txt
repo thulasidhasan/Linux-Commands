@@ -1,0 +1,72 @@
+I] Introduction:
+   =============
+
+	Cloud Computing -- resources, Hypervisor, private, public, hybrid and openstack
+
+
+
+II) Identity service
+
+	Install, configure, and use the Keystone authentication services.
+
+
+III) Object storage service
+
+	Install and manage the Swift object storage service.
+
+
+IV) Image service
+
+	Install the Glance image service.
+
+	Import system images.
+
+
+V) Block storage service
+
+	Install the Cinder block storage service.
+
+	Manage Cinder volumes.
+
+
+VI) Networking service
+
+	Install, configure, and manage OpenStack Platform networking service.
+
+Basics about OpenStack Networking and Open vSwitch
+
+An introduction to IP namespaces
+
+An introduction to Open vSwitch
+
+Basics about OpenStack Networking (Neutron)
+
+Functions
+
+API
+
+VII) Compute and controller services
+
+	Install Nova compute and controller.
+
+
+VIII) Adding nova compute nodes.
+
+	CLI
+
+	Additional compute node
+
+ 	Remove additional Nova compute nodes.
+
+
+IX) Orchestration service
+
+ 	Install the Heat orchestration service.
+
+
+X) Metering service
+
+	Install and manage the Ceilometer metering service.
+
+
+XI) Launch a stack.

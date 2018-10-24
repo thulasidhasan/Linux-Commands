@@ -1,0 +1,33 @@
+LVM Restore:
+============
+
+* what ever the changes done on LV or VG levels will be recorded
+
+To View all the restore points:
+-------------------------------
+
+vgcfgrestore <vg_name> --list
+
+vgcfgrestore <vg_name> -f /etc/lvm/archive/<restore_point_file>
+
+create a pv then vg then lv then mkfs then mount then umount
+                    |       |                                 
+
+remove the lv 
+             |
+
+check the restore points
+
+restore the lv with restore point "before removing the lv"
+
+check whether the lv is available
+
+then apply 
+
+vgchange -ay
+
+try to mount the lv
+
+
+ 
+

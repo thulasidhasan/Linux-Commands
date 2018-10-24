@@ -1,0 +1,43 @@
+###############################################  LAMP    #####################################################
+
+        LAMP is open-source Web development platform,that uses Linux as the operating system, Apache as the Web server, MySQL as a database and PHP as the object-oriented scripting language. instead of php sometimes Perl or Python is used.
+
+   ##############################  CRONTAB   ######################################
+
+    The automatic job scheduler to execute a task ( Crontab format MIN HOUR DOM MON DOW CMD)
+
+   
+1: To view your crontab entries from your unix account. ======>  crontab -l
+2: View Root Crontab entries : Login as root user (su – root) and do =======> crontab -l.
+3: To view crontab entries of other Linux users : Login to root and use -u {username} -l. =====> crontab -u rtr -l
+4: crontab -e ====> to edit the crontab
+5: crontab -r ====> to delete the crontab
+
+####################################################################################################################################################
+
+1: To schedule a job for every minute using Cron.  ======>  * * * * * CMD
+
+2: To schedule a job for more than one time (e.g. Twice a Day) ========>  00 11, 16 * * * /home/maverick/bin/incremental-backup 
+       
+        ####  00 – 0th Minute (Top of the hour)
+        ####  11, 16 – 11 AM and 4 PM
+
+3: To schedule a job for certain range of time (e.g. Only on Weekdays)   ======> 00 09-18 * * * /home/maverick/bin/check-db-status
+        
+        ####  00 – 0th Minute (Top of the hour)
+        ####  09-18 – 9 am, 10 am, 11 am, 12 am, 1 pm, 2 pm, 3 pm, 4 pm, 5 pm, 6 pm
+        
+4:  Cron Job every weekday during working hours : ==========> 00 09-18 * * 1-5 /home/maverick/bin/check-db-status
+        
+        ####  00 – 0th Minute (Top of the hour)
+        ####  09-18 – 9 am, 10 am, 11 am, 12 am, 1 pm, 2 pm, 3 pm, 4 pm, 5 pm, 6 pm
+        ####  * – Every day
+        ####  * – Every month
+        ####  1-5 -Mon, Tue, Wed, Thu and Fri (Every Weekday)
+        
+
+5: To schedule a background Cron job for every 10 minutes. =======>  */10 * * * * /home/maverick/check-disk-space
+
+
+
+

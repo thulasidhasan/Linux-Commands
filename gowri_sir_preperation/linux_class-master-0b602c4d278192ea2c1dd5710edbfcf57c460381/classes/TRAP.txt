@@ -1,0 +1,201 @@
+Signals interrupt system call:
+------------------------------
+
+
+kill:
+=====
+
+The kill command is used to send a termination signal to the specified process or group.
+The default termination signal is a SIGTERM (15) signal. A process which receives a SIGTERM may be programmed to trap signals and perform specific functions or ignore the signal entirely.
+
+-1 or -HUP 
+----------
+
+This argument makes kill send the "Hang Up" signal to processes.
+Processes have to be programmed to actually listen to this process and do something 
+with it.
+
+-2 or -SIGINT
+-------------
+
+This is the same as starting some program and pressing CTRL+C during execution.
+
+-9 or -KILL
+-----------
+
+The kernel will let go of the process without informing the process 
+of it.
+
+An unclean kill like this could result in data loss. 
+This is the "hardest", "roughest" and most unsafe kill signal available, and should only be used to stop something which is
+un-stoppable.
+
+-15 or -TERM:
+-------------
+
+Tell the process to stop whatever it's doing, and end itself. When you don't specify any signal, this signal is used. It should be fairly safe to perform, but better start with a "-1" or "-HUP".
+
+
+kill -l:
+--------
+
+to list all the signals.
+
+
+
+trap:
+=====
+
+trap is a function built into the shell that responds to hardware 
+signals and other events.
+
+trap defines and activates handlers to be run when the shell 
+receives signals or other special conditions.
+
+ARG is a command to be read and executed when the shell 
+receives the signal(s) SIGNAL_SPEC. If ARG is absent (and a 
+single SIGNAL_SPEC is supplied) or ARG is a dash ("-"), each 
+specified signal is reset to its original value. If ARG is the 
+null string, each SIGNAL_SPEC is ignored by the shell and by the 
+commands it invokes.
+
+If a SIGNAL_SPEC is EXIT (0), 
+ARG is executed upon exit from the shell.
+
+If a SIGNAL_SPEC is DEBUG, 
+ARG is executed before every simple command.
+
+If a SIGNAL_SPEC is RETURN, ARG is executed each time a shell 
+function or a script run by the "." or source built-in commands 
+finishes executing.
+
+A SIGNAL_SPEC of ERR means to execute ARG each time a command's 
+failure would cause the shell to exit when the -e option is 
+enabled.
+
+If no arguments are supplied, trap prints the list of commands 
+associated with each signal.
+
+trap syntax:
+============
+
+trap [-lp] [[ARG] SIGNAL_SPEC...]
+
+
+Options:
+========
+
+-l print a list of signal names and their corresponding numbers.
+-p display the trap commands associated with each SIGNAL_SPEC.
+
+Examples:
+=========
+
+Listing:
+--------
+
+trap -l
+
+exit with ERROR:
+================
+
+trap rm -f /tmp/xyz$$; exit' ERR EXIT
+
+Set a trap which, on shell error or shell exit, deletes a temporary file xyz$$
+
+set:
+====
+
+set -e
+
+(exits if any error occurs)
+
+Signals:
+========
+
+
+SIGKILL (signal 9)
+
+SIGSTOP (signal 17)
+
+SIGCONT (signal 19) 
+
+
+trap 'command_list'  signals
+
+trap ''  signals
+
+reset trap use:
+---------------
+
+	
+trap - signals
+
+
+
+
+#!/bin/bash
+# trap1a
+trap 'my_exit; exit' SIGINT SIGQUIT
+count=0
+ 
+my_exit()
+{
+echo "you hit Ctrl-C/Ctrl-\, now exiting.."
+ # cleanp commands here if any
+}
+ 
+while :
+ do
+   sleep 1
+   count=$(expr $count + 1)
+   echo $count
+ done
+
+
+SIGHUP:
+=======
+
+On POSIX-compliant platforms, SIGHUP ("signal hang up") is a signal sent to a process when its controlling terminal is closed. (It was originally designed to notify the process of a serial line drop.) 
+SIGHUP is a symbolic constant defined in the header file signal.h .
+
+
+SIGINT:
+=======
+
+SIGINT is a program interrupt signal, which is sent when an user presses Ctrl+C. SIGTERM is a termination signal, which is sent to a process to request its termination, 
+but it can be caught and interpreted or ignored by the process.
+
+SIGQUIT:
+========
+
+SIGQUIT is the dump core signal. The terminal sends it to the foreground process when the user presses ctrl-\. 
+The default behavior is to terminate the process and dump core, but it can be caught or ignored. The intention is to provide a mechanism for the user to abort the process. You can look at SIGINT as "user-initiated happy 
+termination" and SIGQUIT as "user-initiated unhappy termination."
+
+SIGSTOP:
+========
+
+SIGSTOP is the pause signal. The only behavior is to pause the process; the signal cannot be caught or ignored. 
+The shell uses pausing (and its counterpart, resuming via SIGCONT) to implement job control.
+
+#!/bin/bash
+# trap4
+ 
+trap 'my_exit $LINENO $BASH_COMMAND; exit' SIGHUP SIGINT SIGQUIT
+my_exit()
+{
+echo "$(basename $0)  caught error on line : $1 command was: $2"
+ 
+logger -p notice "script: $(basename $0) was terminated: line: $1, command was $2"
+ # cleanp commands here if any
+}
+ 
+echo 1
+sleep 1
+echo 2
+sleep 1
+echo 3
+
+
+

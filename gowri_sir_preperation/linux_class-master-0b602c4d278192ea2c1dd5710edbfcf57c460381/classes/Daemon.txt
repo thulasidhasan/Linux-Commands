@@ -1,0 +1,43 @@
+Daemon Definition:
+------------------
+A daemon is a type of program on Unix-like operating systems that runs unobtrusively in the background, rather than under the direct control of an user, waiting to be activated by the occurance of a specific event or condition.
+
+RHEL6:
+------
+chkconfig <daemon> <on/off> 
+
+by default runlevel 3,4,5 will be on
+
+service <daemon> <start/stop/status/restart/force-restart/reload>
+
+*All services are under /etc/init.d :
+
+RHEL7:
+------
+
+systemctl enable <daemon>
+
+systemctl <start/stop/status> <daemon>
+
+systemctl list-unit-files
+
+Ports:
+------
+
+The port numbers area available for both TCP and UDP, and when referred to in conjunction with the IP address it specifies the "socket". The first 1000 ports are reserved for specific applications, and on Linux can normally  be own used by a daemon / application that has super user privileges.
+
+TCP & UDP:
+----------
+
+Transmission Control Protocol and UDP or User Datagram Protocol.
+ 
+TCP is connection oriented – once a connection is established, data can be sent bidirectional. 
+
+UDP is a simpler, connectionless Internet protocol. Multiple messages are sent as packets in chunks using UDP. 
+
+what is a protocol:
+-------------------
+
+A protocol is a set of rules and guidelines for communicating data. Rules are defined for each step and process during communication between two or more computers. Networks have to follow these rules to successfully transmit data.
+
+

@@ -1,0 +1,1 @@
+slapd='/usr/sbin/slapd';inst=`$0|sed 's/slapd-//g' /usr/sbin/slapd`;echo "$inst"

@@ -1,0 +1,48 @@
+1) disk partioning:
+
+	a)scanning 
+	b)partitioning
+
+2) creating file system
+
+mkfs -t (type) ext2/ext3/ext4/xfs (file_systems_types)  -m 1 (root reservation) <device> 
+
+3) creating mount point and mounting
+
+mkdir /mount_point
+
+mount -t ext2/ext3/ext4/xfs <device> <mount_point>
+
+df -h    (disk free with human readable, shows only the mounted file systems)
+
+
+4) /etc/fstab    (file system table)
+
+<device>     <mount_point>    <fs_type>    <options>    <backup> <fs_chk>
+
+mount -a (mounts all the entries of /etc/fstab)
+
+*********diff bt file systems:
+
+a) scaling
+	1) what is the maximum file size in a file system ?
+	2) what is the maximum file system size supported in a file system ?
+
+b) Features
+
+ext2-ext3 : Journalling
+
+By_defualt mkfs:
+================
+RHEL5: ext3
+RHEL6 : ext4
+RHEL7 : xfs
+
+  
+fdisk options:
+m- help
+n- new part
+p- print
+w- save
+q- quit
+t- type

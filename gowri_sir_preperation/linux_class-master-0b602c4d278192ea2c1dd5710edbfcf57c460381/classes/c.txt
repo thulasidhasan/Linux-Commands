@@ -1,0 +1,82 @@
+Module 1: Introduction to Programming
+What is Programming and why do we need it?
+What are the different types and categories of       programming languages available today?
+What is the purpose of C programming in the       world today?
+Module 2: C Programming Language Essentials
+Flow Charting for Design
+Module 3: Data Types
+What is a Data Type?
+Storing data in memory
+Memory used by primitive data types
+Module 4: Identifiers
+What is an Identifier?
+What is the purpose of an Identifier in C?
+Names given to Data Types
+Naming Conventions in C
+Module 5: Variables
+What is a Variable?
+Purpose of having place holders in memory
+Role of Variables in a program
+Assigning values to a variable
+Module 6: Keywords
+In built words in that define the programming       language structure
+Module 7: Operators
+Mathematical Operators
+Operators for performing addition, subtraction,       multiplication and division
+Evaluating mathematical expressions using the       BODMAS acronym
+Module 8: A simple C Program
+Setting up the IDE / Environment on your       machine
+Understanding the different parts of a C Program
+Pre-Processor Directives
+Compiling the program
+Executing the program
+Module 9: Decision Constructs
+Logical Operators
+What are logical operators?
+Use of logical operators in C to evaluate       conditions or change the behavior of your       program
+If statement
+If.. else statement
+Nested If .. else statement
+Switch statement 
+
+Module 10: Repetitive Statements (Loops)
+Types and uses of Repetitive Statements
+FOR Loop
+WHILE Loop
+Do-WHILE Loop
+Conditions to use each kind of Loop
+Nested Loops
+Write programs to print patterns by using the       above loop concepts
+Module 11: Arrays
+What is an Array?
+How to use an Array in C?
+Declaring an Arrays
+Storing Values / Elements in an Array
+Performing Operations on the Values /       Elements stored in the Array
+What are the advantages and disadvantages of       Arrays
+Module 12: Functions
+What is a Function and why do we need it in       C?
+How to create a function?
+Types of Functions
+Procedural Functions
+Value Returning Functions
+Differences and Usage
+How to decide which code should be written as        a function?
+Advantages of using many smaller functions       over one main function
+Module 13: Strings
+Collection of Characters as a character Array
+Manipulating Strings using functions from the       String.h library
+Module 14: Console I/O
+Using functions of the stdio.h library to get user       input and display content to screen
+printf(), scanf()
+getchar() - putchar()
+File I/O
+Use of files in C to store and retrieve data
+Introduction to the FILE Pointer
+File Modes and their meaning
+Read, Write, Append
+Using functions from stdio.h library to read       and write contents from files
+Open File, Close File
+Read & Write characters
+Read & Write Strings 
+

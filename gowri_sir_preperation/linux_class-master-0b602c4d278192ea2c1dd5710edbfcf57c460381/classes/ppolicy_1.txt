@@ -1,0 +1,92 @@
+Ppolicy:
+========
+
+Load the ppolicy schema into the OLC:
+-------------------------------------
+
+ldapmodify -D "cn=manager,cn=config" -W -a -f /etc/openldap/schema/ppolicy.ldif
+
+
+Load the Module:
+----------------
+
+ldapmodify -D "cn=manager,cn=config" -W -a -f ppolicymodule.ldif
+
+sample ppolicymodule.ldif:
+--------------------------
+
+dn: cn=module{0},cn=config
+objectClass: olcModuleList
+cn: module{0}
+olcModuleoad: ppolicy.la
+
+configure ppolicy overlay:
+--------------------------
+
+ldapmodify -D "cn=manager,cn=config" -W -a -f ppolicyoverlay.ldif
+
+sample ppolicyoverlay.ldif:
+---------------------------
+
+dn: olcOverlay=ppolicy,olcDatabase={2}bdb,cn=config
+objectClass: olcOverlayConfig
+objectClass: olcPolicyConfig
+olcOverlay: ppolicy
+olcPPolicyDefault: cn=passwordDefault,ou=Policies,dc=veecube00,dc=com
+olcPPolicyHashCleartext: FALSE
+olcPPolicyUseLockout: FALSE
+olcPPolicyForwardUpdates: FALSE
+
+Incase if these needs to be given with slapd.conf:
+==================================================
+
+#-- Load schema
+include         /etc/openldap/schema/ppolicy.schema
+
+#-- Load module
+moduleload ppolicy.la
+
+The next snippet should come somewhere after the database definition:
+
+#-- Load overlay
+overlay ppolicy
+ppolicy_default "cn=passwordDefault,ou=Policies,dc=veecube00,dc=com"
+
+
+This means the default policy is located under 
+cn=passwordDefault,ou=Policies,dc=veecube00,dc=com
+
+
+Definition of a password policy
+--------------------------------
+
+In the overlay configuration we specified the default policy, so we add it now using the following LDIF
+
+dn: ou=Policies,dc=veecube00,dc=com
+ou: Policies
+objectClass: organizationalUnit
+
+dn: cn=passwordDefault,ou=Policies,dc=veecube00,dc=com
+objectClass: pwdPolicy
+objectClass: person
+objectClass: top
+cn: passwordDefault
+sn: passwordDefault
+pwdAttribute: userPassword
+pwdCheckQuality: 0
+pwdMinAge: 0
+pwdMaxAge: 0
+pwdMinLength: 8
+pwdInHistory: 5
+pwdMaxFailure: 3
+pwdFailureCountInterval: 0
+pwdLockout: TRUE
+pwdLockoutDuration: 0
+pwdAllowUserChange: TRUE
+pwdExpireWarning: 0
+pwdGraceAuthNLimit: 0
+pwdMustChange: FALSE
+pwdSafeModify: FALSE
+
+ldapmodify -x -h 192.168.1.205 -p ${}389 -D "cn=Manager,cn=config" -w redhat -a -f /root/ldap/ldif/ppolicyoverlay.ldif
+ldapmodify -x -h 192.168.1.205 -p ${}389 -D "cn=Manager,dc=veecube${},dc=com" -w redhat -a -f /root/ldap/ldif/param_ppolicy_veecube${}.ldif

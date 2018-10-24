@@ -1,0 +1,105 @@
+SAMBA:			port:	137 139 445
+------
+
+A kind of file and resource sharing protocol
+
+Mainly used between Linux and windows or Linux to Linux
+
+Server side:
+------------
+
+Install:
+========
+
+yum install samba samba-common samba-winbind cifs-utils
+
+Main configuration file:
+=========================
+
+/etc/samba/smb.conf
+
+In the configuration:
+---------------------
+
+GLOBAL:
+-------
+
+through which IP/HOST can access
+
+using which NIC 
+
+which NETWORK range/domain can access
+
+SHARE:
+------
+
+share path
+
+share title
+
+share description
+
+write/read ?
+
+Public access/valid users ?
+
+browseable ?
+
+prepare a share:
+----------------
+
+mkdir /samba_share
+
+chmod 777 /samba_share
+
+prepare user:
+-------------
+
+useradd -c "samba user" winsharer
+
+smbpasswd -a winsharer
+
+configuration:
+--------------
+
+[global]
+
+interfaces = lo eth0 192.168.1.0/24
+hosts allow = 127. 192.168.1.
+
+[myshare]
+comment = Windows share
+path = /samba_share
+public = no
+writable = yes
+valid users = winsharer
+browseable = yes
+
+start the service:
+------------------
+
+service smb start ###RHEL6
+
+systemctl start smb.service  ###RHEL7
+
+verify:
+-------
+
+###for smb.conf --- try --> testparm (command)
+
+go to explorer in windows
+
+\\192.168.1.175\myshare
+
+It would ask the credentials
+
+user: winsharer
+password: redhat
+
+
+
+
+
+
+
+ 

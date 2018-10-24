@@ -1,0 +1,74 @@
+AutoFS:
+-------
+
+*Client Service
+
+*Works with Local File systems as well as remote file systems
+
+*Supports NFS, SAMBA like remote systems
+
+Note: please do not put entries on /etc/fstab and on Autofs together, Please use either one of them for mounting.
+
+1) Installation:
+   -------------
+
+yum install autofs
+
+autofs for NFS share:
+---------------------
+
+2) confirm the NFS availability:
+   -----------------------------
+
+showmount -e <NFS_server_ip>
+
+3) create a mount_point:
+   ---------------------
+mkdir /<directory_name>
+
+4) Putting entry in master:
+   ------------------------
+###file:/etc/auto.master
+
+####after the auto.misc line
+
+/<mount_point> 		<new_reference_file>
+
+/auto_mount		/etc/auto.nfs
+
+note: the reference file should start with 'auto'. For eg: auto.nfs and best to keep in /etc
+
+For Eg:
+-------
+###reference file:
+
+5) ###file:/etc/auto.nfs
+
+<secret_name>		<perm>		<nfs_server_ip/host>:<share>
+
+gowri			-rw		192.168.1.173:/share1
+
+###save and exit
+
+6) start&enable the service:
+-------------------------
+
+RHEL7:
+------
+
+systemctl start autofs 
+systemctl enable autofs
+
+RHEL6:
+------
+
+service autofs start
+chkconfig auto on
+
+7) to check :
+   ==========
+
+cd /<mount_point>
+##do a listing ....no files/dirs present
+cd <secret_name> ..... goes to the auto mount
+df -hP

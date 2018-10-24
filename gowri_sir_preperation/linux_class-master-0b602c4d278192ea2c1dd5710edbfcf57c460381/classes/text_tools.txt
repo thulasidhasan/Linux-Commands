@@ -1,0 +1,55 @@
+Common Text related tools:
+---------------------------
+
+
+syntax:
+=======
+
+1) <command> <file_name>
+
+2) result | <command>
+
+
+a)  tail <file>
+
+shows last 10 lines
+
+    tail -15 <file_name>
+
+    cat <file_name> | tail -5 
+
+
+b)  head <file_name>
+
+shows top 10 line
+
+    head -5 <file_name>
+
+    cat <file_name> | tail -5
+
+
+c) less <file_name>
+
+   cat <file_name> | less
+
+both top and bottom scroll available
+
+
+d) more <file_name>
+
+   cat <file_name> | more
+
+only bottom scroll is available
+
+e) wc -l <file_name>    ##line count
+   wc -w <file_name>    ##word count
+   wc -c <file_name>   ##char count
+
+   cat <file_name> | wc -l
+   cat <file_name> | wc -w
+   cat <file_name> | wc -c
+
+f) sort <file_name>
+   cat <file_name> | sort
+   cat <file_name> |sort -u   ... shows without duplicates
+   cat <file_name> |sort |uniq -d  ...shows only the duplicates

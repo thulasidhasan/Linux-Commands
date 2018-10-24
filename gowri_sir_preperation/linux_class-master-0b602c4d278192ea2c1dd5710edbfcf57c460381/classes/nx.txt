@@ -1,0 +1,73 @@
+Logging to the server using root privileges.
+
+    Open yum.conf file in vim editor.
+    # vim /etc/yum.conf
+    Edit the [main] section on the yum.conf file as follow. Then save the file and exit.
+    group_package_types=default mandatory
+     Install whatever the desktop packages on the server. When installing, entire package content is listed.
+    # yum -y groupinstall “Desktop” “Desktop Platform” “X Window System” “Fonts”
+    There are some additional packages also should be installed on the server.
+    # yum -y groupinstall “Graphical Administration Tools”
+    # yum -y groupinstall “Internet Browser”
+    # yum -y groupinstall “General Purpose Desktop”
+    # yum -y groupinstall “Legacy X Window System compatibility”
+    Open the etc/inittab file and change the following configuration.
+    # vi /etc/inittab
+    Chanege  id:3:initdefault: to  id:5:initdefault:in inittab.
+    Restart the machine using the following command.
+    # init 6
+    Download the latest rpm packages for NXserver using wget. (Repos are available on http://rpm.pbone.net/)
+    # wget ftp://ftp.pbone.net/mirror/www.pclinuxos.com/pclinuxos/apt/pclinuxos/64bit/RPMS.retro/nxclient-3.5.0-7.x86_64.rpm
+    # wget ftp://ftp.pbone.net/mirror/www.pclinuxos.com/pclinuxos/apt/pclinuxos/64bit/RPMS.retro/nxnode-3.5.0-9.x86_64.rpm
+    # wget ftp://ftp.ntua.gr/pub/linux/pclinuxos/pclinuxos/apt/pclinuxos/64bit/RPMS.retro/nxserver-3.5.0-11.x86_64.rpm 
+    Install the rpm packages on the server.
+    # rpm -i nxclient-3.5.0-7.x86_64.rpm
+    # rpm -i nxnode-3.5.0-9.x86_64.rpm
+    # rpm -i  nxserver-3.5.0-11.x86_64.rpm
+    Change the directory permission as following.
+    # chmod 755 /usr/lib/cups/backend/ipp
+    Take the backup of existing server configuration file.
+    # cd /usr/NX/etc/
+    # cp server.cfg server.cfg.backup2
+    Open the file and modify the following line.
+    EnablePasswordDB = “1”
+    Go to /etc/ssh/sshd_config and set password authentication to yes.
+    # cd /etc/ssh/
+    # vim sshd_config
+    PasswordAuthentication yes
+    Restart the sshd & NXserver.
+    # service sshd restart
+    # /usr/NX/bin/nxserver –restart
+    Setup ssh key in NXserver
+    # /usr/NX/bin/nxserver –install –setup-nomachine-key
+    Here is the sample output.
+    NX> 701 Updating: server at: Sun Feb 15 22:47:42 2015.
+    NX> 701 Autodetected system: redhat.
+    NX> 701 Update log is: /usr/NX/var/log/update.
+    NX> 701 Checking NX server configuration using /usr/NX/etc/server.cfg file.
+    NX> 701 Running: chkconfig to remove init script.
+    NX> 701 Verifying that all init scripts have been removed.
+    NX> 723 Cannot start NX statistics:
+    NX> 709 NX statistics are disabled for this server.
+    NX> 701 Version ‘3.5.0-11’ update completed.
+    NX> 701 Bye.
+    Create a separate user for run server on remote desktop mode.
+    # useradd -m -d /home/jmeter -s /bin/bash jmeter
+    # passwd jmeter
+    Register the newly created user to access the NXserver remotely using remote desktop.
+    # /usr/NX/bin/nxserver –useradd jmeter
+    Sample output should be shown in the following
+    NX> 900 Setting password for user: jmeter.
+    NX> 102 Password:
+    NX> 102 Confirm password:
+    NX> 110 Password for user: jmeter added to the NX password DB.
+    NX> 900 Adding public key for user: jmeter to the authorized keys file.
+    NX> 716 Created directory: /home/jmeter/.ssh.
+    NX> 716 Public key added to: /home/jmeter/.ssh/authorized_keys2.
+    NX> 900 Verifying public key authentication for NX user: jmeter.
+    NX> 900 Public key authentication succeeded.
+    NX> 301 User: jmeter enabled in the NX user DB.
+    NX> 999 Bye.
+    In order to connect to the server using Nomachine client you have to install the no machine client on your local machine.
+    According to the OS type you can select the appropriate setup file for install in your machine. Please follow this link to access the download site, https://www.nomachine.com/download 
+    After downloaded the file, open it and install on the the machine.

@@ -1,0 +1,39 @@
+function run ( ) {
+
+        case "$1" in
+
+        configtest)
+                configtest
+                ;;
+        start)
+                action_inst
+                RETVAL=$?
+                ;;
+        stop)
+                stop
+                RETVAL=$?
+                ;;
+        status)
+                status -p $pidfile ${inst}
+                RETVAL=$?
+                ;;
+        restart|force-reload)
+                stop
+                start
+                RETVAL=$?
+                ;;
+        condrestart|try-restart)
+                status -p $pidfile ${slapd} > /dev/null 2>&1 || exit 0
+                stop
+                start
+                ;;
+        usage)
+                echo $"Usage: $0 {start|stop|restart|force-reload|status|condrestart|try-restart|configtest|usage}"
+                RETVAL=0
+                ;;
+        *)
+ echo $"Usage: $0 {start|stop|restart|force-reload|status|condrestart|try-restart|configtest|usage}"
+
+esac
+}
+

@@ -1,0 +1,81 @@
+
+
+####create a interface configuration for bond0
+
+# vi /etc/sysconfig/network-scripts/ifcfg-bond0
+
+DEVICE=bond0
+IPADDR=192.168.1.9
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+TYPE=Bond
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+
+
+####edit eth0 configuration
+# vi /etc/sysconfig/network-scripts/ifcfg-eth0
+
+DEVICE=eth0
+HWADDR=08:00:27:5C:A8:8F
+TYPE=Ethernet
+ONBOOT=yes
+NM_CONTROLLED=no
+MASTER=bond0
+SLAVE=yes
+
+
+####edit eth1 configuration
+# vi /etc/sysconfig/network-scripts/ifcfg-eth1
+
+DEVICE=eth1
+TYPE=Ethernet
+ONBOOT=yes
+NM_CONTROLLED=no
+MASTER=bond0
+SLAVE=yes
+
+Create a module file:
+----------------------
+
+vi /etc/modprobe.d/bonding.conf
+alias bond0 bonding
+options bond0 mode=1 miimon=100
+
+restart the network daemon:
+---------------------------
+
+service network restart (RHEL6)
+
+systemctl restart network (RHEL7)
+
+
+######mode details
+
+Different Modes used in bonding.conf file .
+
+    balance-rr or 0 — round-robin mode for fault tolerance and load balancing.
+    active-backup or 1 — Sets active-backup mode for fault tolerance.
+    balance-xor or 2 — Sets an XOR (exclusive-or) mode for fault tolerance and load balancing.
+    broadcast or 3 — Sets a broadcast mode for fault tolerance. All transmissions are sent on all slave interfaces.
+    802.3ad or 4 — Sets an IEEE 802.3ad dynamic link aggregation mode. Creates aggregation groups that share the same speed & duplex settings.
+    balance-tlb or 5 — Sets a Transmit Load Balancing (TLB) mode for fault tolerance & load balancing.
+    balance-alb or 6 — Sets an Active Load Balancing (ALB) mode for fault tolerance & load balancing.
+########
+
+verify:
+-------
+
+from the 3rd party machine ping bond0 continuosly
+
+then go to the console of the bonded machine
+
+ifdown eth0  ... verify ping
+
+ifup eth0 
+
+
+ifdown eth1  ... verify ping
+
+ 
