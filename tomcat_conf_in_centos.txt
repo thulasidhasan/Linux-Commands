@@ -24,7 +24,7 @@ now copy the /usr/java   ====> full path and open /etc/enviroment/  type JAVA_HO
    61  useradd -g tomcat tomcat
    62  useradd tomcat
    63  usermod -g tomcat tomcat    ( add that tomcat user to tomcat group)
-   56  chmod -R 777 /opt            /opt is use too install 3rd party pkg
+                                     /opt is use too install 3rd party pkg
    70  cd /opt/
    71  wget http://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.30/bin/apache-tomcat-8.5.30.tar.gz    (this .tar.gz file you will get in tomcat site   
    72  tar -xvf apache-tomcat-8.5.30.tar.gz  ===> extract the downloaded file
