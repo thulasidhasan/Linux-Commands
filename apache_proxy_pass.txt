@@ -1,0 +1,16 @@
+ProxyPass /pgresponse/ http://localhost:7060/pgresponse/
+ProxyPassReverse /pgresponse/ http://localhost:7060/pgresponse/
+
+/pgresponse is context path
+
+#my own proxypass
+<VirtualHost *:80>
+    ServerName sonar.spaneos.local
+    ServerAlias sonar
+    ServerAdmin thulasi@example.com
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:9000/
+    ProxyPassReverse / http://localhost:9000/
+    TransferLog /var/log/apache2/sonar_access.log
+    ErrorLog /var/log/apache2/sonar_error.log
+</VirtualHost>
