@@ -29,7 +29,10 @@ file1.tar.gz ====> file name that ends with .tar.gz
 
  sudo rsync --progress -ahvz seafile-data.zip root@192.168.1.3:/newhome/  =====> example while taking GB size data include --progress
 
- rsync --ignore-existing --progress -ahvz utorrent-server-alpha-v3_3/ root@192.168.1.3:/tmp/rsync.bak  ===> skipping existing one 
+ rsync --ignore-existing --progress -ahvz utorrent-server-alpha-v3_3/ root@192.168.1.3:/tmp/rsync.bak  ===>  So as to only sync new files on the local machine, that do not exist on the remote machine
+
+sudo rsync -ahvz --update /home/manager/test/ server@192.168.1.195:/opt/test/ ======>  --update will update the edited documents
+
 
 ################  before doing any rsync runn dry run to check for errors  ##############################
 
