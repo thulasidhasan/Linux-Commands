@@ -13,7 +13,7 @@
 
 #################################################################################################################################################
 
-basic Ad_hoc commands
+basic Ad_hoc commands   ====> Ad_Hoc Commands can be used to do simple Task
 
 1: sudo ansible spaneos_local -m ping ====> it will gives the status of what are all the instance u mention in hosts file
         if hosts file is in some other location user -i flag
