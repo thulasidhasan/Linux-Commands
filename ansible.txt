@@ -1,0 +1,35 @@
+################### Using Ansible to automate the Task###########################################
+
+* if root login is disabled in server we need mention user_name and password is hosts file which is in /etc/ansible/hosts
+
+====>>>  Find the below Example
+
+[spaneos_local]	
+#server12
+192.168.1.249 ansible_ssh_pass=span$root273 ansible_ssh_user=manager
+#server11
+192.168.1.159 ansible_ssh_pass=cna123 ansible_ssh_user=cna
+
+
+#################################################################################################################################################
+
+basic Ad_hoc commands
+
+1: sudo ansible spaneos_local -m ping ====> it will gives the status of what are all the instance u mention in hosts file
+        if hosts file is in some other location user -i flag
+
+2: sudo ansible spaneos_local -m shell -a "uptime" ===> it will gives updates as in shell format
+
+$ ansible-doc -l ===========> TO Know more about Ad_Hoc commands
+
+################################################################################################################################################
+
+I NEED TO SEND A ZIP FILE 100 INSATANCE
+
+Eg:
+
+1: sudo ansible spaneos_local -m copy -a "src=/home/server/sed.sh dest=/tmp"
+
+     src= source
+     dest = destination
+
