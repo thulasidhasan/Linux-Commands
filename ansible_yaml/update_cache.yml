@@ -1,6 +1,9 @@
 ---
- -name= update cache and install this package
-  apt:
-    name:apache2
-    update_cache=yes
+- hosts: my_kvm
+  tasks:
+  - name: only for cache
+    apt: 
+      update_cache: yes
+      cache_valid_time: 3600
+    
  

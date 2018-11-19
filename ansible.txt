@@ -33,3 +33,10 @@ Eg:
      src= source
      dest = destination
 
+################################################################################################################################################
+
+simple command to run a ansible playbook in ubuntu
+
+sudo ansible-playbook /home/server/Documents/veecube/ansible_yaml/update_cache.yml --ask-sudo-pass
+
+
