@@ -1,0 +1,6 @@
+---
+ -name= update cache and install this package
+  apt:
+    name:apache2
+    update_cache=yes
+ 
