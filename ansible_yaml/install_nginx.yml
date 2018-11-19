@@ -1,0 +1,12 @@
+---
+
+- hosts: my_kvm
+  become: yes
+  remote_user: thulasi
+  tasks:
+  - name: install "nginx"
+    apt:
+      name: nginx
+      state: latest
+      update_cache: yes
+      cache_valid_time: 3600 
