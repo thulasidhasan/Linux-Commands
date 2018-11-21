@@ -1,0 +1,7 @@
+---
+- hosts: my_kvm
+  tasks:
+  - name: install httpd server
+    yum: install=httpd state=latest
+  - name: start a httpd service
+    service: name=httpd state=restarted
