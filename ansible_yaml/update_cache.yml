@@ -1,5 +1,5 @@
 ---
-- hosts: my_kvm
+- hosts: spaneos_local
   tasks:
   - name: only for cache
     apt: 

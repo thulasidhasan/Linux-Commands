@@ -39,4 +39,10 @@ simple command to run a ansible playbook in ubuntu
 
 sudo ansible-playbook /home/server/Documents/veecube/ansible_yaml/update_cache.yml --ask-sudo-pass
 
+###############################################################################################################################################
 
+sudo ansible -i ansible_inventry.py spaneos_local -m shell -a "ls -ltrh"
+
+-i => my inventry file location
+spaneos_local => hostfile
+-----------------------------------------------------------------------------------------------------------------------------------------------
