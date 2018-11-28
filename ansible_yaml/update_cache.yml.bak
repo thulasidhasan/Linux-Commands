@@ -1,8 +1,7 @@
 ---
 - hosts: spaneos_local
   become: yes
-  become_method: sudo
-  become_user: root
+  remote_user: manager
   tasks: 
   - name: running apt-get update
     apt: 
