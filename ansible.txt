@@ -46,3 +46,4 @@ sudo ansible -i ansible_inventry.py spaneos_local -m shell -a "ls -ltrh"
 -i => my inventry file location
 spaneos_local => hostfile
 -----------------------------------------------------------------------------------------------------------------------------------------------
+sudo ansible-playbook -i /home/thulasi/ansible_inventry.py send_file_sou_dest.yml --syntax-check ===> to syntax-check
