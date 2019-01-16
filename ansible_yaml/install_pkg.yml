@@ -2,7 +2,6 @@
 
 - hosts: my_kvm
   become: yes
-  remote_user: thulasi
   tasks:
   - name: install "telnet"
     apt:
