@@ -1,6 +1,0 @@
----
-- hosts: my_kvm
-  tasks:
-  - name: upgrade all pkg
-    apt:
-      state: latest
