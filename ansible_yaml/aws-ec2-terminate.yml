@@ -1,0 +1,13 @@
+
+
+---
+
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: terminate the instance in aws
+    ec2:
+      instance_id: i-0451b4d3cb095efc5
+      region: ap-south-1
+      state: absent
+      wait: yes

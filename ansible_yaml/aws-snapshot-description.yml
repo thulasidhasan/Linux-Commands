@@ -1,0 +1,16 @@
+
+---
+
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: creating the snapshot
+    ec2_snapshot:
+      volume_id: vol-004b9d4480c232f94
+      region: ap-south-1
+      description: my-test-snapshot
+      snapshot_tags:
+        name: my-app-server-bak
+        purpose: webserver
+      
+      

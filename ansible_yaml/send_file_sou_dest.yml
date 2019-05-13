@@ -2,13 +2,9 @@
 
 - hosts: spaneos_local
   become: yes
-  remote_user: manager
   tasks:
   - name: send file from source to destination
     copy:
-      src: /home/thulasi/ansible_inventry.py
-      dest: /home/manager/ansible_inventry.py.bak
-      owner: manager
-      group: manager
-      mode: 0755
+      src: /home/thulasi/test.sh
+      dest: /home/spaneos/test.sh.bak
         

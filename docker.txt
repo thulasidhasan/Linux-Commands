@@ -1,0 +1,105 @@
+                                                        DOCKER
+
+Docker is a opensource platform to to create,deploy and run application by using containers
+
+docker info ==>  to view even more details about your docker installation:
+
+docker ps -l  ===>  used to see the status of the process.
+
+docker run hello-world ====> Test that your installation works by running the simple Docker image, hello-world
+
+docker image ls   ====>  list the available images
+
+docker container ls  ===> also we can use to see containers details
+
+###############################################################################################################################################
+
+################################################Creating Dockerfile###########################################################################
+
+step 1: create one directory .  cd dir/
+step 2: create a file called Dockerfile
+step 3: edit the file and add this contents
+
+
+FROM ubuntu
+MAINTAINER <thulasidhasan877@gmail.com>
+RUN apt-get update
+CMD ["echo", "hello world"]
+
+
+step 4: docker build .  ===> use this command to build your image,  at last it will give one container id
+                              (or) you can find container id by using cmd: docker containe ls 
+
+step 6: docker run -d -it --name mywebser -p 172.17.0.1:80:80 mycentos/httpd ===> this is the command to run you docker image
+
+###############################################################################################################################################
+
+################################################## Docker volume   ############################################################################
+
+docker volume create test  ====>  to create a volume
+
+docker volume inspect test  ====> Display detailed information on one or more volumes
+
+docker volume ls           ====>  list the volumes
+
+docker volume prune =====>        Remove all unused local volumes
+
+docker volume rm test =====> to remove the volume
+
+
+###################################### Now we run the container using volume  ###########################################################
+
+for eg: your are running a image called jenkins, we need to specify the volume
+
+1: docker run -d --name myjenkins_test1 -v test_vol:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins  ===> command to run jenkins by   specifying the volume
+
+so this will store the data inside the volume 
+
+# if u want to test run another jenkins image for EX
+
+2: docker run -d --name myjenkins_test2 -v test_vol:/var/jenkins_home -p 7070:8080 -p 40000:50000 jenkins  ===> now you can see the data inside the jenkins after login
+
+
+################################################################################################################################################
+
+#################################################### Docker bind mounts ###################################################
+
+the host mounted path using the default local volume driver something like the below:
+
+1: docker run --name myjenkins_test22 -it -u 0 -v /home/spaneos/jenkins_home1:/var/jenkins_home -p 6161:8080 -p 40003:50000 jenkins
+
+    --name = giving another name to the container
+    -it    = iterative terminal
+    -u     = user
+     0     = zero means root user id
+    -v     = specifinig the host mounted path
+     /home/spaneos/jenkins_home1     ===>   is your local mounted path
+     /var/jenkins_home               ===> is your jenkins home in container  for EX
+
+2: docker container exec -u 0 -it your_container_id /bin/bash
+     step 1: cd ~jenkins it will change dir to your jenkins_home
+
+      exec = exec command inside the container 
+      -u,0 and -it = already discussed
+      /bin/bash  = we run command inside the bash
+
+###############################################################################################################################################      
+
+to tag the untagged image
+
+docker tag 0e5574283393 ubuntu/httpd:version1.0
+
+##############################################################################################################################################
+
+##########################################  Docker network   ##########################################
+
+
+By default if we run image new container will be created in bridge network
+
+docker network ls                           ====> to list the network
+docker network inspect bridge               ====> to inspect the network
+
+docker network create --drive=bridge my_driv ====> to create a custom bridge network 
+
+docker run -itd --name alpinet  --network my_driv alpine  ====> joining container to custom bridge network.
+

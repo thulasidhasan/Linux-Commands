@@ -4,6 +4,13 @@ for example iam going to take backup /home
 
 command : tar -cvpzf /backdata/file1.tar.gz /home
 
+tar = Tape archive
+c = Create
+v = Verbose mode
+p = Preserving files and directory permissions.
+z = This will tell tar that compress the files further to reduce the size of tar file.
+f = It allows tar to get file name.
+
 backdate ========> directory  destination
 file1.tar.gz ====> file name that ends with .tar.gz
 /home ===========> is my source

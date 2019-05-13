@@ -1,48 +1,211 @@
-################### Using Ansible to automate the Task###########################################
-
-* if root login is disabled in server we need mention user_name and password is hosts file which is in /etc/ansible/hosts
-
-====>>>  Find the below Example
-
-[spaneos_local]	
-#server12
-192.168.1.249 ansible_ssh_pass=span$root273 ansible_ssh_user=manager
-#server11
-192.168.1.159 ansible_ssh_pass=cna123 ansible_ssh_user=cna
+##############################################  Ansible  #####################################################################################3
 
 
-#################################################################################################################################################
+Ansible is an open-source configuration management, and application deployment tool.
 
-basic Ad_hoc commands   ====> Ad_Hoc Commands can be used to do simple Task
 
-1: sudo ansible spaneos_local -m ping ====> it will gives the status of what are all the instance u mention in hosts file
-        if hosts file is in some other location user -i flag
+Automation:
 
-2: sudo ansible spaneos_local -m shell -a "uptime" ===> it will gives updates as in shell format
+yum install epel-relese -y
+yum install ansible python-pip
+pip install boto
 
-$ ansible-doc -l ===========> TO Know more about Ad_Hoc commands
 
-################################################################################################################################################
+# The real automation comes under writing play-book
 
-I NEED TO SEND A ZIP FILE 100 INSATANCE
+1: By Default if you are running ansible it will take hosts from /etc/ansible/hosts
 
-Eg:
+    But we will create a host file ( Eg: ansible-inventry.py )
 
-1: sudo ansible spaneos_local -m copy -a "src=/home/server/sed.sh dest=/tmp"
+2: Edit the file 
+              
+               [my-test-machine]
+               192.168.1.168 ansible_ssh_pass=123 ansible_ssh_user=root
+  command      sudo ansible all -i ansible-inventry.py -m ping -o
 
-     src= source
-     dest = destination
+3: to verify what we have done run ansible 
+               copy the two lines and paste in /etc/ansible/hosts
+               Now Run 
+  ~$ sudo ansible my-test-machine -i ansible-inventry.py -m ping 
+  ~$ sudo ansible my-test-machine -i ansible-inventry.py -m shell -a "w"  ====> this o/p looks like shell format
+  ~$ sudo ansible aws-test-machine -i ansible_inventry.py -m shell -a "w" -u ec2-user =====>  to ping aws instance
 
-################################################################################################################################################
+###################   to a help from ansible   #####################################
 
-simple command to run a ansible playbook in ubuntu
+               
+ansible-doc -l ===========> TO Know more about Ad_Hoc commands
 
-sudo ansible-playbook /home/server/Documents/veecube/ansible_yaml/update_cache.yml --ask-sudo-pass
+sudo ansible-doc ping =====> to get a help from particular command
 
 ###############################################################################################################################################
 
-sudo ansible -i ansible_inventry.py spaneos_local -m shell -a "ls -ltrh"
+######### now we are going to write the ansible play-book to create a directory ##############################
 
--i => my inventry file location
-spaneos_local => hostfile
------------------------------------------------------------------------------------------------------------------------------------------------
+sudo ansible-playbook -i ansible_inventry.py test.py --syntax-check  ==> it will check the syntax error
+
+##################################################################################################################################
+
+
+1: Create a file called .yml
+
+---
+
+- hosts: my-test-machine
+  tasks:
+  - name: exam dir 
+    file: 
+      path: "/root/exam"
+      state: directory
+      mode: 0755
+
+NOTE: dont use tab in between 
+
+2: to create a file instead of directory give state: touch
+
+################## now we are  going send a file from source to dest  ###################################################
+
+---
+
+- hosts:
+  tasks:
+  - name: send file from source to destination
+    copy:
+      src: /home/thulasi/test.txt
+      dest: /root/test.txt.bak
+      mode: 0755
+      group: root
+      owner: root
+
+
+####################  now we are going to install apache and it is going to webpage  ####################################################
+
+---
+
+- hosts: my-test-machine
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: latest
+  - name: send file from local to dest 
+    copy:
+      src: /home/thulasi/index.html
+      dest: /var/www/html/index.html
+      mode: 0755
+  - name: start a service
+    service:
+      name: httpd
+      state: restarted
+###########################################################################################################################################
+
+
+####################### To Find the hostname of all instance ##############################################################################
+
+---
+ - hosts: my-test-machine
+   tasks:
+   - name: hostname
+     debug:
+       var=ansible_hostname
+
+###########################################################################################################################################  .
+
+
+########################   install Httpd in Ec2 instance ################################################3
+
+---
+
+- hosts: aws-test-machine
+  remote_user: ec2-user
+  become: yes
+  tasks:
+  - name: to check the hostname
+    debug:
+      var: ansible_hostname
+  - name: install httpd web server
+    yum:
+      name: httpd
+      state: latest
+  - service:
+      name: httpd
+      state: restarted
+      enabled: yes
+
+#########################################################################################################################################
+
+############################3  To Run Bash Script in remote Machine ##########################################################################
+
+
+
+---
+
+- hosts: my-test-machine
+  tasks:
+  - name: give a proper permission
+    file:
+      path: /root/exe.sh
+      mode: 0755
+  - name: run a script
+    shell: /root/exe.sh
+
+      (or)
+
+- name: Execute the script
+       command: sh /home/test_user/test.sh
+
+###############################################################################################################################################
+
+---
+
+- hosts: my-test-machine
+  vars:
+   dest_file: /tmp/dir1/dir2/dir3/dir4
+  tasks:
+  - name: create a directory
+    copy:
+      src: /home/thulasi/jenkins.txt
+      dest: "{{ dest_file }}"
+
+#send file from source to destination
+#############################################################################################################################################
+
+To run in local machine: sudo ansible-playbook test.yml
+
+##############################################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

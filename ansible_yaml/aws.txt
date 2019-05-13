@@ -1,0 +1,111 @@
+[root@ip-172-31-16-117 ~]# cat playbook_ec2.yaml
+- name: ansible ec2 playbook
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: playbook to create ec2 instance using ansible
+    ec2:
+      instance_type: t2.micro
+      key_name: my_aws
+      image: ami-0889b8a448de4fc44
+      region: ap-south-1
+      group: default
+      count: 1
+      vpc_subnet_id: subnet-3b13a977
+      assign_public_ip: yes
+      wait: yes
+
+-----------------------------------------------------------------------------------------------
+
+
+13.126.122.63[root@ip-172-31-16-117 ~]# cat .boto
+[Credentials]
+aws_access_key_id: AKIA5UST55M356Q6TE4O
+aws_secret_access_key: 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
+
+
+[root@ip-172-31-16-117 ~]# cat .boto
+[Credentials]
+aws_access_key_id: AKIA5UST55M356Q6TE4O
+aws_secret_access_key: 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
+[root@ip-172-31-16-117 ~]# cat playbook
+playbook1_ec2.retry  playbook1_ec2.yaml   playbook_ec2.retry   playbook_ec2.yaml
+
+[root@ip-172-31-16-117 ~]# cat playbook_ec2.yaml
+- name: ansible ec2 playbook
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: playbook to create ec2 instance using ansible
+    ec2:
+      instance_type: t2.micro
+      key_name: my_aws
+      image: ami-0889b8a448de4fc44
+      region: ap-south-1
+      group: default
+      count: 1
+      vpc_subnet_id: subnet-3b13a977
+      assign_public_ip: yes
+      wait: yes
+
+
+[root@ip-172-31-16-117 ~]# cat playbook1_ec2.yaml
+- name: ansible ec2 playbook
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: playbook to create ec2 instance using ansible
+    ec2:
+      instance_type: t2.micro
+      key_name: my_aws
+      image: ami-0889b8a448de4fc44
+      region: ap-south-1
+      group: MY-DMZ
+      count: 1
+      vpc_subnet_id: subnet-3b13a977
+      assign_public_ip: yes
+      wait: yes
+
+
+
+--------------------------------------------------------------------------
+
+
+[root@ip-172-31-16-117 ~]# cat terminate_ec2.yaml
+- name: ansible ec2_terminate
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: terminate ec2
+    ec2:
+      instance_id: i-0ce130a5a90e48d53
+      state: absent
+      region: ap-southeast-1
+
+
+
+------------------------------------------------------------------------
+
+
+[root@ip-172-31-16-117 ~]# cat volume_ec2.yaml
+- name: ansible ec2 playbook
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: playbook to create ec2 instance using ansible
+    ec2:
+      instance_type: t2.micro
+      key_name: my_aws
+      image: ami-0889b8a448de4fc44
+      volumes:
+        - device_name: /dev/xvdb
+          volume_type: gp2
+          volume_size: 1
+      region: ap-south-1
+      group: MY-DMZ
+      count: 1
+      vpc_subnet_id: subnet-3b13a977
+      assign_public_ip: yes
+      wait: yes
+
+

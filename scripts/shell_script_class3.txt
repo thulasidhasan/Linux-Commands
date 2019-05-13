@@ -264,6 +264,7 @@ awk 'BEGIN {FS=":";OFS="|"}{print $1,$3}' /etc/passwd  --- print with delimeter
 
 awk -F ":" ' BEGIN { print "number occurances of nologin in an user information 
 
+echo "hai hello how r u now iam in n virginia | awk -F ' ' '{print $2" "$5" "$10}'
 
 
 

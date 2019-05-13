@@ -1,0 +1,14 @@
+
+---
+
+- hosts: my-test-machine
+  tasks:
+  - name: put the script file in opt folder
+    copy:
+      src: /home/thulasi/killproc_7070.sh
+      dest: /opt/killproc_7070.sh
+      mode: 0755
+      owner: spaneos
+      group: spaneos
+  - name: kill the tomcat which is running on port 7070
+    command: sh /opt/killproc_7070.sh

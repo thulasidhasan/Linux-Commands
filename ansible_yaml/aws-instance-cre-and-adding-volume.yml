@@ -1,0 +1,21 @@
+
+---
+
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: create ec2-instance using ansible automation
+    ec2:
+      instance_type: t2.micro
+      image: ami-0889b8a448de4fc44
+      region: ap-south-1
+      group: my-security-group
+      count: 1
+      assign_public_ip: yes
+      key_name: my-awskey
+      vpc_subnet_id: subnet-38f17474
+      wait: yes
+      volumes: 
+        - device_name: /dev/xvda
+          volume_type: gp2
+          volume_size: 8 
