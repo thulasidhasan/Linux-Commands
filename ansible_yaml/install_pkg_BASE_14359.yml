@@ -1,0 +1,11 @@
+---
+
+- hosts: my_kvm
+  become: yes
+  remote_user: thulasi
+  tasks:
+  - name: install "telnet"
+    apt:
+      name: telnet
+      update_cache: yes
+      cache_valid_time: 3600
