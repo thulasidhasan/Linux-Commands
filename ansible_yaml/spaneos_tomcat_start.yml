@@ -1,7 +1,0 @@
-
----
-
-- hosts: spaneos_tomcat_servers
-  tasks:
-    name: start all tomcat
-    command: sh /opt/tomcat7070/bin/startup.sh 
