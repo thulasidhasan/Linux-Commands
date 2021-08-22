@@ -5,7 +5,7 @@ ProxyPassReverse /pgresponse/ http://localhost:7060/pgresponse/
 
 #my own proxypass
 <VirtualHost *:80>
-    ServerName sonar.spaneos.local
+    ServerName sonar.example.local
     ServerAlias sonar
     ServerAdmin thulasi@example.com
     ProxyPreserveHost On

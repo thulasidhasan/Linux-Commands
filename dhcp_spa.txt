@@ -115,7 +115,7 @@ max-lease-time 7200;
 
 subnet 192.168.0.0 netmask 255.255.252.0 {
 range 192.168.1.25 192.168.1.250;
-option domain-name "spaneos.local";
+option domain-name "spa.local";
 option subnet-mask 255.255.252.0;
 option broadcast-address 192.168.3.255;
 option routers 192.168.0.1;
@@ -126,7 +126,7 @@ authoritative;
 ddns-update-style none;
 log-facility local7;
 
-host rajeev { 
+host rr { 
 		hardware ethernet f8:a9:63:71:8f:8c; 
 		fixed-address 192.168.1.82;
 	}
@@ -136,49 +136,49 @@ host DESKTOP-JMOD4NI {
 		fixed-address	192.168.1.44;
 	}
 
-host spaneos0014 {
+host spa0014 {
                 hardware ethernet 14:dd:a9:e7:14:31;
                 fixed-address 192.168.1.202;
         }
 
-host karthik {
+host rs {
                 hardware ethernet 50:7b:9d:ba:80:8e;
                 fixed-address 192.168.1.189;
         }
 
-host spaneos0010-System-Product-Name {
+host spa0010-System-Product-Name {
                 hardware ethernet 14:dd:a9:ed:dc:18;
                 fixed-address 192.168.1.206;
         }
 
-host spanadmin-System-Product-Name {
+host sadmin-System-Product-Name {
                 hardware ethernet 14:dd:a9:ed:e1:66;
                 fixed-address 192.168.1.80;
         }
 
-host spaneos5 {
+host spa5 {
                 hardware ethernet 50:7b:9d:5c:dd:48;
                 fixed-address 192.168.1.64;
         }
 
-host spaneos23 {
+host spa23 {
                 hardware ethernet 34:97:f6:9c:4f:58;
                 fixed-address 192.168.1.223;
         }
 
 
-host spaneos7 {
+host spa7 {
                 hardware ethernet 50:7b:9d:5c:d9:40;
                 fixed-address 192.168.1.124;
         }
 
-host spaneos0042 {
+host spa0042 {
                 hardware ethernet 14:dd:a9:e7:14:08;
                 fixed-address 192.168.1.171;
         }
 
 
-#host spaneos {
+#host spa {
 #                hardware ethernet 14:dd:a9:e7:13:65;
 #                fixed-address 192.168.1.154;
 #        }
